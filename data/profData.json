@@ -1,0 +1,274 @@
+[
+  {
+    "prof": "青木宏",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "解析力学 量子力学 現代物理概論 電磁力学",
+    "else": "素粒子物理学 宇宙論",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/tatsuki-toda/",
+    "description": "新しい宇宙論と物理学の基礎理論について研究する"
+  },
+  {
+    "prof": "池口雅道",
+    "field": "応用物理学 生命理工学 物質理工学",
+    "specialField": "",
+    "classes": "物理化学A 分子生物学実験 生化学実験 構造生物学 有機化学Ⅰ",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/masamiti-ikeguchi/",
+    "description": "卒研ではタンパク質分子の物理的研究、化学的研究、生物学的研究のどれかをします"
+  },
+  {
+    "prof": "井田旬一",
+    "field": "応用物理学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "マテリアルサイエンス 機器分析学 化学工学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/junichi-ida/",
+    "description": "私の研究室では、新しい材料や技術を開発し、それを例えば環境問題等に応用する、という研究を行なっています。ですので、できれば化学系の科目の他にマテリアルサイエンスや化学工学を取っておくとよいと思います。"
+  },
+  {
+    "prof": "伊藤眞人",
+    "field": "物質理工学",
+    "specialField": "",
+    "classes": "マテリアルサイエンス実験 機器分析学 分子設計 有機化学Ⅱ",
+    "else": "科学教育",
+    "master": "",
+    "link": "https://www.soka.ac.jp/faculty-profiles/masato-ito/",
+    "description": "できれば、物質理工学の選択必修科目に加えて、物理化学Ｂ，物理化学実験，量子化学，環境分析化学､環境分析化学実験を修得していることが望ましい。"
+  },
+  {
+    "prof": "伊与田健敏",
+    "field": "応用物理学",
+    "specialField": "",
+    "classes": "情報工学実験 ディジタル回路基礎論 計算機アーキテクチャ 電子工学実験 プログラミング演習",
+    "else": "計測工学 情報工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/taketoshi-iyota/",
+    "description": ""
+  },
+  {
+    "prof": "金松知幸",
+    "field": "生命理工学 環境理工学",
+    "specialField": "",
+    "classes": "",
+    "else": "神経生理学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/tomoyuki-kanamatsu/",
+    "description": "卒研はあくまでも学生が主体となって積極的に実験を行って欲しい。代謝生化学、分子細胞生物学なども履修しておいくとよりよいと思います。"
+  },
+  {
+    "prof": "川井秀樹",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "分子生物学 生化学 機能生理学 海洋学実習 ニューロサイエンス",
+    "else": "神経生理学 生命医科学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/hideki-kawai/",
+    "description": "大脳皮質の形成、生理的機能と制御機構、神経疾患の分子的修復方法などを研究しています。神経科学は生物系科目を中心に、他分野が融合した幅広い科目です。卒研には化学的土台も必要です。"
+  },
+  {
+    "prof": "木下聖子",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "バイオインフォマティクス演習 バイオプログラミング	ゲノム情報科学 プログラミング演習 アドバンスドプログラミング演習",
+    "else": "バイオインフォマティクス",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/kiyoko-kinoshita/",
+    "description": "生化学や細胞生物学の情報を扱い、プログラミングを行いますので、生化学系の授業に加え、情報システム工学科の「データ構造」を推奨します。"
+
+  },
+  {
+    "prof": "久保いづみ",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "分析化学 物理化学実験 微生物学実験 機器分析学",
+    "else": "食品衛生学 臨床検査工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/izumi-kubo/",
+    "description": ""
+  },
+  {
+    "prof": "窪寺昌一",
+    "field": "応用物理学",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shoichi-kubodera/",
+    "description": ""
+  },
+  {
+    "prof": "久米川宣一",
+    "field": "生命理工学 環境理工学",
+    "specialField": "",
+    "classes": "光学 微生物学実験 植物生理生態学",
+    "else": "計測工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/norikazu-kumekawa/",
+    "description": ""
+  },
+  {
+    "prof": "黒沢則夫",
+    "field": "生命理工学 環境理工学",
+    "specialField": "",
+    "classes": "微生物学 微生物学実験 分子生物学 分子生物学実験 海洋学実習",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/norio-kurosawa/",
+    "description": ""
+  },
+  {
+    "prof": "近藤和典",
+    "field": "生命理工学",
+    "specialField": "",
+    "classes": "分子生物学 分子生物学実 細胞生物学 分子細胞生物学Ⅰ 分子細胞生物学Ⅱ",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/kazunori-kondo/",
+    "description": ""
+  },
+  {
+    "prof": "佐藤伸二郎",
+    "field": "環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "土壌学 植物栄養肥料学 環境分析化学実験",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shinjiro-sato/",
+    "description": ""
+  },
+  {
+    "prof": "清水昭夫",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "物理化学A	物理化学実験 有機化学Ⅰ",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/akio-shimizu/",
+    "description": ""
+  },
+  {
+    "prof": "関篤志",
+    "field": "物質理工学",
+    "specialField": "",
+    "classes": "化学実験 光学 分析化学 マテリアルサイエンス",
+    "else": "計測工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/atsushi-seki/",
+    "description": ""
+  },
+  {
+    "prof": "高瀬明",
+    "field": "生命理工学",
+    "specialField": "",
+    "classes": "微生物学 微生物学実験 分子生物学実験 生化学 細胞生物学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/sayaka-takase/",
+    "description": "卒研では、ウイルスと細胞の相互作用を分子レベルで解析します。「分子生物学」や「分子細胞生物学」「免疫科学」の履修も推奨します。"
+  },
+  {
+    "prof": "戸田龍樹",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "生態学 多様性生物学 地球科学概論 環境科学 生態環境工学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/tatsuki-toda/",
+    "description": "水圏生態系の保全と修復、水処理工学に関する研究テーマが中心です。"
+  },
+  {
+    "prof": "中嶋一行",
+    "field": "生命理工学",
+    "specialField": "",
+    "classes": "生物学A 生物学B 細胞生物学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/kazuyuki-nakajima/",
+    "description": ""
+  },
+  {
+    "prof": "新津隆士",
+    "field": "環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "化学A 化学B 環境計量学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/takashi-niitsu/",
+    "description": ""
+  },
+  {
+    "prof": "西原祥子",
+    "field": "生命理工学",
+    "specialField": "",
+    "classes": "微生物学実験 分子生物学 分子生物学実験 生化学 細胞生物学",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shoko-nishihara/",
+    "description": "卒研では、「幹細胞や疾病における糖鎖の役割」をES/iPS細胞、ショウジョウバエ、ノックアウトマウスなどを用いて、分子レベルで研究します。「発生生物学」や「分子細胞生物学」の履修も推奨します。"
+  },
+  {
+    "prof": "西山道子",
+    "field": "応用理工学",
+    "specialField": "",
+    "classes": "微生物学実験 分子生物学 分子生物学実験 生化学 細胞生物学",
+    "else": "システム工学 計測工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shoko-nishihara/",
+    "description": ""
+  },
+  {
+    "prof": "藤原和夫",
+    "field": "応用物理学 生命理工学 物質理工学",
+    "specialField": "",
+    "classes": "生体内の分子機械であるタンパク質の立体構造に関する研究をコンピュータを用いて行いますが、生命の仕組みについても学んで来てください。",
+    "else": "バイオインフォマティクス",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/kazuo-fujiwara/",
+    "description": "プログラミング演習 アドバンスドプログラミング演習 構造生物学 分子細胞生物学Ⅰ バイオインフォマティクス演習"
+  },
+  {
+    "prof": "松山達",
+    "field": "応用物理学 生命理工学 物質理工学",
+    "specialField": "",
+    "classes": "プログラミング演習 アドバンスドプログラミング演習 化学工学実験",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/tatsushi-matsuyama/",
+    "description": ""
+  },
+  {
+    "prof": "丸山晋策",
+    "field": "応用物理学 生命理工学 物質理工学",
+    "specialField": "",
+    "classes": "",
+    "else": "食品化学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shinsaku-maruta/",
+    "description": "卒研の内容は複合領域であり、卒研テーマに興味がある学生であれば、どのような領域で学んできても対応できるようにしたいと思っています。従って私の卒研では、特に推奨する科目は設けないことにしています。"
+  },
+  {
+    "prof": "山本修一",
+    "field": "環境理工学",
+    "specialField": "",
+    "classes": "地球科学概論 地球化学 生態圏科学 地球科学実験 環境分析化学実験",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/shuichi-yamamoto/",
+    "description": ""
+  },
+  {
+    "prof": "渡辺一弘",
+    "field": "応用物理学",
+    "specialField": "",
+    "classes": "光学 基礎光物性 レーザ科学入門 物性物理概論",
+    "else": "計測工学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/kazuhiro-watanabe/",
+    "description": ""
+  }
+  
+]
