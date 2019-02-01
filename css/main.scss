@@ -1,0 +1,44 @@
+@import 'compass';
+@charset 'utf-8';
+$baseColor: #fff;
+$subColor: #353e94;
+$greenColor : #00f100;
+$yellowColor : #ffd700;
+$redColor : #ff4500;
+$blueColor : #5cb3f1;
+$orangeColor: #ffb600;
+$ja_font : "Times New Roman","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif;
+
+
+
+#displayModel {
+  border-left: 2px solid #ccc;
+  padding-left: 0px;
+  .sidebarTitle {
+    background-color: $subColor;
+    font-weight: bold;
+    color: $baseColor;
+    padding: 17px 0px 17px 15px;
+    margin: 0;
+  }
+  #rishuModel__Content {
+    height: 300px;
+    overflow: auto;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    @include border-radius(3px);
+    padding: 10px;
+    
+    ul{
+      padding-left: 20px;
+      li {
+        list-style-type: none;
+        a {
+          font-weight: bold;
+          color: black;
+        }
+      }
+    }
+
+  }
+}

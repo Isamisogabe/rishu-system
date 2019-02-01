@@ -1,6 +1,7 @@
 /* global $ */
 var allLectures;
 var rishuModel = [];
+var rishuUnit  = [0,0,0,0,0,0,0,0];
   
 
 function getClassJson(url) {
@@ -38,9 +39,15 @@ function rishuBtnOnClick (lectures) {
     
     console.log("追加した後の履修モデル", rishuModel);
     
-    var semester = parseInt(lecture.semester);
-    var lecLi = $("<li><a href=#" + lecture.classId+ ">" + lecture.name + " (" + lecture.subject +")</a></li>");
+    var semester = parseInt(lecture.semester),
+        unit     = parseInt(lecture.unit);
+    var lecLi = $("<li id=display__" + lecture.classId + "><a href=#" + lecture.classId+ ">" + lecture.name + " (" + lecture.subject +")</a></li>");
     $("#rishuModel__Content #rishu__" + semester).append(lecLi);
+    $("#rishuInfo #unit__rishu__" + semester).html("");
+    rishuUnit[semester-1] += unit;
+    $("#rishuInfo #unit__rishu__" + semester).append(rishuUnit[semester-1]);
+    console.log("履修状況の単位 セメスター：",semester, "その単位数：", rishuUnit[semester-1]);
+    
   });
   $('.rishuBtnOff').on('click', function(e) {
     var Offbtn  = $(this),
@@ -59,8 +66,13 @@ function rishuBtnOnClick (lectures) {
       }
     }
     console.log(rishuModel);
-    var semester = parseInt(lecture.semester);
-    $("#rishu__" + semester).find("#" + lecture.classId).remove();
+    var semester = parseInt(lecture.semester),
+        unit     = parseInt(lecture.unit);
+    console.log(unit);
+    $("#rishu__" + semester).find("#display__" + lecture.classId).remove();
+    $("#rishuInfo #unit__rishu__" + semester).html("");
+    rishuUnit[semester-1] -= unit;
+    $("#rishuInfo #unit__rishu__" + semester).append(rishuUnit[semester-1]);
   });
 }
 
@@ -75,7 +87,7 @@ function showClasses (clsArr) {
     
     lecture.append('<div class="lecture__title" id=' + clsArr[i].classId + ' value="' + i + '">' + clsArr[i].name + ' ' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</div>');
     lecture.append('<button class="rishuBtnOn btn btn-primary" value="' + i + '" style="display: inline-block">履修する</button>');
-    lecture.append('<button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">キャンセル</button>');
+    lecture.append('<button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">はずす</button>');
     lecture.append('<div class="lecture__table table"></div>');
     $(".lecture:nth-child(" + i + ") > .lecture__table").append('<table class="lecture__table table"> <tr><td>教員名</td><td>' + clsArr[i].teacher + '</td></tr> <tr><td>事前履修科目</td><td>' + clsArr[i].childClass + '</td></tr> <tr><td>後続授業</td><td>' + clsArr[i].parentClass + '</td> </tr><tr><td>概要</td><td>' + clsArr[i].description + '</td></tr></table>');
   

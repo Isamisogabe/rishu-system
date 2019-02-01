@@ -1,3 +1,27 @@
-
+#displayModel {
+  border-left: 2px solid #ccc;
+  padding-left: 0px; }
+  #displayModel .sidebarTitle {
+    background-color: #353e94;
+    font-weight: bold;
+    color: #fff;
+    padding: 17px 0px 17px 15px;
+    margin: 0; }
+  #displayModel #rishuModel__Content {
+    height: 300px;
+    overflow: auto;
+    background-color: #f7f7f7;
+    border: 1px solid #ccc;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    padding: 10px; }
+    #displayModel #rishuModel__Content ul {
+      padding-left: 20px; }
+      #displayModel #rishuModel__Content ul li {
+        list-style-type: none; }
+        #displayModel #rishuModel__Content ul li a {
+          font-weight: bold;
+          color: black; }
 
 /*# sourceMappingURL=main.css.map */
