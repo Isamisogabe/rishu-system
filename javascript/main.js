@@ -48,6 +48,9 @@ function selectSubject(subject){
     case "専門学外学修科目":     return 8; 
   }
 }
+function detailBtnOnClick() {
+  
+}
 function rishuBtnOnClick (lectures) {
   //-------------------- 履修ボタンクリック処理 --------------------//
   $('.rishuBtnOn').on('click', function(e) {
@@ -125,13 +128,13 @@ function showClasses (clsArr) {
   
   for (var i in clsArr) {
     var lecture = $(".lectures > .lecture:nth-child(" + i + ")");
-    divLecs.append('<div class="lecture" value='+ i +'></div>');
+    divLecs.append('<div class="lecture" value='+ i +' id=' + clsArr[i].classId + '></div>');
     
-    lecture.append('<div class="lecture__title" id=' + clsArr[i].classId + ' value="' + i + '">' + clsArr[i].name + ' ' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</div>');
-    lecture.append('<button class="rishuBtnOn btn btn-primary" value="' + i + '" style="display: inline-block">履修する</button>');
-    lecture.append('<button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">はずす</button>');
-    lecture.append('<div class="lecture__table table"></div>');
-    $(".lecture:nth-child(" + i + ") > .lecture__table").append('<table class="lecture__table table"> <tr><td>教員名</td><td>' + clsArr[i].teacher + '</td></tr> <tr><td>事前履修科目</td><td>' + clsArr[i].childClass + '</td></tr> <tr><td>次の推奨授業</td><td>' + clsArr[i].parentClass + '</td> </tr><tr><td>概要</td><td>' + clsArr[i].description + '</td></tr></table>');
+    lecture.append('<div class="col-sm-10"><h3 class="lecture__title" value="' + i + '">' + clsArr[i].name + '<span>  </span><span class="glyphicon glyphicon-plus detailBtn" aria-hidden="true"></span></span> </h3><h4>' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</h4></div> ');
+    lecture.append('<div class="col-sm-2"><button class="rishuBtnOn btn btn-primary" value="' + i + '" style="display: inline-block">履修する</button></div>');
+    lecture.append('<div class="col-sm-2"><button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">はずす</button></div>');
+    lecture.append('<div class="table" id="lectureTable"></div>');
+    $(".lecture:nth-child(" + i + ") > #lectureTable").append('<table class="lecture__table table"> <tr><td>教員名</td><td>' + clsArr[i].teacher + '</td></tr> <tr><td>事前履修科目</td><td>' + clsArr[i].childClass + '</td></tr> <tr><td>次の推奨授業</td><td>' + clsArr[i].parentClass + '</td> </tr><tr><td>概要</td><td>' + clsArr[i].description + '</td></tr></table>');
   
   }
       
@@ -167,6 +170,7 @@ $(document).ready(function() {
        allLectures = json;
        showClasses(allLectures);
        rishuBtnOnClick();
+       detailBtnOnClick();
     },
     function() {
       console.log('読み込みに失敗しました');

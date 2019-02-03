@@ -1,6 +1,50 @@
 @charset "UTF-8";
+h6 {
+  font-size: 12px;
+  font-size: 1.2rem; }
+
+h5 {
+  font-size: 14px;
+  font-size: 1.4rem; }
+
+h4 {
+  font-size: 16px;
+  font-size: 1.6rem; }
+
+h3 {
+  font-size: 18px;
+  font-size: 1.8rem; }
+
+h2 {
+  font-size: 20px;
+  font-size: 2rem; }
+
+h1 {
+  font-size: 22px;
+  font-size: 2.2rem; }
+
+td {
+  font-size: 14px;
+  font-size: 1.4rem; }
+
 body {
-  font: "Times New Roman", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif; }
+  font: "Times New Roman", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif;
+  font-size: 62.5%; }
+
+.tabs .lectures .lecture {
+  padding: 5px;
+  margin: 10px 0;
+  border: 1px solid #aaa;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px; }
+  .tabs .lectures .lecture .lecture__title {
+    padding: 10px 0 0 0;
+    margin: 0; }
+  .tabs .lectures .lecture #lectureTable tr td {
+    min-width: 70px; }
+    .tabs .lectures .lecture #lectureTable tr td:first-child {
+      min-width: 140px; }
 
 #displayModel {
   padding-left: 0px; }
@@ -24,6 +68,8 @@ body {
       #displayModel #rishuModel__Content ul li {
         list-style-type: none; }
         #displayModel #rishuModel__Content ul li a {
+          font-size: 12px;
+          font-size: 1.2rem;
           font-weight: bold;
           color: #353e94; }
   #displayModel #rishuInfo h5 span {
