@@ -9,10 +9,11 @@ $blueColor : #5cb3f1;
 $orangeColor: #ffb600;
 $ja_font : "Times New Roman","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif;
 
-
+body {
+  font: $ja_font;
+}
 
 #displayModel {
-  border-left: 2px solid #ccc;
   padding-left: 0px;
   .sidebarTitle {
     background-color: $subColor;
@@ -35,10 +36,19 @@ $ja_font : "Times New Roman","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic 
         list-style-type: none;
         a {
           font-weight: bold;
-          color: black;
+          color: $subColor;
         }
       }
     }
 
+  }
+  
+  #rishuInfo {
+    h5{
+      span{
+        color: $subColor;
+        font-weight: bold;
+      }
+    }
   }
 }

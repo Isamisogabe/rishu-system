@@ -2,6 +2,9 @@
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
+var subjectUnit = [0,0,0,0,0,0,0,0,0];
+var totalUnit  = 0;
+var minimalUnit = []
   
 
 function getClassJson(url) {
@@ -21,7 +24,30 @@ function getClassJson(url) {
   req.responseType = "json";
   req.send(null);
 }
-
+function sideScroll () {
+  $("#displayModel").hover(function(e){
+    var sidebar = $(this),
+        height  = sidebar.height(),
+        windowHeight = $(window).height();
+    
+    sidebar.scroll(function(e) {
+      
+    })
+  })
+}
+function selectSubject(subject){
+  switch(subject){
+    case "英語科目":             
+    case "専門導入科目":         return 1; 
+    case "専門基礎科目":         return 2; 
+    case "専門演習科目":         return 3; 
+    case "専門応用科目理学系":   return 4; 
+    case "専門応用科目理工学系": return 5; 
+    case "専門応用科目工学系":   return 6; 
+    case "専門関連科目":         return 7; 
+    case "専門学外学修科目":     return 8; 
+  }
+}
 function rishuBtnOnClick (lectures) {
   //-------------------- 履修ボタンクリック処理 --------------------//
   $('.rishuBtnOn').on('click', function(e) {
@@ -39,15 +65,22 @@ function rishuBtnOnClick (lectures) {
     
     console.log("追加した後の履修モデル", rishuModel);
     
-    var semester = parseInt(lecture.semester),
-        unit     = parseInt(lecture.unit);
+    var semester = parseInt(lecture.semester, 10),
+        unit     = parseInt(lecture.unit, 10);
     var lecLi = $("<li id=display__" + lecture.classId + "><a href=#" + lecture.classId+ ">" + lecture.name + " (" + lecture.subject +")</a></li>");
-    $("#rishuModel__Content #rishu__" + semester).append(lecLi);
-    $("#rishuInfo #unit__rishu__" + semester).html("");
+    $("#rishu__" + lecture.semester).append(lecLi);
     rishuUnit[semester-1] += unit;
-    $("#rishuInfo #unit__rishu__" + semester).append(rishuUnit[semester-1]);
+    totalUnit += unit;
+    $("#rishuInfo #unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
+    $("#rishuInfo #unit__total").html("").append(totalUnit);
     console.log("履修状況の単位 セメスター：",semester, "その単位数：", rishuUnit[semester-1]);
     
+    var subjectId = selectSubject(lecture.subject);
+    console.log("選択した授業の科目 ->", lecture.subject);
+    subjectUnit[subjectId] += unit;
+    $("#subject__" + subjectId).html("")
+    .append(subjectUnit[subjectId]);
+    console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
   });
   $('.rishuBtnOff').on('click', function(e) {
     var Offbtn  = $(this),
@@ -70,9 +103,18 @@ function rishuBtnOnClick (lectures) {
         unit     = parseInt(lecture.unit);
     console.log(unit);
     $("#rishu__" + semester).find("#display__" + lecture.classId).remove();
-    $("#rishuInfo #unit__rishu__" + semester).html("");
+    
     rishuUnit[semester-1] -= unit;
-    $("#rishuInfo #unit__rishu__" + semester).append(rishuUnit[semester-1]);
+    totalUnit -= unit;
+    $("#rishuInfo #unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
+    $("#rishuInfo #unit__total").html("").append(totalUnit);
+    
+    var subjectId = selectSubject(lecture.subject);
+    console.log("選択した授業の科目 ->", lecture.subject);
+    subjectUnit[subjectId] -= unit;
+    $("#subject__" + subjectId).html("")
+    .append(subjectUnit[subjectId]);
+    console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
   });
 }
 
@@ -89,7 +131,7 @@ function showClasses (clsArr) {
     lecture.append('<button class="rishuBtnOn btn btn-primary" value="' + i + '" style="display: inline-block">履修する</button>');
     lecture.append('<button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">はずす</button>');
     lecture.append('<div class="lecture__table table"></div>');
-    $(".lecture:nth-child(" + i + ") > .lecture__table").append('<table class="lecture__table table"> <tr><td>教員名</td><td>' + clsArr[i].teacher + '</td></tr> <tr><td>事前履修科目</td><td>' + clsArr[i].childClass + '</td></tr> <tr><td>後続授業</td><td>' + clsArr[i].parentClass + '</td> </tr><tr><td>概要</td><td>' + clsArr[i].description + '</td></tr></table>');
+    $(".lecture:nth-child(" + i + ") > .lecture__table").append('<table class="lecture__table table"> <tr><td>教員名</td><td>' + clsArr[i].teacher + '</td></tr> <tr><td>事前履修科目</td><td>' + clsArr[i].childClass + '</td></tr> <tr><td>次の推奨授業</td><td>' + clsArr[i].parentClass + '</td> </tr><tr><td>概要</td><td>' + clsArr[i].description + '</td></tr></table>');
   
   }
       

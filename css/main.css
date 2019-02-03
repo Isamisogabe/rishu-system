@@ -1,5 +1,8 @@
+@charset "UTF-8";
+body {
+  font: "Times New Roman", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif; }
+
 #displayModel {
-  border-left: 2px solid #ccc;
   padding-left: 0px; }
   #displayModel .sidebarTitle {
     background-color: #353e94;
@@ -22,6 +25,9 @@
         list-style-type: none; }
         #displayModel #rishuModel__Content ul li a {
           font-weight: bold;
-          color: black; }
+          color: #353e94; }
+  #displayModel #rishuInfo h5 span {
+    color: #353e94;
+    font-weight: bold; }
 
 /*# sourceMappingURL=main.css.map */
