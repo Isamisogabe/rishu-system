@@ -7,7 +7,8 @@ var totalUnit  = 0;
 var minimalUnit = [];
 var profData   ;
 var fieldData  = [];
-
+var ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
+var ryouikiColor = [ "env", "apply", "material", "bio"];
 function init(){
   
 }
@@ -41,20 +42,21 @@ function getClassJson(url) {
   req.responseType = "json";
   req.send(null);
 }
-function sideScroll () {
-  $("#displayModel").hover(function(e){
-    var sidebar = $(this),
-        height  = sidebar.height(),
-        windowHeight = $(window).height();
+function windowSizeControll () {
+  var height = $(window).height();
+    $('#displayModel').css('height', height);
+
+  $(window).resize(function() {
+    var height = $(window).height(),
+        width  = $(window).width();
     
-    sidebar.scroll(function(e) {
-      
-    })
-  })
+    $('#displayModel').css('height', height);
+    
+  });
 }
 function selectSubject(subject){
   switch(subject){
-    case "英語科目":             
+    case "英語科目":             return 0; 
     case "専門導入科目":         return 1; 
     case "専門基礎科目":         return 2; 
     case "専門演習科目":         return 3; 
@@ -63,6 +65,11 @@ function selectSubject(subject){
     case "専門応用科目工学系":   return 6; 
     case "専門関連科目":         return 7; 
     case "専門学外学修科目":     return 8; 
+  }
+}
+function selectRyouiki(ryouiki){
+  switch(ryouiki) {
+    case "環境理工学":
   }
 }
 function getClsId(clsName){
@@ -83,7 +90,6 @@ function detailBtnOnClick() {
   
   detailOnBtn.on('click', function(){
     var self    = $(this),
-        tableNum = self.val(),
         table   = self
         .parent().parent().parent('.lecture').find('.lectureDivTable');
     self.css({"display": "none"});
@@ -93,7 +99,6 @@ function detailBtnOnClick() {
   detailOffBtn.on('click', function(){
     
     var self    = $(this),
-        tableNum = self.val(),
         table   = self
         .parent().parent().parent('.lecture').find('.lectureDivTable');
     self.css({"display": "none"});
@@ -106,7 +111,7 @@ function rishuBtnOnClick (lectures) {
   $('.rishuBtnOn').on('click', function(e) {
     var Onbtn  = $(this),
         Offbtn = Onbtn.parent().find('.rishuBtnOff'),
-        clsId  = parseInt(Onbtn.val()),
+        clsId  = Onbtn.attr('data-clsNum'),
         lecture = allLectures[clsId];
     console.log("授業登録ボタンを押す -> classナンバー：",  clsId);
     
@@ -192,13 +197,59 @@ function showClasses (clsArr) {
         parentLecs  = clsArr[i].parentClass;
     var j = i+1;
     divLecs.append('<div class="lecture" value='+ i +' id=' + clsArr[i].classId + '></div>');
-    var lecture = $(".lecture:nth-child(" + j + ")"); 
-    lecture.append('<div class="col-sm-10"><h3 class="lecture__title" value="' + i + '">' + clsArr[i].name + '<span>  </span><span class="glyphicon glyphicon-plus detailBtn detailOnBtn" value="' + i + '"  aria-hidden="true"></span><span class="glyphicon glyphicon-minus detailBtn detailOffBtn" style="display:none" value="' + i + '" aria-hidden="true"></span> </span> </h3><h4>' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</h4></div> ');
-    lecture.append('<div class="col-sm-2"><button class="rishuBtnOn btn btn-primary" value="' + i + '" style="display: inline-block">履修する</button><button class="rishuBtnOff btn btn-light" value="' + i + '" style="display: none;">はずす</button></div>');
+    var lecture = $(".lecture:nth-child(" + j + ")");
+    
+    lecture.append('<div class="col-sm-10"><h3 class="lecture__title"> <span id=' + clsArr[i].name + ' >' + clsArr[i].name + '</span><span>  </span><span class="glyphicon glyphicon-plus detailBtn detailOnBtn"  aria-hidden="true"></span><span class="glyphicon glyphicon-minus detailBtn detailOffBtn" style="display:none" aria-hidden="true"></span> </span> <h4>' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</h4></div> ');
+    if(clsArr[i].subject === "専門応用科目理工学系"){
+      lecture.find('#' + clsArr[i].name).attr("class", "sciEn");
+    }
+    if(clsArr[i].subject === "専門応用科目工学系"){
+      lecture.find('#' + clsArr[i].name).attr("class", "eng");
+    }
+    if((clsArr[i].classField === "環境理工学") && clsArr[i].isFieldCommon){
+      if(clsArr[i].subject === "専門応用科目理工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "env sciEn ryouikihisshu");
+      } else if(clsArr[i].subject === "専門応用科目工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "env eng ryouikihisshu");
+      } else {
+        lecture.find('#' + clsArr[i].name).attr("class", "env ryouikihisshu");
+      }
+    }
+    if((clsArr[i].classField === "物質理工学") && clsArr[i].isFieldCommon){
+      if(clsArr[i].subject === "専門応用科目理工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "material sciEn ryouikihisshu");
+      } else if(clsArr[i].subject === "専門応用科目工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "material eng ryouikihisshu");
+      } else {
+        lecture.find('#' + clsArr[i].name).attr("class", "material ryouikihisshu");
+      }
+    }
+    if((clsArr[i].classField === "応用物理学") && clsArr[i].isFieldCommon){
+      if(clsArr[i].subject === "専門応用科目理工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "apply sciEn ryouikihisshu");
+      } else if(clsArr[i].subject === "専門応用科目工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "apply eng ryouikihisshu");
+      } else {
+        lecture.find('#' + clsArr[i].name).attr("class", "apply ryouikihisshu");
+      }
+    }
+    if((clsArr[i].classField === "生命理工学") && clsArr[i].isFieldCommon){
+      if(clsArr[i].subject === "専門応用科目理工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "bio sciEn ryouikihisshu");
+      } else if(clsArr[i].subject === "専門応用科目工学系"){
+        lecture.find('#' + clsArr[i].name).attr("class", "bio eng ryouikihisshu");
+      } else {
+        lecture.find('#' + clsArr[i].name).attr("class", "bio ryouikihisshu");
+      }
+    }
+    
+    
+    lecture.append('<div class="col-sm-2"><button class="rishuBtnOn rishuBtn btn btn-primary" style="display: inline-block;" data-clsNum="' + i + '"　value="' + i + '" >履修する</button><button class="rishuBtnOff rishuBtn btn btn-light" value="' + i + '" style="display: none;">はずす</button></div>');
     lecture.append('<div class="table lectureDivTable" style="display: none;" ></div>');
-    $(".lecture:nth-child(" + j+ ") > .lectureDivTable").append('<table class="lecture__table table" > <tr><td>教員名</td><td class="profName"></td></tr> <tr><td>事前履修科目</td><td class="childClass nextClass"></td></tr> <tr><td>次の推奨授業</td><td class="parentClass nextClass"></td> </tr><tr><td>概要</td><td ><p class="lectureDesc">' + clsArr[i].description + '</p></td></tr></table>');
+    $(".lecture:nth-child(" + j + ") > .lectureDivTable").append('<table class="lecture__table table" > <tr><td>教員名</td><td class="profName"></td></tr> <tr><td>事前履修科目</td><td class="childClass nextClass"></td></tr> <tr><td>必要とする科目</td><td class="parentClass nextClass"></td> </tr><tr><td>概要</td><td ><p class="lectureDesc">' + clsArr[i].description + '</p></td></tr></table>');
     
     
+    // --------------- 授業を担当する教授の名前にリンクを載せて表示する（リンクがない場合はのせない） --------------- //
     var profNames = clsArr[i].teacher.split(" ");
     for(var k=0; k < profNames.length; k++){
       var profLink = getAddress(profNames[k]);
@@ -211,22 +262,27 @@ function showClasses (clsArr) {
       }
       
     }
-    
+    // --------------- 事前履修科目についてのリンクを乗せるコード --------------- //
     for(var k=0; k < childLecs.length; k++){
       var lectureId = getClsId(childLecs[k]);
       if(!(lectureId === undefined)){
         $(".childClass:eq(" + i + ")").append('<a href=#' + lectureId + ' >' + childLecs[k] + ' </a>');
       }
-      
+      else{
+        $(".childClass:eq(" + i + ")").append(' ' + childLecs[k] + ' ');
+      }
     }
+    // --------------- 必要とする科目のリンクを乗せるコード ---------------//
     for(var k=0; k < parentLecs.length; k++){
       var lectureId = getClsId(parentLecs[k]);
       if(!(lectureId === undefined)){
-      $(".parentClass:eq(" + i + ")").append('<a href=#' + lectureId + '>' + parentLecs[k] + ' </a>');
+        $(".parentClass:eq(" + i + ")").append('<a href=#' + lectureId + '>' + parentLecs[k] + ' </a>');
+      }
+      else{
+        $(".parentClass:eq(" + i + ")").append(' ' + parentLecs[k] + ' ');
       }
     }
-  }
-  // clsArr
+  }// for (var i=0; i < clsArr.length ; i++) 終了
 }
 
 $.ajax({
@@ -250,7 +306,7 @@ $(document).ready(function() {
   
   $.ajax({
     type: 'GET',
-    url: './data/classData.json',
+    url: './data/classData5.json',
     dataType: 'json'
   })
   .then(
@@ -261,6 +317,7 @@ $(document).ready(function() {
        rishuBtnOnClick();
        detailBtnOnClick();
        clsOnClick();
+       windowSizeControll();
     },
     function() {
       console.log('読み込みに失敗しました');

@@ -1,12 +1,62 @@
 [
   {
+    "prof": "小林幸夫",
+    "field": "",
+    "specialField": "",
+    "classes": "常微分方程式 物理学A 線型数理",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/yukio-kobayashi/",
+    "description": ""
+  },
+  {
+    "prof": "伊本俊明",
+    "field": "",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/toshiaki-imoto/",
+    "description": "新しい宇宙論と物理学の基礎理論について研究する"
+  },
+  {
+    "prof": "石井良夫",
+    "field": "",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/yoshio-ishii/",
+    "description": ""
+  },
+  {
+    "prof": "崔龍雲",
+    "field": "",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/yongwoon-choi/",
+    "description": ""
+  },
+  {
+    "prof": "今村弘樹",
+    "field": "",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/hiroki-imamura/",
+    "description": ""
+  },
+  {
     "prof": "青木宏",
     "field": "応用物理学 生命理工学 環境理工学 物質理工学",
     "specialField": "",
     "classes": "解析力学 量子力学 現代物理概論 電磁力学",
     "else": "素粒子物理学 宇宙論",
     "master": "none",
-    "link": "https://www.soka.ac.jp/faculty-profiles/tatsuki-toda/",
+    "link": "https://www.soka.ac.jp/faculty-profiles/hiroshi-aoki/",
     "description": "新しい宇宙論と物理学の基礎理論について研究する"
   },
   {
@@ -16,7 +66,7 @@
     "classes": "物理化学A 分子生物学実験 生化学実験 構造生物学 有機化学Ⅰ",
     "else": "",
     "master": "none",
-    "link": "https://www.soka.ac.jp/faculty-profiles/masamiti-ikeguchi/",
+    "link": "https://www.soka.ac.jp/faculty-profiles/masamichi-ikeguchi/",
     "description": "卒研ではタンパク質分子の物理的研究、化学的研究、生物学的研究のどれかをします"
   },
   {
@@ -61,6 +111,15 @@
   },
   {
     "prof": "川井秀樹",
+    "field": "応用物理学 生命理工学 環境理工学 物質理工学",
+    "specialField": "",
+    "classes": "分子生物学 生化学 機能生理学 海洋学実習 ニューロサイエンス",
+    "else": "神経生理学 生命医科学",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/hideki-kawai/",
+    "description": "大脳皮質の形成、生理的機能と制御機構、神経疾患の分子的修復方法などを研究しています。神経科学は生物系科目を中心に、他分野が融合した幅広い科目です。卒研には化学的土台も必要です。"
+  },{
+    "prof": "川井秀樹（英語版授業）",
     "field": "応用物理学 生命理工学 環境理工学 物質理工学",
     "specialField": "",
     "classes": "分子生物学 生化学 機能生理学 海洋学実習 ニューロサイエンス",
@@ -241,7 +300,7 @@
     "description": ""
   },
   {
-    "prof": "丸山晋策",
+    "prof": "丸田晋策",
     "field": "応用物理学 生命理工学 物質理工学",
     "specialField": "",
     "classes": "",

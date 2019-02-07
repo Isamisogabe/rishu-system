@@ -39,6 +39,37 @@ body {
   font-size: 62.5%;
   background: #fff; }
 
+.row {
+  margin: 0 1% 0 1%; }
+
+.ryouikihisshu {
+  text-decoration-line: underline; }
+
+.sciEn {
+  font-weight: bold; }
+
+.eng {
+  font-style: italic; }
+
+.material {
+  color: #5cb3f1; }
+
+.bio {
+  color: #ff4500; }
+
+.apply {
+  color: #ffb600; }
+
+.env {
+  color: #00f100; }
+
+.clearfix:after {
+  content: " ";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden; }
+
 .tabs .lectures .lecture {
   padding: 5px;
   margin: 10px 0;
@@ -47,6 +78,12 @@ body {
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px; }
+  @media (max-width: 768px) {
+    .tabs .lectures .lecture {
+      min-height: 150px; } }
+  @media (max-width: 768px) {
+    .tabs .lectures .lecture .rishuBtn {
+      float: right; } }
   .tabs .lectures .lecture .lecture__title {
     padding: 10px 0 0 0;
     margin: 0; }
@@ -60,6 +97,9 @@ body {
       -moz-border-radius: 50%;
       -webkit-border-radius: 50%;
       border-radius: 50%; }
+      @media (max-width: 768px) {
+        .tabs .lectures .lecture .lecture__title .detailBtn {
+          text-align: right; } }
     .tabs .lectures .lecture .lecture__title .detailOnBtn:hover {
       color: #00f100;
       background: #eee; }
@@ -70,25 +110,37 @@ body {
         color: #ff4500;
         background: #eee; }
   .tabs .lectures .lecture .lectureDivTable .lecture__table tr td {
-    min-width: 70px; }
-    .tabs .lectures .lecture .lectureDivTable .lecture__table tr td:first-child {
-      min-width: 140px; }
+    min-width: 120px; }
+    @media (max-width: 768px) {
+      .tabs .lectures .lecture .lectureDivTable .lecture__table tr td {
+        min-width: 70px; } }
   .tabs .lectures .lecture .lectureDivTable .lecture__table tr .lectureDesc {
     height: 200px;
     line-height: 1.9;
     overflow: auto; }
+    @media (max-width: 768px) {
+      .tabs .lectures .lecture .lectureDivTable .lecture__table tr .lectureDesc {
+        height: 400px; } }
 
 #displayModel {
   position: fixed;
   top: 0;
   right: 0;
-  padding-left: 0px; }
+  padding-left: 0px;
+  overflow: auto; }
+  @media (max-width: 768px) {
+    #displayModel {
+      position: static;
+      padding-left: 15px; } }
   #displayModel .sidebarTitle {
     background-color: #353e94;
     font-weight: bold;
     color: #fff;
     padding: 17px 0px 17px 15px;
     margin: 0; }
+    @media (max-width: 768px) {
+      #displayModel .sidebarTitle {
+        text-align: center; } }
   #displayModel #rishuModel__Content {
     height: 300px;
     overflow: auto;

@@ -49,7 +49,41 @@ body {
 .container {
   
 }
-
+.row {
+  margin: 0 1% 0 1%;
+}
+.ryouikihisshu{
+  text-decoration-line: underline;
+}
+.sciEn {
+  font-weight: bold;
+}
+.eng {
+  font-style: italic;
+}
+.material{
+  color: $blueColor;
+}
+.bio{
+  color: $redColor;
+}
+.apply{
+  color: $orangeColor;
+}
+.env{
+  color: $greenColor;
+}
+.sci {
+  
+}
+.clearfix:after {
+  
+  content: " " ;
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
 .tabs{
   
   .lectures{
@@ -59,6 +93,15 @@ body {
       border: 1px solid #aaa;
       min-height: 100px;
       @include border-radius(5px);
+      @media(max-width: 768px){
+        min-height: 150px;
+      }
+      .rishuBtn{
+        @media(max-width: 768px){
+            float: right;
+            
+        }
+      }
       .lecture__title{
         padding: 10px 0 0 0;
         margin: 0;
@@ -67,6 +110,9 @@ body {
           padding: 5px 4px 5px 5px;
           @include transition(all 0.15s linear);
           @include border-radius(50%);
+          @media(max-width: 768px){
+            text-align: right;
+          }
         }
         .detailOnBtn{
           &:hover{
@@ -82,30 +128,28 @@ body {
             background: #eee;
           }
         }
-        
-        #detailOnBtn{
-          
-        }
       }
       
       .lectureDivTable {
         .lecture__table {
           tr{
             td{
-              min-width: 70px;
-              &:first-child{
-                min-width: 140px;
+              min-width: 120px;
+              @media(max-width: 768px){
+                min-width: 70px;
               }
             }
             .lectureDesc {
               height: 200px;
               line-height: 1.9;
               overflow: auto;
+              @media(max-width: 768px){
+                height: 400px;
+              }
             }
           }
         }
         // .lecture__table
-        
       }
       // #lecture__table
     }
@@ -117,12 +161,23 @@ body {
   top: 0;
   right: 0;
   padding-left: 0px;
+  overflow: auto;
+  @media(max-width: 768px){
+    position: static;
+    padding-left: 15px;
+    
+  }
+  
   .sidebarTitle {
     background-color: $subColor;
     font-weight: bold;
     color: $baseColor;
     padding: 17px 0px 17px 15px;
     margin: 0;
+    @media(max-width: 768px){
+      text-align: center;
+    }
+    
   }
   #rishuModel__Content {
     height: 300px;
