@@ -8,44 +8,127 @@
     
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="css/main.css"></link>
-
   </head>
   <body>
-    <div class="">
+    <header>
+      <nav class="navbar navbar-inverse">
+      	<div class="container-fluid">
+      		<div class="navbar-header">
+      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbarEexample7">
+      				<span class="sr-only">Toggle navigation</span>
+      				<span class="icon-bar"></span>
+      				<span class="icon-bar"></span>
+      				<span class="icon-bar"></span>
+      			</button>
+      			<a class="navbar-brand" href="#">
+      				ホーム
+      			</a>
+      		</div>
+      		
+      		<div class="collapse navbar-collapse" id="navbarEexample7">
+      			<ul class="nav navbar-nav">
+      				<li><a href="#">領域適性検査</a></li>
+      				<li class="active"><a href="#">履修登録</a></li>
+      				<li><a href="#">研究室探し</a></li>
+      			</ul>
+      			<ul class="nav navbar-nav navbar-right">
+      				
+      				<li><a href="https://plas.soka.ac.jp/csp/plas/login.csp" target="_blank">創価大学ポータルサイト</a></li>
+      				<li><a href="https://www.soka.ac.jp/" target="_blank">創価大学公式ホームページ</a></li>
+      			</ul>
+      			
+      		</div>
+      	</div>
+      </nav>
+    </header>
+    <main class="">
       <div class="row">
-        <div class="col-sm-9 ">
+        <div class="col-sm-8 main">
+          <ul class="nav nav-tabs nav-justified">
+          	<li role="presentation" class="active"><a href="#">領域別</a></li>
+          	<li role="presentation"><a href="#">研究室</a></li>
+          	<li role="presentation"><a href="#">検索</a></li>
+          </ul>
           <div class="tabs">
             <div class="tabs__lab">
-              <div class="lectures">
-                <!-- 授業内容の型
-                <div class="lecture">
-                  <div class="lecture__title"></div>
-                  <div class="rishuBtn"></div>
-                  <table class="lecture__table table">
-                    <tr>
-                      <td>担当教授</td> 
-                      <td></td>
-                    </tr>
-                    
-                    <tr>
-                      <td>授業内容</td>
-                      <td></td>
-                    </tr>
-                  </table>
-                </div>
-                -->
-              </div>
+              
             </div>
             <div class="tabs__keyword">
-              
+              <h2 class="noteLabel">研究室が推奨する授業から選びましょう。</h2>
+              <div class="dropdown">
+              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              		教科名
+              		<span class="caret"></span>
+              	</button>
+              	<ul class="dropdown-menu" role="menu">
+              		<li role="presentation"><a href="#">リンクのリスト１</a></li>
+              		<li role="presentation"><a href="#">リンクのリスト２</a></li>
+              		<li role="presentation"><a href="#">リンクのリスト３</a></li>
+              	</ul>
+              </div>
+              <div class="dropdown">
+              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              		年次・セメスター検索
+              		<span class="caret"></span>
+              	</button>
+              	<ul class="dropdown-menu" role="menu">
+              		<li role="presentation"><a href="#" data-year="1">１年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="1">１セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="2">２セメスター</a></li>
+              		<li role="presentation"><a href="#" data-year="2">２年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="3">３セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="4">４セメスター</a></li>
+              		<li role="presentation"><a href="#" data-year="3">３年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="5">５セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="6">６セメスター</a></li>
+              		<li role="presentation"><a href="#" data-year="4">４年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="7">７セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="8">８セメスター</a></li>
+              	</ul>
+              </div>
+              <div class="dropdown">
+              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              		教員検索
+              		<span class="caret"></span>
+              	</button>
+              	<ul class="dropdown-menu" role="menu">
+              		<li role="presentation"><a href="#">リンクのリスト１</a></li>
+              		<li role="presentation"><a href="#">リンクのリスト２</a></li>
+              		<li role="presentation"><a href="#">リンクのリスト３</a></li>
+              	</ul>
+              </div>
+              <div class="dropdown">
+              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              		領域検索
+              		<span class="caret"></span>
+              	</button>
+              	<ul class="dropdown-menu" role="menu">
+              	  <li role="presentation"><a href="#" data-field="none" class="fieldBtn" >なし</a></li>
+              		<li role="presentation"><a href="#" data-field="応用物理学" class="fieldBtn apply">応用物理学</a></li>
+              		<li role="presentation"><a href="#" data-field="物質理工学" class="fieldBtn material">物質理工学</a></li>
+              		<li role="presentation"><a href="#" data-field="生命理工学" class="fieldBtn bio">生命理工学</a></li>
+              		<li role="presentation"><a href="#" data-field="環境理工学" class="fieldBtn env">環境理工学</a></li>
+              	</ul>
+              </div>
+              <div class="input-group">
+              	<input type="text" class="form-control" placeholder="テキスト入力欄">
+              	<span class="input-group-btn">
+              		<button type="button" class="btn btn-default">ボタン</button>
+              	</span>
+              </div>
             </div>
             <div class="tabs__ryouiki">
-              
+              <h2 class="noteLabel">研究室が推奨する授業から選びましょう。</h2>
             </div>
           </div>
+          <div class="lectures">
+                
+          </div>
+          
         </div>
-        <div id="displayModel" class="col-sm-3" style="">
+        <div id="displayModel" class="col-sm-4" style="">
           <div id="rishuModel">
             <h2 class="sidebarTitle" id="rishuModel__title">履修モデル</h2>
             <div class="content" id="rishuModel__Content">
@@ -107,9 +190,12 @@
           </div>
         </div>
       </div>
-    </div>
-    
+    </main>
+    <footer>
+      
+    </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
     <script src="javascript/main.js"></script>
   </body>
   

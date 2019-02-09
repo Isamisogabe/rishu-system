@@ -23,8 +23,6 @@ function getAddress(profName){
   }
   return link;
 }
-  
-
 function getClassJson(url) {
   var req = new XMLHttpRequest();
   var jsonObj;
@@ -52,7 +50,25 @@ function windowSizeControll () {
     
     $('#displayModel').css('height', height);
     
+    if(width <= 768){
+      $("#displayModel").css("position", "static");
+    }
   });
+}
+function windowScroll() {
+  $(window).scroll(function(e){
+    var scrollTop = $(window).scrollTop(),
+        width     = $(window).width(),
+        navHeight = 50;
+    
+    if(scrollTop >= navHeight && width >= 768){
+      $("#displayModel").css("position", "fixed");
+    } else {
+      $("#displayModel").css("position", "static");
+    }
+  });
+  
+  
 }
 function selectSubject(subject){
   switch(subject){
@@ -67,10 +83,19 @@ function selectSubject(subject){
     case "専門学外学修科目":     return 8; 
   }
 }
-function selectRyouiki(ryouiki){
-  switch(ryouiki) {
-    case "環境理工学":
-  }
+function selectRyouiki(){
+  $(".fieldBtn").on("click", function(){
+    var btn = $(this),
+        field = btn.attr("data-field");
+    if(field == "none")  return $(".lecture").show();
+    $(".lecture").show();
+    for(var i=0;  i < allLectures.length; i++){
+      var k=i+1;
+      if(!(field === allLectures[i].classField)){
+        $(".lecture:nth-child(" + k + ")").css("display", "none");
+      }
+    }
+  });
 }
 function getClsId(clsName){
   var classId;
@@ -177,7 +202,6 @@ function rishuBtnOnClick (lectures) {
     console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
   });
 }
-
 function clsOnClick() {
   $(".nextClass a").on("click", function() {
     var cls   = $(this),
@@ -189,7 +213,6 @@ function clsOnClick() {
     $(  clsId + "  .detailOffBtn").css("display", "inline-block");
   });
 }
-
 function showClasses (clsArr) {
   var divLecs      = $(".lectures");
   for (var i=0; i < clsArr.length ; i++) {
@@ -208,38 +231,38 @@ function showClasses (clsArr) {
     }
     if((clsArr[i].classField === "環境理工学") && clsArr[i].isFieldCommon){
       if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "env sciEn ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "env sciEn ryouikihisshu").append("(領域必修)");
       } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "env eng ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "env eng ryouikihisshu").append("(領域必修)");
       } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "env ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "env ryouikihisshu").append("(領域必修)");
       }
     }
     if((clsArr[i].classField === "物質理工学") && clsArr[i].isFieldCommon){
       if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "material sciEn ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "material sciEn ryouikihisshu").append("(領域必修)");
       } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "material eng ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "material eng ryouikihisshu").append("(領域必修)");
       } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "material ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "material ryouikihisshu").append("(領域必修)");
       }
     }
     if((clsArr[i].classField === "応用物理学") && clsArr[i].isFieldCommon){
       if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "apply sciEn ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "apply sciEn ryouikihisshu").append("(領域必修)");
       } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "apply eng ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "apply eng ryouikihisshu").append("(領域必修)");
       } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "apply ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "apply ryouikihisshu").append("(領域必修)");
       }
     }
     if((clsArr[i].classField === "生命理工学") && clsArr[i].isFieldCommon){
       if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "bio sciEn ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "bio sciEn ryouikihisshu").append("(領域必修)");
       } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "bio eng ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "bio eng ryouikihisshu").append("(領域必修)");
       } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "bio ryouikihisshu");
+        lecture.find('#' + clsArr[i].name).attr("class", "bio ryouikihisshu").append("(領域必修)");
       }
     }
     
@@ -253,7 +276,7 @@ function showClasses (clsArr) {
     var profNames = clsArr[i].teacher.split(" ");
     for(var k=0; k < profNames.length; k++){
       var profLink = getAddress(profNames[k]);
-      console.log(profLink);
+      
       if(!(profLink === undefined)){
         $(".profName:eq(" + i + ")").append('<a href=' + profLink + ' target=_blank>' + profNames[k] + ' </a>');
       }
@@ -318,6 +341,8 @@ $(document).ready(function() {
        detailBtnOnClick();
        clsOnClick();
        windowSizeControll();
+       windowScroll();
+       selectRyouiki();
     },
     function() {
       console.log('読み込みに失敗しました');

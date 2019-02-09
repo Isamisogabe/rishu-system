@@ -8,11 +8,12 @@ $redColor : #ff4500;
 $blueColor : #5cb3f1;
 $orangeColor: #ffb600;
 
-$ja_font : "Times New Roman","ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "メイリオ", Verdana, "MS Pゴシック", sans-serif;
+$ja_font :   "メイリオ", "Verdana", "MS Pゴシック", "sans-serif","Times New Roman";
 @mixin fontsize($size: 24, $base : 10){
   font-size: $size + px;
   font-size: $size / $base  * 1rem;
 }
+
 h6{
   @include fontsize(14);
 }
@@ -42,15 +43,38 @@ td {
   @include fontsize(14);
 }
 body {
-  font: $ja_font;
+  font-family: $ja_font;
   font-size: 62.5%;
   background: #fff;
 }
-.container {
-  
+.dropdown-menu>li{
+  .material{
+    color: $blueColor;
+    &:hover {
+      color: $blueColor;
+    }
+  }
+  .bio{
+    color: $redColor;
+    &:hover {
+      color: $redColor;
+    }
+  }
+  .apply{
+    color: $orangeColor;
+    &:hover {
+      color: $orangeColor;
+    }
+  }
+  .env{
+    color: $greenColor;
+    &:hover {
+      color: $greenColor;
+    }
+  }
 }
 .row {
-  margin: 0 1% 0 1%;
+  margin: 0 0 0 0;
 }
 .ryouikihisshu{
   text-decoration-line: underline;
@@ -60,6 +84,7 @@ body {
 }
 .eng {
   font-style: italic;
+  font-family: "ＭＳ ゴシック";
 }
 .material{
   color: $blueColor;
@@ -76,6 +101,7 @@ body {
 .sci {
   
 }
+
 .clearfix:after {
   
   content: " " ;
@@ -84,14 +110,33 @@ body {
   clear: both;
   visibility: hidden;
 }
-.tabs{
+.navbar {
+  border-radius: 0;
+  margin: 0;
+}
+.navbar-nav{
+  @include fontsize(14);
+}
+.nav-tabs {
+  @include fontsize(14);
+}
+.main {
+  margin: 10px 0;
+}
+.noteLabel {
+  padding: 18px 20px;
+  border-left: 5px solid $subColor;
+  border-bottom: 1px solid $subColor;
+  @include box-shadow(1px 1px 0.5px 0.5px rgba(0,0,0,0.2));
+}
+
   
   .lectures{
     .lecture{
       padding: 5px;
       margin: 10px 0;
-      border: 1px solid #aaa;
       min-height: 100px;
+      @include box-shadow(1px 1px 1px 2px rgba(0,0,0,0.1));
       @include border-radius(5px);
       @media(max-width: 768px){
         min-height: 150px;
@@ -155,12 +200,12 @@ body {
     }
   }
   // .lecture
-}
+
 #displayModel {
-  position: fixed;
-  top: 0;
+  position: static;
+  top: 0px;
   right: 0;
-  padding-left: 0px;
+  padding-right: 0px;
   overflow: auto;
   @media(max-width: 768px){
     position: static;
