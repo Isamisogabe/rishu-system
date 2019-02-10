@@ -47,56 +47,50 @@
       <div class="row">
         <div class="col-sm-8 main">
           <ul class="nav nav-tabs nav-justified">
-          	<li role="presentation" class="active"><a href="#">領域別</a></li>
-          	<li role="presentation"><a href="#">研究室</a></li>
-          	<li role="presentation"><a href="#">検索</a></li>
+          	<li role="presentation" class="active tab" data-target="#ryouiki"><a href="javascript:void(0);">領域別</a></li>
+          	<li role="presentation" class="tab" data-target="#lab"><a href="javascript:void(0);">研究室</a></li>
+          	<li role="presentation" class="tab" data-target="#free"><a href="javascript:void(0);">検索</a></li>
           </ul>
           <div class="tabs">
-            <div class="tabs__lab">
-              
+            <div class="tabs__lab tabContent" id="lab">
+              <h2 class="noteLabel">研究室別検索</h2>
+              <div class="lab__ryouiki__apply">
+              </div>
+              <div class="description">
+                
+              </div>
+              <h2 class="noteLabel">推薦される授業</h2>
             </div>
-            <div class="tabs__keyword">
-              <h2 class="noteLabel">研究室が推奨する授業から選びましょう。</h2>
+            <div class="tabs__keyword tabContent" id="free">
+              <h2 class="noteLabel">フリーワード検索</h2>
               <div class="dropdown">
-              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-              		教科名
-              		<span class="caret"></span>
-              	</button>
-              	<ul class="dropdown-menu" role="menu">
-              		<li role="presentation"><a href="#">リンクのリスト１</a></li>
-              		<li role="presentation"><a href="#">リンクのリスト２</a></li>
-              		<li role="presentation"><a href="#">リンクのリスト３</a></li>
-              	</ul>
+                <input type="radio" name="search" value="1">
+              	教科名
+              </div>
+              
+              <div class="dropdown">
+                <input type="radio" name="search" value="2">
+              	教員検索
+              		
               </div>
               <div class="dropdown">
-              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
               		年次・セメスター検索
               		<span class="caret"></span>
               	</button>
               	<ul class="dropdown-menu" role="menu">
-              		<li role="presentation"><a href="#" data-year="1">１年次</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="1">１セメスター</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="2">２セメスター</a></li>
-              		<li role="presentation"><a href="#" data-year="2">２年次</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="3">３セメスター</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="4">４セメスター</a></li>
-              		<li role="presentation"><a href="#" data-year="3">３年次</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="5">５セメスター</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="6">６セメスター</a></li>
-              		<li role="presentation"><a href="#" data-year="4">４年次</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="7">７セメスター</a></li>
-              		<li role="presentation" class="dropdown-header"><a href="#" data-semester="8">８セメスター</a></li>
-              	</ul>
-              </div>
-              <div class="dropdown">
-              	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-              		教員検索
-              		<span class="caret"></span>
-              	</button>
-              	<ul class="dropdown-menu" role="menu">
-              		<li role="presentation"><a href="#">リンクのリスト１</a></li>
-              		<li role="presentation"><a href="#">リンクのリスト２</a></li>
-              		<li role="presentation"><a href="#">リンクのリスト３</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-year="1" class="yearBtn">１年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="1" class="semesterBtn">１セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="2" class="semesterBtn">２セメスター</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-year="2" class="yearBtn">２年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="3" class="semesterBtn">３セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="4" class="semesterBtn">４セメスター</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-year="3" class="yearBtn">３年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="5" class="semesterBtn">５セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="6" class="semesterBtn">６セメスター</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-year="4" class="yearBtn">４年次</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="7" class="semesterBtn">７セメスター</a></li>
+              		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="8" class="semesterBtn">８セメスター</a></li>
               	</ul>
               </div>
               <div class="dropdown">
@@ -112,15 +106,32 @@
               		<li role="presentation"><a href="#" data-field="環境理工学" class="fieldBtn env">環境理工学</a></li>
               	</ul>
               </div>
+              
               <div class="input-group">
-              	<input type="text" class="form-control" placeholder="テキスト入力欄">
+              	<input type="text" class="form-control" placeholder="テキスト入力欄" id="searchCls">
               	<span class="input-group-btn">
-              		<button type="button" class="btn btn-default">ボタン</button>
+              		<button type="button" class="btn btn-default" id="searchBtn">検索</button>
               	</span>
               </div>
+              <!--
+              <div id="conditionDesc">
+                <h6>課されている条件：</h6>
+                <ul class="conditions">
+                  
+                </ul>
+                <button type="button" class="btn btn-default" onclick="clear()">条件をクリア</button>
+              </div>
+              -->
             </div>
-            <div class="tabs__ryouiki">
-              <h2 class="noteLabel">研究室が推奨する授業から選びましょう。</h2>
+            <div class="tabs__ryouiki tabContent" id="ryouiki">
+              <h2 class="noteLabel">領域別検索</h2>
+              <div class="btns">
+                <button class="btn btn-default fieldBtn bigBtn apply-bg" name="applyFieldBtn" data-field="応用物理学">応用物理学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn material-bg" name="materialFieldBtn" data-field="物質理工学">物質理工学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn bio-bg" name="bioFieldBtn" data-field="生命理工学">生命理工学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn env-bg" name="envFieldBtn" data-field="環境理工学">環境理工学領域</button>
+              </div>
+              <h2 class="noteLabel">領域別授業一覧</h2>
             </div>
           </div>
           <div class="lectures">

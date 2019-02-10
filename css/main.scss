@@ -46,6 +46,7 @@ body {
   font-family: $ja_font;
   font-size: 62.5%;
   background: #fff;
+  min-height: 1000px;
 }
 .dropdown-menu>li{
   .material{
@@ -72,6 +73,13 @@ body {
       color: $greenColor;
     }
   }
+}
+.dropdown{
+  display: inline-block;
+  @include fontsize(14);
+}
+.input-group {
+  margin: 20px 0;
 }
 .row {
   margin: 0 0 0 0;
@@ -101,6 +109,30 @@ body {
 .sci {
   
 }
+.material-bg{
+  background-color: $blueColor;
+  &:hover {
+    background-color: darken($blueColor, 10%);
+  }
+}
+.bio-bg{
+  background-color: $redColor;
+  &:hover {
+    background-color: darken($redColor, 10%);
+  }
+}
+.apply-bg{
+  background-color: $orangeColor;
+  &:hover {
+    background-color: darken($orangeColor, 10%);
+  }
+}
+.env-bg{
+  background-color: $greenColor;
+  &:hover {
+    background-color: darken($greenColor, 10%);
+  }
+}
 
 .clearfix:after {
   
@@ -129,77 +161,124 @@ body {
   border-bottom: 1px solid $subColor;
   @include box-shadow(1px 1px 0.5px 0.5px rgba(0,0,0,0.2));
 }
-
-  
-  .lectures{
-    .lecture{
-      padding: 5px;
-      margin: 10px 0;
-      min-height: 100px;
-      @include box-shadow(1px 1px 1px 2px rgba(0,0,0,0.1));
-      @include border-radius(5px);
-      @media(max-width: 768px){
-        min-height: 150px;
-      }
-      .rishuBtn{
-        @media(max-width: 768px){
-            float: right;
-            
-        }
-      }
-      .lecture__title{
-        padding: 10px 0 0 0;
-        margin: 0;
-        .detailBtn {
-          cursor: pointer;
-          padding: 5px 4px 5px 5px;
-          @include transition(all 0.15s linear);
-          @include border-radius(50%);
-          @media(max-width: 768px){
-            text-align: right;
-          }
-        }
-        .detailOnBtn{
-          &:hover{
-            color: $greenColor;
-            background: #eee;
-          }
-        }
-        .detailOffBtn{
-          padding-right: 6px;
-          padding-bottom: 5px;
-          &:hover {
-            color: $redColor;
-            background: #eee;
-          }
-        }
-      }
+.tabContent {
+  &:nth-child(1){
+    display: none;
+  }
+  &:nth-child(2) {
+    display: none;
+  }
+}
+.tabs__lab {
+  .lab__ryouiki__apply{
+    @include display-flex(flex);
+    @include justify-content(space-between);
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    .profGroup{
+      width: 188px;
       
-      .lectureDivTable {
-        .lecture__table {
-          tr{
-            td{
-              min-width: 120px;
-              @media(max-width: 768px){
-                min-width: 70px;
-              }
-            }
-            .lectureDesc {
-              height: 200px;
-              line-height: 1.9;
-              overflow: auto;
-              @media(max-width: 768px){
-                height: 400px;
-              }
-            }
-          }
-        }
-        // .lecture__table
+      h5{
+        display: inline-block;
       }
-      // #lecture__table
     }
   }
-  // .lecture
+}
+.tabs__ryouiki {
+  h2{
+    
+  }
+  .btns{
+    @include display-flex(flex);
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    button {
+      @include fontsize(20);
+      font-weight: bold;
+      color: white;
+      width: 48%;
+      padding: 30px 1%;
+      margin: 20px 1%;
+      @include box-sizing(border-box);
+      @include box-shadow(1px 1px 1px 1px rgba(0, 0, 0, 0.2));
+      @include justify-content(space-between);
+      
+    }
+  }
+}
+
+
+
+  
+.lectures{
+  .lecture{
+    padding: 5px;
+    margin: 10px 0;
+    min-height: 100px;
+    @include box-shadow(1px 1px 1px 2px rgba(0,0,0,0.1));
+    @include border-radius(5px);
+    @media(max-width: 768px){
+      min-height: 150px;
+    }
+    .rishuBtn{
+      @media(max-width: 768px){
+          float: right;
+          
+      }
+    }
+    .lecture__title{
+      padding: 10px 0 0 0;
+      margin: 0;
+      .detailBtn {
+        cursor: pointer;
+        padding: 5px 4px 5px 5px;
+        @include transition(all 0.15s linear);
+        @include border-radius(50%);
+        @media(max-width: 768px){
+          text-align: right;
+        }
+      }
+      .detailOnBtn{
+        &:hover{
+          color: $greenColor;
+          background: #eee;
+        }
+      }
+      .detailOffBtn{
+        padding-right: 6px;
+        padding-bottom: 5px;
+        &:hover {
+          color: $redColor;
+          background: #eee;
+        }
+      }
+    }
+    
+    .lectureDivTable {
+      .lecture__table {
+        tr{
+          td{
+            min-width: 120px;
+            @media(max-width: 768px){
+              min-width: 70px;
+            }
+          }
+          .lectureDesc {
+            height: 200px;
+            line-height: 1.9;
+            overflow: auto;
+            @media(max-width: 768px){
+              height: 400px;
+            }
+          }
+        }
+      }
+      // .lecture__table
+    }
+    // #lecture__table
+  }
+}
+// .lecture
 
 #displayModel {
   position: static;
