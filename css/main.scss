@@ -48,6 +48,19 @@ body {
   background: #fff;
   min-height: 1000px;
 }
+
+// --------------- bootstrap --------------- //
+
+.navbar {
+  border-radius: 0;
+  margin: 0;
+}
+.navbar-nav{
+  @include fontsize(14);
+}
+.nav-tabs {
+  @include fontsize(14);
+}
 .dropdown-menu>li{
   .material{
     color: $blueColor;
@@ -84,6 +97,7 @@ body {
 .row {
   margin: 0 0 0 0;
 }
+// --------------- ryouiki color --------------- //
 .ryouikihisshu{
   text-decoration-line: underline;
 }
@@ -142,16 +156,7 @@ body {
   clear: both;
   visibility: hidden;
 }
-.navbar {
-  border-radius: 0;
-  margin: 0;
-}
-.navbar-nav{
-  @include fontsize(14);
-}
-.nav-tabs {
-  @include fontsize(14);
-}
+
 .main {
   margin: 10px 0;
 }
@@ -185,9 +190,7 @@ body {
   }
 }
 .tabs__ryouiki {
-  h2{
-    
-  }
+  
   .btns{
     @include display-flex(flex);
     @include flex-direction(row);
@@ -330,6 +333,16 @@ body {
         color: $subColor;
         font-weight: bold;
       }
+    }
+  }
+}
+
+
+#easyExam {
+  margin: 0 10px ;
+  ul {
+    .examBtn {
+      
     }
   }
 }

@@ -29,9 +29,9 @@
       		
       		<div class="collapse navbar-collapse" id="navbarEexample7">
       			<ul class="nav navbar-nav">
-      				<li><a href="#">領域適性検査</a></li>
+      				<li><a href="javascript:void(0)">領域適性検査</a></li>
       				<li class="active"><a href="#">履修登録</a></li>
-      				<li><a href="#">研究室探し</a></li>
+      				<li><a href="javascript:void(0)">研究室探し</a></li>
       			</ul>
       			<ul class="nav navbar-nav navbar-right">
       				
@@ -43,15 +43,25 @@
       	</div>
       </nav>
     </header>
-    <main class="">
+    <main id="classResistration">
       <div class="row">
         <div class="col-sm-8 main">
           <ul class="nav nav-tabs nav-justified">
-          	<li role="presentation" class="active tab" data-target="#ryouiki"><a href="javascript:void(0);">領域別</a></li>
+          	<li role="presentation" class="tab" data-target="#ryouiki"><a href="javascript:void(0);">領域別</a></li>
           	<li role="presentation" class="tab" data-target="#lab"><a href="javascript:void(0);">研究室</a></li>
-          	<li role="presentation" class="tab" data-target="#free"><a href="javascript:void(0);">検索</a></li>
+          	<li role="presentation" class="active tab" data-target="#free"><a href="javascript:void(0);">検索</a></li>
           </ul>
           <div class="tabs">
+            <div class="tabs__ryouiki tabContent" id="ryouiki">
+              <h2 class="noteLabel">領域別検索</h2>
+              <div class="btns">
+                <button class="btn btn-default fieldBtn bigBtn apply-bg" name="applyFieldBtn" data-field="応用物理学">応用物理学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn material-bg" name="materialFieldBtn" data-field="物質理工学">物質理工学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn bio-bg" name="bioFieldBtn" data-field="生命理工学">生命理工学領域</button>
+                <button class="btn btn-default fieldBtn bigBtn env-bg" name="envFieldBtn" data-field="環境理工学">環境理工学領域</button>
+              </div>
+              <h2 class="noteLabel">領域別授業一覧</h2>
+            </div>
             <div class="tabs__lab tabContent" id="lab">
               <h2 class="noteLabel">研究室別検索</h2>
               <div class="lab__ryouiki__apply">
@@ -70,8 +80,12 @@
               
               <div class="dropdown">
                 <input type="radio" name="search" value="2">
-              	教員検索
+              	概要検索
               		
+              </div>
+              <div class="dropdown">
+                <input type="radio" name="search" value="3">
+              	教員検索
               </div>
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
@@ -99,16 +113,21 @@
               		<span class="caret"></span>
               	</button>
               	<ul class="dropdown-menu" role="menu">
-              	  <li role="presentation"><a href="#" data-field="none" class="fieldBtn" >なし</a></li>
-              		<li role="presentation"><a href="#" data-field="応用物理学" class="fieldBtn apply">応用物理学</a></li>
-              		<li role="presentation"><a href="#" data-field="物質理工学" class="fieldBtn material">物質理工学</a></li>
-              		<li role="presentation"><a href="#" data-field="生命理工学" class="fieldBtn bio">生命理工学</a></li>
-              		<li role="presentation"><a href="#" data-field="環境理工学" class="fieldBtn env">環境理工学</a></li>
+              	  <li role="presentation"><a href="javascript:void(0)" data-field="none" class="fieldBtn" >なし</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" class="fieldBtn apply">応用物理学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" class="fieldBtn material">物質理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" class="fieldBtn bio">生命理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" class="fieldBtn env">環境理工学</a></li>
+              		<li role="presentation" class="dropdown-header">領域選択必修のみ</li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" data-isOnlyFieldCommon="true" class="fieldBtn apply">応用物理学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" data-isOnlyFieldCommon="true" class="fieldBtn material">物質理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" data-isOnlyFieldCommon="true" class="fieldBtn bio">生命理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" data-isOnlyFieldCommon="true" class="fieldBtn env">環境理工学</a></li>
               	</ul>
               </div>
               
               <div class="input-group">
-              	<input type="text" class="form-control" placeholder="テキスト入力欄" id="searchCls">
+              	<input type="text" class="form-control" placeholder="テキスト入力欄(30文字まで)" id="searchCls">
               	<span class="input-group-btn">
               		<button type="button" class="btn btn-default" id="searchBtn">検索</button>
               	</span>
@@ -123,16 +142,7 @@
               </div>
               -->
             </div>
-            <div class="tabs__ryouiki tabContent" id="ryouiki">
-              <h2 class="noteLabel">領域別検索</h2>
-              <div class="btns">
-                <button class="btn btn-default fieldBtn bigBtn apply-bg" name="applyFieldBtn" data-field="応用物理学">応用物理学領域</button>
-                <button class="btn btn-default fieldBtn bigBtn material-bg" name="materialFieldBtn" data-field="物質理工学">物質理工学領域</button>
-                <button class="btn btn-default fieldBtn bigBtn bio-bg" name="bioFieldBtn" data-field="生命理工学">生命理工学領域</button>
-                <button class="btn btn-default fieldBtn bigBtn env-bg" name="envFieldBtn" data-field="環境理工学">環境理工学領域</button>
-              </div>
-              <h2 class="noteLabel">領域別授業一覧</h2>
-            </div>
+            
           </div>
           <div class="lectures">
                 
@@ -175,6 +185,7 @@
               <ul id="rishu__8">
                 
               </ul>
+              <a download="Myplan.html" id="download"><button onclick="pushTxtFile()" type="button" class="btn btn-success" id="textBtn">計画を書き出す</button></a>
             </div>
           </div>
           <div id="rishuInfo">
@@ -188,19 +199,32 @@
             
             <h4>満たしているコース：</h4>
             
-            <h6>英語科目：              <span id="subject__0"></span>単位</h6>
-            <h6>専門導入科目：          <span id="subject__1"></span>単位</h6>
-            <h6>専門基礎科目：          <span id="subject__2"></span>単位</h6>
-            <h6>専門演習科目：          <span id="subject__3"></span>単位</h6>
-            <h6>専門応用科目理学系：    <span id="subject__4"></span>単位</h6>
-            <h6 class="sciEn">専門応用科目理工学系：  <span id="subject__5"></span>単位</h6>
-            <h6 class="eng">専門応用科目工学系：    <span id="subject__6"></span>単位</h6>
+            <h6 style="color: #ff4500">英語科目：              <span id="subject__0"></span>単位</h6>
+            <h6 style="color: #ff4500">専門導入科目：          <span id="subject__1"></span>単位</h6>
+            <h6 style="color: #ff4500">専門基礎科目：          <span id="subject__2"></span>単位</h6>
+            <h6 style="color: #ff4500">専門演習科目：          <span id="subject__3"></span>単位</h6>
+            <h6 style="color: #ff4500">専門応用科目理学系：    <span id="subject__4"></span>単位</h6>
+            <h6 style="color: #ff4500" class="sciEn">専門応用科目理工学系：  <span id="subject__5"></span>単位</h6>
+            <h6 style="color: #ff4500" class="eng">専門応用科目工学系：    <span id="subject__6"></span>単位</h6>
             <h6>専門関連科目            <span id="subject__7"></span>単位</h6>
             <h6>専門学外学習科目        <span id="subject__8"></span>単位</h6>
             
           </div>
         </div>
       </div>
+    </main>
+    
+    <main id="easyExam">
+      <div class="noteLabel">
+        <h2>自分が興味のあるワードを探してみよう！</h2>
+      </div>
+      <ul id="eleBtns">
+        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+      </ul>
     </main>
     <footer>
       

@@ -7,9 +7,28 @@ var standardUnit= [6,6,20,8,38];
 var totalUnit  = 0;
 var minimalUnit = [];
 var profData   ;
+var otherProfData;
+var eleValues;
 var fieldData  = [];
 var ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
 var ryouikiColor = [ "env", "apply", "material", "bio"];
+
+// --------------- 履修登録用の関数 --------------- //
+function pushTxtFile(){
+  $("#textBtn").hide();
+  var htmlContent = $("#rishuModel__Content").html(),
+      content = htmlContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''),
+      bom     = new Uint8Array([0xEF, 0xBB, 0xBF]), // UTF-8
+      blob = new Blob([bom, htmlContent], {type: 'text/html'}),
+      a = document.getElementById('download');
+  if(window.navigator.msSaveBlob){
+    window.navigator.msSaveBlob(htmlContent, "Myplan.txt");
+  } else {
+    a.href = window.URL.createObjectURL(blob);
+    a.target = "_blank";
+  }
+  $("#textBtn").show();
+}
 function init(){
   for(var i=0;i<allLectures.length;i++){
     if(allLectures[i].isCommmon){
@@ -35,6 +54,28 @@ function init(){
 }
 function clear() {
   $(".lecture").css("display", "block");
+}
+function supervise(unit, id){
+  console.log(unit );
+  if(unit < standardUnit[id] ){
+    $("#subject__" + id).parent().css("color", "#ff4500");
+  } else {
+    $("#subject__" + id).parent().css("color", "#000000");
+  }
+  if( 3 < id && id <= 6 ){
+    var totalUnit = subjectUnit[4] + subjectUnit[5] + subjectUnit[6];
+    console.log(totalUnit, standardUnit[4]);
+    if(totalUnit < standardUnit[4]){
+      $("#subject__" + 4).parent().css("color", "#ff4500");
+      $("#subject__" + 5).parent().css("color", "#ff4500");
+      $("#subject__" + 6).parent().css("color", "#ff4500");
+    }
+    else {
+      $("#subject__" + 4).parent().css("color", "#000000");
+      $("#subject__" + 5).parent().css("color", "#000000");
+      $("#subject__" + 6).parent().css("color", "#000000");
+    }
+  } 
 }
 function switchTabs(){
   $(".tab").on("click", function() {
@@ -78,6 +119,7 @@ function searchCls() {
     var text = $("#searchCls").val(),
         reg  = new RegExp(text);
     console.log(reg);
+    if(text >= 30) return window.alert("30文字を超えています。修正してください。");
     var type = $("input[name=search]:checked").val();
     if(type === "1"){
       for(var i=0;i<allLectures.length;i++){
@@ -89,6 +131,17 @@ function searchCls() {
         }
       }
     } else if(type === "2"){
+      for(var i=0;i<allLectures.length;i++){
+        var j = i + 1;
+        if(allLectures[i].description.search(reg) >= 0){
+          $(".lecture:nth-child(" + j + ")").css("display", "block");
+        } 
+        else{
+          $(".lecture:nth-child(" + j + ")").css("display", "none");
+        }
+      }
+    }
+    else if(type === "3"){
       for(var i=0;i<allLectures.length;i++){
         var j = i + 1;
         if(allLectures[i].teacher.search(reg) >= 0){
@@ -106,6 +159,12 @@ function getAddress(profName){
   var link;
   for(var i=0; i < profData.length; i++) {
     if(profData[i].prof === profName){
+      link = profData[i].link;
+      break;
+    }
+  }
+  for(var i=0; i<otherProfData.length; i++){
+    if(otherProfData[i].prof === profName){
       link = profData[i].link;
       break;
     }
@@ -174,8 +233,10 @@ function selectSubject(subject){
 }
 function selectRyouiki(){
   $(".fieldBtn").on("click", function(){
-    var btn = $(this),
-        field = btn.attr("data-field");
+    var btn     = $(this),
+        field   = btn.attr("data-field"),
+        isOnlyFieldCommon = btn.attr("data-isOnlyFieldCommon");
+    console.log(isOnlyFieldCommon);
     if(field == "none"){
       $("#" + field).parent().html("");
       return $(".lecture").show();
@@ -185,8 +246,12 @@ function selectRyouiki(){
       var k=i+1;
       if(!(field === allLectures[i].classField)){
         $(".lecture:nth-child(" + k + ")").css("display", "none");
+      } 
+      if(isOnlyFieldCommon && (!allLectures[i].isFieldCommon)){
+        $(".lecture:nth-child(" + k + ")").css("display", "none");
       }
     }
+    
     $(".conditions").append("<li id=" + field +">" + field + "</li>");
   });
 }
@@ -268,6 +333,7 @@ function addRishuModel(lecture) {
   subjectUnit[subjectId] += unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
+  supervise(subjectUnit[subjectId], subjectId);
   console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
 }
 function reduceRishuModel(lecture) {
@@ -286,6 +352,7 @@ function reduceRishuModel(lecture) {
   subjectUnit[subjectId] -= unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
+  supervise(subjectUnit[subjectId], subjectId);
   console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
 }
 function rishuBtnOnClick (lectures) {
@@ -434,7 +501,23 @@ function showClasses (clsArr) {
     }
   }// for (var i=0; i < clsArr.length ; i++) 終了
 }
+// --------------- 履修登録用関数終了 --------------- //
 
+// --------------- easyExam用の関数 --------------- //
+
+function showExamBtns(data) {
+  console.log(data);
+  for(var i=0;i<data.length;i++){
+    $("#eleBtns").append("<li> <button class='btn btn-default'  id=" + data[i].ele +" >" + data[i].ele + "</button></li>" );
+    $("#" + data[i].ele).attr(
+      {  
+        "data-phy"  : data[i].phy,
+        "data-chem" : data[i].chem,
+        "data-bio"  : data[i].bio,
+        "data-env"  : data[i].env,
+      });
+  }
+}
 $.ajax({
   type: 'GET',
   url: './data/classData.json',
@@ -452,7 +535,7 @@ $.ajax({
 
 
 $(document).ready(function() {
-  var rishuModel = [];
+  var rishuModel = rishuModel || [];
   $.ajax({
     type: 'GET',
     url: './data/profData.json',
@@ -461,7 +544,7 @@ $(document).ready(function() {
   .then(
     function(json) {
       console.log(json);
-       profData = json;
+      profData = json;
     },
     function() {
       console.log('読み込みに失敗しました');
@@ -469,7 +552,46 @@ $(document).ready(function() {
   );
   $.ajax({
     type: 'GET',
-    url: './data/classData5.json',
+    url: './data/otherProfData.json',
+    dataType: 'json'
+  })
+  .then(
+    function(json) {
+      console.log(json);
+       otherProfData = json;
+    },
+    function() {
+      console.log('読み込みに失敗しました');
+    }
+  );
+  $.ajax({
+    type: 'GET',
+    url: './data/easyExam.json',
+    dataType: 'json'
+  })
+  .then(
+    function(json) {
+      console.log(json);
+       eleValues = json;
+       showExamBtns(eleValues);
+    },
+    function() {
+      console.log('読み込みに失敗しました');
+    }
+  );
+  
+  
+  /*
+  $(window).scroll(function(e) {
+    var height = $(window).scrollTop();
+    $("#displayModel").css({"margin-top":height });
+  });
+  */
+});
+window.onload = function(){
+  $.ajax({
+    type: 'GET',
+    url: './data/classData7.json',
     dataType: 'json'
   })
   .then(
@@ -489,17 +611,12 @@ $(document).ready(function() {
        searchCls();
        deployLabRadioBtn();
        switchTabs();
-       $(".lecture").css("display", "none");
+       clear();
+       
+       
     },
     function() {
       console.log('読み込みに失敗しました');
     }
   );
-  
-  /*
-  $(window).scroll(function(e) {
-    var height = $(window).scrollTop();
-    $("#displayModel").css({"margin-top":height });
-  });
-  */
-})
+}

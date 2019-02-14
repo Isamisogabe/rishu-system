@@ -40,6 +40,18 @@ body {
   background: #fff;
   min-height: 1000px; }
 
+.navbar {
+  border-radius: 0;
+  margin: 0; }
+
+.navbar-nav {
+  font-size: 14px;
+  font-size: 1.4rem; }
+
+.nav-tabs {
+  font-size: 14px;
+  font-size: 1.4rem; }
+
 .dropdown-menu > li .material {
   color: #5cb3f1; }
   .dropdown-menu > li .material:hover {
@@ -116,18 +128,6 @@ body {
   height: 0;
   clear: both;
   visibility: hidden; }
-
-.navbar {
-  border-radius: 0;
-  margin: 0; }
-
-.navbar-nav {
-  font-size: 14px;
-  font-size: 1.4rem; }
-
-.nav-tabs {
-  font-size: 14px;
-  font-size: 1.4rem; }
 
 .main {
   margin: 10px 0; }
@@ -274,5 +274,8 @@ body {
   #displayModel #rishuInfo h5 span {
     color: #353e94;
     font-weight: bold; }
+
+#easyExam {
+  margin: 0 10px; }
 
 /*# sourceMappingURL=main.css.map */
