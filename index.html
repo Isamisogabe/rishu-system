@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="理工学部共生創造理工学科履修登録システム">
+    <meta name="author" content="IsamiSogabe">
     <title>Rishu System</title>
     
     
@@ -22,30 +24,30 @@
       				<span class="icon-bar"></span>
       				<span class="icon-bar"></span>
       			</button>
-      			<a class="navbar-brand" href="#">
+      			<!-- <a class="navbar-brand" href="#">
       				ホーム
       			</a>
+      			-->
       		</div>
       		
       		<div class="collapse navbar-collapse" id="navbarEexample7">
       			<ul class="nav navbar-nav">
-      				<li><a href="javascript:void(0)">領域適性検査</a></li>
-      				<li class="active"><a href="#">履修登録</a></li>
-      				<li><a href="javascript:void(0)">研究室探し</a></li>
+      				<li><a class="home-nav "href="javascript:void(0)" data-target="#easyExam">領域適性検査</a></li>
+      				<li class="active"><a class="home-nav" href="javascript:void(0)" data-target="#classResist">履修登録</a></li>
+      				<li><a class="home-nav" href="javascript:void(0)" data-target="#fieldLabs">研究室探し</a></li>
       			</ul>
       			<ul class="nav navbar-nav navbar-right">
       				
       				<li><a href="https://plas.soka.ac.jp/csp/plas/login.csp" target="_blank">創価大学ポータルサイト</a></li>
       				<li><a href="https://www.soka.ac.jp/" target="_blank">創価大学公式ホームページ</a></li>
       			</ul>
-      			
       		</div>
       	</div>
       </nav>
     </header>
-    <main id="classResistration">
+    <main id="classResist">
       <div class="row">
-        <div class="col-sm-8 main">
+        <div class="col-sm-8 topMargin">
           <ul class="nav nav-tabs nav-justified">
           	<li role="presentation" class="tab" data-target="#ryouiki"><a href="javascript:void(0);">領域別</a></li>
           	<li role="presentation" class="tab" data-target="#lab"><a href="javascript:void(0);">研究室</a></li>
@@ -64,8 +66,35 @@
             </div>
             <div class="tabs__lab tabContent" id="lab">
               <h2 class="noteLabel">研究室別検索</h2>
-              <div class="lab__ryouiki__apply">
+              <div class="lab__ryouiki">
+                <ul class="nav nav-pills labBtns">
+                	<li role="presentation" class="apply-bg labBtn" data-target="#wellApply"><h3 class="fontBold fontWhite">応用物理学</h3></li>
+                	<li role="presentation" class="material-bg labBtn" data-target="#wellMaterial"><h3 class="fontBold fontWhite">物質理工学</h3></li>
+                	<li role="presentation" class="bio-bg labBtn" data-target="#wellBio"><h3 class="fontBold fontWhite">生命理工学</h3></li>
+                	<li role="presentation" class="env-bg labBtn" data-target="#wellEnv"><h3 class="fontBold fontWhite">環境理工学</h3></li>
+                </ul>
+                <div class="lab__ryouiki__apply well well-lg apply-well well-ryouiki active" id="wellApply" >
+                  <div class="profs" id="applyProfs">
+                    
+                  </div>
+                </div>
+                <div class="lab__ryouiki__material well well-lg material-well well-ryouiki" id="wellMaterial" >
+                  <div class="profs" id="materialProfs">
+                    
+                  </div>
+                </div>
+                <div class="lab__ryouiki__bio well well-lg bio-well well-ryouiki" id="wellBio">
+                  <div class="profs" id="bioProfs">
+                    
+                  </div>
+                </div>
+                <div class="lab__ryouiki__env well well-lg env-well well-ryouiki" id="wellEnv">
+                  <div class="profs" id="envProfs">
+                    
+                  </div>
+                </div>
               </div>
+              
               <div class="description">
                 
               </div>
@@ -107,22 +136,23 @@
               		<li role="presentation" class="dropdown-header"><a href="javascript:void(0)" data-semester="8" class="semesterBtn">８セメスター</a></li>
               	</ul>
               </div>
-              <div class="dropdown">
+              <div class="dropdown" id="dropSearchField">
               	<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
               		領域検索
               		<span class="caret"></span>
               	</button>
               	<ul class="dropdown-menu" role="menu">
               	  <li role="presentation"><a href="javascript:void(0)" data-field="none" class="fieldBtn" >なし</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" class="fieldBtn apply">応用物理学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" class="fieldBtn material">物質理工学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" class="fieldBtn bio">生命理工学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" class="fieldBtn env">環境理工学</a></li>
-              		<li role="presentation" class="dropdown-header">領域選択必修のみ</li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" data-isOnlyFieldCommon="true" class="fieldBtn apply">応用物理学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" data-isOnlyFieldCommon="true" class="fieldBtn material">物質理工学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" data-isOnlyFieldCommon="true" class="fieldBtn bio">生命理工学</a></li>
-              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" data-isOnlyFieldCommon="true" class="fieldBtn env">環境理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" class="fieldBtn apply parent">応用物理学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="応用物理学" data-isOnlyFieldCommon="true" class="fieldBtn child apply">↪領域選択必修のみ</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" class="fieldBtn material parent">物質理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="物質理工学" data-isOnlyFieldCommon="true" class="fieldBtn child material">↪領域選択必修のみ</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" class="fieldBtn bio parent">生命理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="生命理工学" data-isOnlyFieldCommon="true" class="fieldBtn child bio">↪領域選択必修のみ</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" class="fieldBtn env parent">環境理工学</a></li>
+              		<li role="presentation"><a href="javascript:void(0)" data-field="環境理工学" data-isOnlyFieldCommon="true" class="fieldBtn child env">↪領域選択必修のみ</a></li>
+              		<li role="presentation" class="dropdown-header"></li>
+              		
               	</ul>
               </div>
               
@@ -132,56 +162,52 @@
               		<button type="button" class="btn btn-default" id="searchBtn">検索</button>
               	</span>
               </div>
-              <!--
-              <div id="conditionDesc">
-                <h6>課されている条件：</h6>
-                <ul class="conditions">
-                  
-                </ul>
-                <button type="button" class="btn btn-default" onclick="clear()">条件をクリア</button>
-              </div>
-              -->
             </div>
-            
           </div>
           <div class="lectures">
                 
           </div>
-          
         </div>
-        <div id="displayModel" class="col-sm-4" style="">
+        <div id="displayModel" class="col-sm-4">
           <div id="rishuModel">
             <h2 class="sidebarTitle" id="rishuModel__title">履修モデル</h2>
             <div class="content" id="rishuModel__Content">
-              <h6>1年春学期</h6>
+              <h6>1年春学期　<span class="unit__rishu__1"></span>単位</h6>
               <ul id="rishu__1">
                 
               </ul>
-              <h6>1年秋学期</h6>
+              
+              <h6>1年秋学期　<span class="unit__rishu__2"></span>単位</h6>
               <ul id="rishu__2">
                 
               </ul>
-              <h6>2年春学期</h6>
+              
+              <h6>2年春学期　<span class="unit__rishu__3"></span>単位</h6>
               <ul id="rishu__3">
                 
               </ul>
-              <h6>2年秋学期</h6>
+              
+              <h6>2年秋学期　<span class="unit__rishu__4"></span>単位</h6>
               <ul id="rishu__4">
                 
               </ul>
-              <h6>3年春学期</h6>
+              
+              <h6>3年春学期　<span class="unit__rishu__5"></span>単位</h6>
               <ul id="rishu__5">
                 
               </ul>
-              <h6>3年秋学期</h6>
+
+              <h6>3年秋学期　<span class="unit__rishu__6"></span>単位</h6>
               <ul id="rishu__6">
                 
               </ul>
-              <h6>4年春学期</h6>
+              
+              <h6>4年春学期　<span class="unit__rishu__7"></span>単位</h6>
               <ul id="rishu__7">
                 
               </ul>
-              <h6>4年秋学期</h6>
+              
+              <h6>4年秋学期　<span class="unit__rishu__8"></span>単位</h6>
               <ul id="rishu__8">
                 
               </ul>
@@ -190,10 +216,10 @@
           </div>
           <div id="rishuInfo">
             <h2 class="sidebarTitle">履修状況</h2>
-            <h6>1年　春学期<span id="unit__rishu__1"></span>単位、　秋学期<span id="unit__rishu__2"></span>単位</h6>
-            <h6>2年　春学期<span id="unit__rishu__3"></span>単位、　秋学期<span id="unit__rishu__4"></span>単位</h6>
-            <h6>3年　春学期<span id="unit__rishu__5"></span>単位、　秋学期<span id="unit__rishu__6"></span>単位</h6>
-            <h6>4年　春学期<span id="unit__rishu__7"></span>単位、　秋学期<span id="unit__rishu__8"></span>単位</h6>
+            <h6>1年　春学期<span class="unit__rishu__1"></span>単位、　秋学期<span class="unit__rishu__2"></span>単位</h6>
+            <h6>2年　春学期<span class="unit__rishu__3"></span>単位、　秋学期<span class="unit__rishu__4"></span>単位</h6>
+            <h6>3年　春学期<span class="unit__rishu__5"></span>単位、　秋学期<span class="unit__rishu__6"></span>単位</h6>
+            <h6>4年　春学期<span class="unit__rishu__7"></span>単位、　秋学期<span class="unit__rishu__8"></span>単位</h6>
             
             <h6>合計単位数：<span id="unit__total"></span></h6>
             
@@ -215,16 +241,38 @@
     </main>
     
     <main id="easyExam">
-      <div class="noteLabel">
-        <h2>自分が興味のあるワードを探してみよう！</h2>
-      </div>
+     
+      <h2 class="noteLabel">自分が興味のあるワードを探してみよう！</h2>
+      
       <ul id="eleBtns">
-        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
-        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
-        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
-        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
-        <li class="examBtn" ><button class="btn btn-default">キーワード</button></li>
+        
       </ul>
+      <button type="button" class="btn btn-success" id="evaluate" >評価する</button>
+      <div id="examResult">
+        
+      </div>
+    </main>
+    <main id="fieldLabs" class="wholeMargin">
+      
+      <h2 class="noteLabel">研究室の領域別分野一覧</h2>
+      
+      <h4>ここでは専門領域から最適な研究室や教授を探すことができます。</h4>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>教員名</th>
+            <th>応用物理学</th>
+            <th>物質理工学</th>
+            <th>生命理工学</th>
+            <th>環境理工学</th>
+            <th>その他の応用分野</th>
+            <th>大学院（専攻名）</th>
+          </tr>
+        </thead>
+        <tbody id="labsRyouikiTable">
+          
+        </tbody>
+      </table>
     </main>
     <footer>
       

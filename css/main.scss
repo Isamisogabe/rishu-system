@@ -13,6 +13,12 @@ $ja_font :   "メイリオ", "Verdana", "MS Pゴシック", "sans-serif","Times 
   font-size: $size + px;
   font-size: $size / $base  * 1rem;
 }
+.fontBold {
+  font-weight: bold;
+}
+.fontWhite {
+  color: #fff;
+}
 
 h6{
   @include fontsize(14);
@@ -25,6 +31,7 @@ h4{
 }
 h3{
   @include fontsize(20);
+  
 }
 h2{
   @include fontsize(22);
@@ -60,6 +67,13 @@ body {
 }
 .nav-tabs {
   @include fontsize(14);
+}
+.nav>li>a:hover {
+  text-decoration: none;
+  background: inherit;
+}
+.nav>li>a:focus {
+  
 }
 .dropdown-menu>li{
   .material{
@@ -100,6 +114,9 @@ body {
 // --------------- ryouiki color --------------- //
 .ryouikihisshu{
   text-decoration-line: underline;
+}
+.recommended{
+  text-decoration: underline dotted red;
 }
 .sciEn {
   font-weight: bold;
@@ -147,6 +164,21 @@ body {
     background-color: darken($greenColor, 10%);
   }
 }
+.well {
+  @include border-radius(0 0 3px 3px);
+}
+.apply-well {
+  background-color: lighten($orangeColor, 30%);
+}
+.material-well {
+  background-color: lighten($blueColor, 30%);
+}
+.bio-well {
+  background-color: lighten($redColor, 30%);
+}
+.env-well {
+  background-color: lighten($greenColor, 30%);
+}
 
 .clearfix:after {
   
@@ -156,15 +188,17 @@ body {
   clear: both;
   visibility: hidden;
 }
-
-.main {
+.topMargin {
   margin: 10px 0;
+}
+.wholeMargin {
+  margin: 10px 10px;
 }
 .noteLabel {
   padding: 18px 20px;
   border-left: 5px solid $subColor;
-  border-bottom: 1px solid $subColor;
-  @include box-shadow(1px 1px 0.5px 0.5px rgba(0,0,0,0.2));
+
+  @include box-shadow(1px 1px 0.8px 0.8px rgba(0,0,0,0.2));
 }
 .tabContent {
   &:nth-child(1){
@@ -175,16 +209,34 @@ body {
   }
 }
 .tabs__lab {
-  .lab__ryouiki__apply{
-    @include display-flex(flex);
-    @include justify-content(space-between);
-    @include flex-direction(row);
-    @include flex-wrap(wrap);
-    .profGroup{
-      width: 188px;
-      
-      h5{
-        display: inline-block;
+  .lab__ryouiki{
+    ul {
+      li {
+        @include border-radius(3px 3px 0 0);
+        padding: 0 10px;
+        cursor: pointer;
+        margin-bottom: -1px;
+        h3 {
+          margin: 10px 0px;
+          @media( max-width: 800px){
+            @include fontsize(12);
+          }
+        }
+      }
+    }
+    div{
+      .profs{
+        @include display-flex(flex);
+        @include justify-content(space-between);
+        @include flex-direction(row);
+        @include flex-wrap(wrap);
+        .prof{
+          width: 188px;
+          
+          h5{
+            display: inline-block;
+          }
+        }
       }
     }
   }
@@ -210,6 +262,23 @@ body {
   }
 }
 
+.tabs__keyword {
+  #dropSearchField {
+    ul {
+      li{
+        
+        .child {
+          display: block;
+          padding: 3px 30px;
+          font-size: 12px;
+          line-height: 1.42857143;
+          color: #777;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
 
 
   
@@ -220,11 +289,11 @@ body {
     min-height: 100px;
     @include box-shadow(1px 1px 1px 2px rgba(0,0,0,0.1));
     @include border-radius(5px);
-    @media(max-width: 768px){
+    @media(max-width: 800px){
       min-height: 150px;
     }
     .rishuBtn{
-      @media(max-width: 768px){
+      @media(max-width: 800px){
           float: right;
           
       }
@@ -237,7 +306,7 @@ body {
         padding: 5px 4px 5px 5px;
         @include transition(all 0.15s linear);
         @include border-radius(50%);
-        @media(max-width: 768px){
+        @media(max-width: 800px){
           text-align: right;
         }
       }
@@ -262,7 +331,7 @@ body {
         tr{
           td{
             min-width: 120px;
-            @media(max-width: 768px){
+            @media(max-width: 800px){
               min-width: 70px;
             }
           }
@@ -270,7 +339,7 @@ body {
             height: 200px;
             line-height: 1.9;
             overflow: auto;
-            @media(max-width: 768px){
+            @media(max-width: 800px){
               height: 400px;
             }
           }
@@ -289,7 +358,7 @@ body {
   right: 0;
   padding-right: 0px;
   overflow: auto;
-  @media(max-width: 768px){
+  @media(max-width: 800px){
     position: static;
     padding-left: 15px;
     
@@ -301,7 +370,7 @@ body {
     color: $baseColor;
     padding: 17px 0px 17px 15px;
     margin: 0;
-    @media(max-width: 768px){
+    @media(max-width: 800px){
       text-align: center;
     }
     
@@ -340,9 +409,50 @@ body {
 
 #easyExam {
   margin: 0 10px ;
+  
   ul {
-    .examBtn {
-      
+    margin: 20px 0;
+    padding: 0;
+    @include display-flex(flex);
+    @include flex-direction(row);
+    @include flex-wrap(wrap);
+    @include justify-content(space-between);
+    li{
+      list-style-type: none;
+      margin: 10px 0;
+      @include transition(all .2s ease-in-out);
+      .eleBtn {
+        width: 130px;
+        height: 60px;
+        @include fontsize(16);
+        @include transition(all .2s ease-in-out);
+
+      }
+    }
+  }
+  
+  
+}
+.checked {
+  background-color: $subColor;
+  color: white;
+}
+
+#fieldLabs {
+  table {
+    thead {
+      tr {
+        th {
+          text-align: left;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          text-align: left;
+        }
+      }
     }
   }
 }
