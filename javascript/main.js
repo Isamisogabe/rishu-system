@@ -627,8 +627,8 @@ function showTable() {
       setTd(strings[k], "生命理工学", j, l);
       setTd(strings[k], "環境理工学", j, l);
     }
-    $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(6)").html(profData[i].master);
-    $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(7)").html(profData[i].else);
+    $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(6)").html(profData[i].else);
+    $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(7)").html(profData[i].master);
   }
 }
 // --------------- データの読み込み --------------- //
