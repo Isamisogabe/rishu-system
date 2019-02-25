@@ -30,7 +30,7 @@ function pushTxtFile(){
   }
   $("#textBtn").show();
 }
-function init(){
+function pushInitLecs(){
   for(var i=0;i<allLectures.length;i++){
     if(allLectures[i].isCommmon){
       var j = i + 1,
@@ -706,7 +706,7 @@ window.onload = function(){
       console.log(json);
        allLectures = json;
        showClasses(allLectures);
-       init();
+       pushInitLecs();
        rishuBtnOnClick();
        detailBtnOnClick();
        clsOnClick();
