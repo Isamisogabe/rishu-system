@@ -136,9 +136,9 @@ body {
     background-color: #00be00; }
 
 .well {
-  -moz-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 5px 5px 5px;
   -webkit-border-radius: 0;
-  border-radius: 0 0 3px 3px; }
+  border-radius: 0 5px 5px 5px; }
 
 .apply-well {
   background-color: #ffe299; }
@@ -178,9 +178,9 @@ body {
   display: none; }
 
 .tabs__lab .lab__ryouiki ul li {
-  -moz-border-radius: 3px 3px 0 0;
-  -webkit-border-radius: 3px;
-  border-radius: 3px 3px 0 0;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px;
+  border-radius: 5px 5px 0 0;
   padding: 0 10px;
   cursor: pointer;
   margin-bottom: -1px; }
@@ -235,6 +235,13 @@ body {
   line-height: 1.42857143;
   color: #777;
   white-space: nowrap; }
+.tabs__keyword #freewordSearch {
+  width: 70%; }
+  @media (max-width: 800px) {
+    .tabs__keyword #freewordSearch {
+      width: 100%; } }
+  .tabs__keyword #freewordSearch .input-group-btn {
+    text-align: left; }
 
 .lectures .lecture {
   padding: 5px;
@@ -299,7 +306,8 @@ body {
   @media (max-width: 800px) {
     #displayModel {
       position: static;
-      padding-left: 15px; } }
+      padding-left: 15px;
+      padding-right: 15px; } }
   #displayModel .sidebarTitle {
     background-color: #353e94;
     font-weight: bold;
@@ -366,5 +374,13 @@ body {
   text-align: left; }
 #fieldLabs table tbody tr td {
   text-align: left; }
+
+#textBtn {
+  display: inline-block;
+  width: 98%;
+  margin: 0 0 100px 0; }
+  @media (max-width: 800px) {
+    #textBtn {
+      width: 100%; } }
 
 /*# sourceMappingURL=main.css.map */

@@ -35,6 +35,7 @@
       				<li><a class="home-nav "href="javascript:void(0)" data-target="#easyExam">領域適性検査</a></li>
       				<li class="active"><a class="home-nav" href="javascript:void(0)" data-target="#classResist">履修登録</a></li>
       				<li><a class="home-nav" href="javascript:void(0)" data-target="#fieldLabs">研究室探し</a></li>
+      				<li><a class="home-nav" href="javascript:void(0)" data-target="#clsDataVisualization">授業関係図</a></li>
       			</ul>
       			<ul class="nav navbar-nav navbar-right">
       				
@@ -56,6 +57,7 @@
           <div class="tabs">
             <div class="tabs__ryouiki tabContent" id="ryouiki">
               <h2 class="noteLabel">領域別検索</h2>
+              <p>ここでは、領域ごとにボタンをクリックすることで、その領域に関係する授業を閲覧・履修することができます。</p>
               <div class="btns">
                 <button class="btn btn-default fieldBtn bigBtn apply-bg" name="applyFieldBtn" data-field="応用物理学">応用物理学領域</button>
                 <button class="btn btn-default fieldBtn bigBtn material-bg" name="materialFieldBtn" data-field="物質理工学">物質理工学領域</button>
@@ -66,6 +68,7 @@
             </div>
             <div class="tabs__lab tabContent" id="lab">
               <h2 class="noteLabel">研究室別検索</h2>
+              <p>研究室の教授の左にあるボタンをクリックすることで、その研究室における履修推奨科目を検索することができます。また教授名のリンクをクリックすることで、教授の紹介ホームページに遷移することができます。</p>
               <div class="lab__ryouiki">
                 <ul class="nav nav-pills labBtns">
                 	<li role="presentation" class="apply-bg labBtn" data-target="#wellApply"><h3 class="fontBold fontWhite">応用物理学</h3></li>
@@ -73,8 +76,8 @@
                 	<li role="presentation" class="bio-bg labBtn" data-target="#wellBio"><h3 class="fontBold fontWhite">生命理工学</h3></li>
                 	<li role="presentation" class="env-bg labBtn" data-target="#wellEnv"><h3 class="fontBold fontWhite">環境理工学</h3></li>
                 </ul>
-                <div class="lab__ryouiki__apply well well-lg apply-well well-ryouiki active" id="wellApply" >
-                  <div class="profs" id="applyProfs">
+                <div class="lab__ryouiki__apply well well-lg apply-well well-ryouiki" id="wellApply" >
+                  <div class="profs" id="applyProfs" >
                     
                   </div>
                 </div>
@@ -102,6 +105,7 @@
             </div>
             <div class="tabs__keyword tabContent" id="free">
               <h2 class="noteLabel">フリーワード検索</h2>
+              <p>ここでは、様々なカテゴリに合わせて授業を検索することができます。カテゴリボタンをまず選択し、キーワードを入力して「検索」ボタンを押すと、キーワードにマッチした授業を発見することができます。</p>
               <div class="dropdown">
                 <input type="radio" name="search" value="1">
               	教科名
@@ -156,8 +160,8 @@
               	</ul>
               </div>
               
-              <div class="input-group">
-              	<input type="text" class="form-control" placeholder="テキスト入力欄(30文字まで)" id="searchCls">
+              <div class="input-group" id="freewordSearch">
+              	<input type="text" class="form-control" placeholder="テキスト入力欄(30文字まで)" id="searchTxt">
               	<span class="input-group-btn">
               		<button type="button" class="btn btn-default" id="searchBtn">検索</button>
               	</span>
@@ -171,6 +175,7 @@
         <div id="displayModel" class="col-sm-4">
           <div id="rishuModel">
             <h2 class="sidebarTitle" id="rishuModel__title">履修モデル</h2>
+            <p>ここでは仮に登録した授業を管理することができます。リンクをクリックすることでその授業を呼び出すことができます。</p>
             <div class="content" id="rishuModel__Content">
               <h6>1年春学期　<span class="unit__rishu__1"></span>単位</h6>
               <ul id="rishu__1">
@@ -211,7 +216,7 @@
               <ul id="rishu__8">
                 
               </ul>
-              <a download="Myplan.html" id="download"><button onclick="pushTxtFile()" type="button" class="btn btn-success" id="textBtn">計画を書き出す</button></a>
+              
             </div>
           </div>
           <div id="rishuInfo">
@@ -234,6 +239,7 @@
             <h6 style="color: #ff4500" class="eng">専門応用科目工学系：    <span id="subject__6"></span>単位</h6>
             <h6>専門関連科目            <span id="subject__7"></span>単位</h6>
             <h6>専門学外学習科目        <span id="subject__8"></span>単位</h6>
+            <a download="Myplan.html" id="download"><button onclick="pushTxtFile()" type="button" class="btn btn-success" id="textBtn">履修モデルを書き出す</button></a>
             
           </div>
         </div>
@@ -274,10 +280,14 @@
         </tbody>
       </table>
     </main>
+    <main id="clsDataVisualization">
+      
+    </main>
     <footer>
       
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="javascript/d3.js"></script>
     <script src="javascript/bootstrap.min.js"></script>
     <script src="javascript/main.js"></script>
   </body>

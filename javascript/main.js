@@ -1,18 +1,21 @@
 /* global $ */
+/* global d3 */
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
 var subjectUnit = [0,0,0,0,0,0,0,0,0];
 var standardUnit= [6,8,20,8,38];
 var totalUnit  = 0;
-var minimalUnit = [];
 var profData   ;
 var otherProfData;
 var eleValues;
 var fieldData  = [];
 var ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
 var ryouikiColor = [ "env", "apply", "material", "bio"];
-
+// moduleの作成
+var rishuSystem = {
+  
+};
 
 // --------------- 履修登録用の関数 --------------- //
 function pushTxtFile(){
@@ -425,6 +428,7 @@ function clsOnClick() {
 }
 function labBtnOnClick() {
   $(".well-ryouiki").css("display", "none");
+  $("#wellApply").css("display", "block");
   $(".labBtn").on("click", function() {
     var id = $(this).attr("data-target");
     $(".well-ryouiki").css("display", "none");
@@ -457,7 +461,7 @@ function showClasses (clsArr) {
       }
     }
     
-    if((clsArr[i].classField === "物質理工学") && clsArr[i].isFieldCommon){
+    if((clsArr[i].classField === "���質理工学") && clsArr[i].isFieldCommon){
       if(clsArr[i].subject === "専門応用科目理工学系"){
         lecture.find('#' + clsArr[i].name).attr("class", "material sciEn ryouikihisshu").append("(領域選択必修)");
       } else if(clsArr[i].subject === "専門応用科目工学系"){
@@ -534,6 +538,11 @@ function showClasses (clsArr) {
   }// for (var i=0; i < clsArr.length ; i++) 終了
 }
 // --------------- 履修登録用関数終了 --------------- //
+
+// --------------- 授業関係のデータビジュアライゼーション -------------- //
+function setClsData(){
+  
+}
 
 // --------------- easyExam用の関数 --------------- //
 var evals = [0,0,0,0];
@@ -632,20 +641,6 @@ function showTable() {
   }
 }
 // --------------- データの読み込み --------------- //
-$.ajax({
-  type: 'GET',
-  url: './data/classData.json',
-  dataType: 'json'
-})
-.then(
-  function(json) {
-    console.log(json);
-     
-  },
-  function() {
-    console.log('読み込みに失敗しました');
-  }
-);
 
 $(document).ready(function() {
   var rishuModel = rishuModel || [];
@@ -704,6 +699,7 @@ window.onload = function(){
   .then(
     function(json) {
       console.log(json);
+      
        allLectures = json;
        showClasses(allLectures);
        pushInitLecs();
@@ -723,6 +719,7 @@ window.onload = function(){
        clear();
        
        showTable();
+       
     },
     function() {
       console.log('読み込みに失敗しました');

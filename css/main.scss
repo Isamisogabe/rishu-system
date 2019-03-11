@@ -165,7 +165,7 @@ body {
   }
 }
 .well {
-  @include border-radius(0 0 3px 3px);
+  @include border-radius(0 5px 5px 5px);
 }
 .apply-well {
   background-color: lighten($orangeColor, 30%);
@@ -212,7 +212,7 @@ body {
   .lab__ryouiki{
     ul {
       li {
-        @include border-radius(3px 3px 0 0);
+        @include border-radius(5px 5px 0 0);
         padding: 0 10px;
         cursor: pointer;
         margin-bottom: -1px;
@@ -276,6 +276,19 @@ body {
           white-space: nowrap;
         }
       }
+    }
+  } // #dropSearchField
+  
+  #freewordSearch {
+    width: 70%;
+    @media(max-width: 800px){
+      width: 100%;
+    }
+    #searchTxt {
+      
+    }
+    .input-group-btn {
+      text-align: left;
     }
   }
 }
@@ -361,6 +374,7 @@ body {
   @media(max-width: 800px){
     position: static;
     padding-left: 15px;
+    padding-right: 15px;
     
   }
   
@@ -454,5 +468,13 @@ body {
         }
       }
     }
+  }
+}
+#textBtn {
+  display: inline-block;
+  width: 98%;
+  margin : 0 0 100px 0;
+  @media(max-width: 800px) {
+    width: 100%;
   }
 }
