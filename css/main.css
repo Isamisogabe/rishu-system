@@ -383,4 +383,12 @@ body {
     #textBtn {
       width: 100%; } }
 
+#physicsGraph {
+  display: none;
+  top: 100px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute; }
+
 /*# sourceMappingURL=main.css.map */

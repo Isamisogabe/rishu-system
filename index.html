@@ -239,7 +239,7 @@
             <h6 style="color: #ff4500" class="eng">専門応用科目工学系：    <span id="subject__6"></span>単位</h6>
             <h6>専門関連科目            <span id="subject__7"></span>単位</h6>
             <h6>専門学外学習科目        <span id="subject__8"></span>単位</h6>
-            <a download="Myplan.html" id="download"><button onclick="pushTxtFile()" type="button" class="btn btn-success" id="textBtn">履修モデルを書き出す</button></a>
+            <a download="Myplan.html" id="download"><button onclick="pushHtmlFile()" type="button" class="btn btn-success" id="textBtn">履修モデルを書き出す</button></a>
             
           </div>
         </div>
@@ -281,13 +281,36 @@
       </table>
     </main>
     <main id="clsDataVisualization">
-      
+      <div class="btns"></div>
+      <div id="ryouikiGraphs">
+        <div class="btns">
+          <button class="btn btn-default graphBtn bigBtn apply-bg" name="applyFieldBtn" data-id="#physicsGraph">応用物理学領域</button>
+          <button class="btn btn-default graphBtn bigBtn material-bg" name="materialGraphBtn" data-id="#materialGraph">物質理工学領域</button>
+          <button class="btn btn-default graphBtn bigBtn bio-bg" name="bioGraphBtn" data-id="#bioGraph">生命理工学領域</button>
+          <button class="btn btn-default graphBtn bigBtn env-bg" name="envGraphBtn" data-id="#envGraph">環境理工学領域</button>
+        </div>
+        <div class="graphs">
+          <div class="graph" id="physicsGraph">
+            
+          </div>
+          <div class="graph" id="materialGraph">
+            
+          </div>
+          <div class="graph" id="bioGraph">
+            
+          </div>
+          <div class="graph" id="envGraph">
+            
+          </div>
+        </div>
+      </div>
     </main>
     <footer>
       
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src="javascript/d3.js"></script>
+    <script src="javascript/sigma.min.js"></script>
+    <script src="javascript/sigma.plugins.dragNodes.min.js"></script>
     <script src="javascript/bootstrap.min.js"></script>
     <script src="javascript/main.js"></script>
   </body>

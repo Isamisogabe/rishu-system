@@ -1,5 +1,5 @@
 /* global $ */
-/* global d3 */
+/* global sigma */
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
@@ -18,7 +18,7 @@ var rishuSystem = {
 };
 
 // --------------- 履修登録用の関数 --------------- //
-function pushTxtFile(){
+function pushHtmlFile(){
   $("#textBtn").hide();
   var htmlContent = $("#rishuModel__Content").html(),
       content = htmlContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''),
@@ -35,7 +35,7 @@ function pushTxtFile(){
 }
 function pushInitLecs(){
   for(var i=0;i<allLectures.length;i++){
-    if(allLectures[i].isCommmon){
+    if(allLectures[i].isCommon){
       var j = i + 1,
           onBtn = $(".lecture:nth-child(" + j +") .rishuBtnOn"),
           offBtn = $(".lecture:nth-child(" + j +") .rishuBtnOff"),
@@ -540,8 +540,243 @@ function showClasses (clsArr) {
 // --------------- 履修登録用関数終了 --------------- //
 
 // --------------- 授業関係のデータビジュアライゼーション -------------- //
-function setClsData(){
+
+function isExist(clsName, graph){
+  for(var i in graph.nodes){
+    
+    if(graph.nodes[i].label === clsName) return true;
+  }
+  return false;
+}
+function searchLecJson(clsName){
+  var cls;
+  for(var i =0;i<allLectures.length; i++) {
+    if(clsName === allLectures[i].name) {
+      cls = allLectures[i];
+      break;
+    }
+  }
+  return cls;
+}
+function* calcPosX () {
   
+}
+function calcMargin(clsName) {
+  var rate = 0.029;
+  var len = parseInt(clsName.length, 10);
+  if(len >= 30) rate =0.008;
+  return rate * len;
+  
+}
+function setClsData(){
+  const positionY = [0.85, 0.75, 0.65, 0.55, 0.25, 0.05];
+  var positionX = [0,0,0,0,0,0];
+  var maxNode = allLectures.length,
+      maxEdge,
+      i;
+  var physGraph  = {
+        nodes: [],
+        edges: []
+      },
+      materialGraph = {
+        nodes: [],
+        edges: []
+      }, 
+      envGraph = {
+        nodes: [],
+        edges: []
+      }, 
+      bioGraph = {
+        nodes: [],
+        edges: []
+      };
+  var physLecs = [];
+  
+  for (i = 0; i < allLectures.length ; i++){
+    console.log(positionX);
+    var lec = allLectures[i];
+    console.log(lec.name);
+    console.log("isCommon:", lec.isCommon);
+    if(((lec.classField === "応用物理学") || lec.isCommon)  && (lec.semester < 7)){
+      physLecs.push(lec);
+      if(!(isExist(lec.name, physGraph))){
+        
+        var id = parseInt(lec.semester,10) -1;
+        console.log("lecName", lec.name);
+        physGraph.nodes.push({
+          id: lec.name,
+          label: lec.name,
+          x: positionX[id],
+          y: positionY[id],
+          size: 0.5,
+          color: '#666'
+        });
+        positionX[id]+=calcMargin(lec.name);
+      }
+      
+      
+      for(var j in lec.parentClass) {
+        var parentLec = lec.parentClass[j];
+        console.log("parentLec: ",parentLec);
+        if(parentLec === undefined) continue;
+        console.log("parentLec:", parentLec);
+        console.log("ペアレントクラスでノードに存在するかどうかisExist:", isExist(parentLec, physGraph));
+        console.log("この時点でのgraph", physGraph.nodes);
+        if(!(isExist(parentLec, physGraph))) {
+          var parentLecJson = searchLecJson(parentLec);
+          console.log("parentLecJson: ", parentLecJson);
+          if(parentLecJson === undefined) continue;
+          
+          physGraph.nodes.push({
+            id: parentLecJson.name,
+            label: parentLecJson.name,
+            x: positionX[parseInt(parentLecJson.semester, 10)-1],
+            y: positionY[parseInt(parentLecJson.semester, 10)-1],
+            size: 0.5,
+            color: '#666'
+          });
+          positionX[parseInt(parentLecJson.semester, 10)-1]+=calcMargin(parentLecJson.name);
+        }
+      }
+      
+    
+      for(var j in lec.childClass){
+        var childLec = lec.childClass[j];
+        console.log(childLec);
+        if(childLec === undefined) continue;
+        console.log(isExist(childLec, physGraph));
+        if(isExist(childLec, physGraph)) continue;
+        var childLecJson = searchLecJson(childLec);
+        console.log("childLecJson: ", parentLecJson);
+        if(childLecJson === undefined) continue;
+        
+        physGraph.nodes.push({
+          id: childLecJson.name,
+          label: childLecJson.name,
+          x: positionX[parseInt(childLecJson.semester, 10)-1],
+          y: positionY[parseInt(childLecJson.semester, 10)-1],
+          size: 0.5,
+          color: '#666'
+        });
+        positionX[parseInt(childLecJson.semester, 10)-1]+=calcMargin(childLecJson.name);
+      }
+      
+    }
+  }
+  
+  console.log("ノードの状態：", physGraph.nodes);
+  var parentEdgeCount = 0;
+  var childEdgeCount  = 0;
+  for(i=0;i<physLecs.length;i++){
+    var lec = physLecs[i];
+    console.log(lec.name);
+    for(var id in lec.parentClass){
+      var parentClsName = lec.parentClass[id];
+      console.log("parentClassName", parentClsName);
+      if(parentClsName === undefined) continue;
+      if(isExist(parentClsName, physGraph)){
+          physGraph.edges.push({
+          id: 'edgeParent' + parentEdgeCount,
+          source: lec.name,
+          target: parentClsName,
+          size: 0.1,
+          type: 'line',
+          color: '#ddd',
+          hover_color: '#ffd700'
+        });
+      }
+      
+      parentEdgeCount++;
+    }
+    for(var id in lec.childClass) {
+      var childClsName = lec.childClass[id];
+      if(childClsName === undefined) continue;
+      if(isExist(childClsName, physGraph)){
+          physGraph.edges.push({
+          id: 'edgeChild' + childEdgeCount,
+          source: lec.name,
+          target: childClsName,
+          size: 0.1,
+          type: 'line',
+          color: '#ddd',
+          hover_color: '#ffd700'
+        });
+      }
+      childEdgeCount++;
+    }
+  }
+  
+    
+  var physSigma = new sigma({
+    graph: physGraph,
+    renderer: {
+      container: document.getElementById('physicsGraph'),
+      type: 'canvas'
+    },
+    settings: {
+      doubleClickEnabled: false,
+      minEdgeSize: 0.1,
+      maxEdgeSize: 2,
+      enableEdgeHovering: true,
+      enableCamera: false,
+      edgeHoverColor: 'edge',
+      defaultEdgeHoverColor: '#ffd700',
+      edgeHoverSizeRatio: 1,
+      edgeHoverExtremities: true,
+      labelSize: "fixed"
+    }
+  });
+  
+  // Bind the events:
+  physSigma.bind('overNode', function(e) {
+    var nodeName = e.data.node.name,
+        max_edge = e.data.edges;
+        edges = function() {
+          var list = [];
+        
+        }
+    var hoverNode = function () {
+      
+      
+    };
+  });
+  physSigma.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
+    console.log(e.type, e.data.node.label, e.data.captor, e.data);
+  });
+  physSigma.bind('overEdge outEdge clickEdge doubleClickEdge rightClickEdge', function(e) {
+    console.log(e.type, e.data.edge, e.data.captor);
+  });
+  physSigma.bind('clickStage', function(e) {
+    console.log(e.type, e.data.captor);
+  });
+  physSigma.bind('doubleClickStage rightClickStage', function(e) {
+    console.log(e.type, e.data.captor);
+  });
+  
+  physSigma.refresh();
+  // Initialize the dragNodes plugin:
+var dragListener = sigma.plugins.dragNodes(physSigma, physSigma.renderers[0]);
+
+dragListener.bind('startdrag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drag', function(event) {
+  console.log(event);
+});
+dragListener.bind('drop', function(event) {
+  console.log(event);
+});
+dragListener.bind('dragend', function(event) {
+  console.log(event);
+});
+}
+function graphBtnOnClick () {
+  $(".graphBtn").on("click", function() {
+    var data = $(this).attr("data-id");
+    $(".graph").css("display", "none");
+    $(data).css("display", "block");
+    setClsData();
+  });
 }
 
 // --------------- easyExam用の関数 --------------- //
@@ -693,7 +928,7 @@ $(document).ready(function() {
 window.onload = function(){
   $.ajax({
     type: 'GET',
-    url: './data/classData7.json',
+    url: './data/classData10.json',
     dataType: 'json'
   })
   .then(
@@ -720,6 +955,7 @@ window.onload = function(){
        
        showTable();
        
+       graphBtnOnClick();
     },
     function() {
       console.log('読み込みに失敗しました');

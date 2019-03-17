@@ -1,5 +1,25 @@
 [
   {
+    "prof": "山上敦士",
+    "field": "",
+    "specialField": "",
+    "classes": "微積分学2 偏微分方程式",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/atsushi-yamagami/",
+    "description": ""
+  },
+  {
+    "prof": "北野晃明",
+    "field": "",
+    "specialField": "",
+    "classes": "微積分学1",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/teruaki-kitano/",
+    "description": ""
+  },
+  {
     "prof": "小林幸夫",
     "field": "",
     "specialField": "",
@@ -47,6 +67,16 @@
     "else": "",
     "master": "none",
     "link": "https://www.soka.ac.jp/faculty-profiles/hiroki-imamura/",
+    "description": ""
+  },
+  {
+    "prof": "畝見達夫",
+    "field": "",
+    "specialField": "",
+    "classes": "",
+    "else": "",
+    "master": "none",
+    "link": "https://www.soka.ac.jp/faculty-profiles/tatsuo-unemi/",
     "description": ""
   },
   {
