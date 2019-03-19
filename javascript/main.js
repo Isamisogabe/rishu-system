@@ -10,8 +10,8 @@ var profData   ;
 var otherProfData;
 var eleValues;
 var fieldData  = [];
-var ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
-var ryouikiColor = [ "env", "apply", "material", "bio"];
+const ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
+const ryouikiColor = [ "env", "apply", "material", "bio"];
 // moduleの作成
 var rishuSystem = {
   
@@ -134,7 +134,7 @@ function deployLabRadioBtn () {
 }
 function searchCls() {
   $("#searchBtn").on("click", function(){
-    var text = $("#searchCls").val(),
+    var text = $("#searchTxt").val(),
         reg  = new RegExp(text);
     console.log(reg);
     if(text.length >= 30) return window.alert("30文字を超えています。修正してください。");
@@ -173,7 +173,7 @@ function searchCls() {
     console.log(text);
   })
 }
-function getAddress(profName){
+function getProfLink(profName){
   var link;
   for(var i=0; i < profData.length; i++) {
     if(profData[i].prof === profName){
@@ -183,7 +183,7 @@ function getAddress(profName){
   }
   for(var i=0; i<otherProfData.length; i++){
     if(otherProfData[i].prof === profName){
-      link = profData[i].link;
+      link = otherProfData[i].link;
       break;
     }
   }
@@ -250,10 +250,11 @@ function selectSubject(subject){
   }
 }
 function selectRyouiki(){
+  // 領域ボタンを押すと消去法で関係ない授業を消すようにする。
   $(".fieldBtn").on("click", function(){
     var btn     = $(this),
         field   = btn.attr("data-field"),
-        isOnlyFieldCommon = btn.attr("data-isOnlyFieldCommon");
+        isOnlyFieldCommon = btn.attr("data-isonlyfieldcommon");
     console.log(isOnlyFieldCommon);
     if(field == "none"){
       $("#" + field).parent().html("");
@@ -262,11 +263,34 @@ function selectRyouiki(){
     $(".lecture").show();
     for(var i=0;  i < allLectures.length; i++){
       var k=i+1;
-      if(!(field === allLectures[i].classField)){
-        $(".lecture:nth-child(" + k + ")").css("display", "none");
+      var lecture = $(".lecture:nth-child(" + k + ")");
+      if(!isOnlyFieldCommon) {
+        var classField = allLectures[i].classField.split(" ");
+        console.log(field in classField);
+        lecture.css("display", "none");
+        for(var l in classField){
+          if(field === classField[l]){
+            lecture.css("display", "block");
+            if(allLectures[i].isCommon){
+              lecture.css("display", "none");
+            }
+            break;
+          }
+          lecture.css("display", "none");
+        }
       } 
-      if(isOnlyFieldCommon && (!allLectures[i].isFieldCommon)){
-        $(".lecture:nth-child(" + k + ")").css("display", "none");
+      else if (isOnlyFieldCommon) {
+        lecture.css("display", "none");
+        if(!(allLectures[i].reqField === undefined)){
+          var reqField = allLectures[i].reqField.split(" ");
+        
+          for(var l in reqField){
+            if(reqField[l] === field){
+              lecture.css("display", "block");
+              break;
+            }
+          }
+        }
       }
     }
     
@@ -436,68 +460,70 @@ function labBtnOnClick() {
   });
 }
 function showClasses (clsArr) {
+  // 授業を包括するタグの生成
   var divLecs      = $(".lectures");
   for (var i=0; i < clsArr.length ; i++) {
-    var childLecs = clsArr[i].childClass,
-        parentLecs  = clsArr[i].parentClass;
-    var j = i+1;
+    var childLecs   = clsArr[i].childClass,  // 子クラスの変数
+        parentLecs  = clsArr[i].parentClass, // 親クラスの変数
+        reqField;                            // 領域選択必修の領域の変数
+    var j = i+1;                             // for Jquery nth-child
+    
+    
+    // 新しく授業タグを生成する
     divLecs.append('<div class="lecture" id=' + clsArr[i].classId + '></div>');
+    
+    // 授業タグを指定する変数
     var lecture = $(".lecture:nth-child(" + j + ")");
+        
     
+    // 授業タイトル部分の内容作成
     lecture.append('<div class="col-sm-10"><h3 class="lecture__title"> <span id=' + clsArr[i].name + ' >' + clsArr[i].name + '</span><span>  </span><span class="glyphicon glyphicon-plus detailBtn detailOnBtn"  aria-hidden="true"></span><span class="glyphicon glyphicon-minus detailBtn detailOffBtn" style="display:none" aria-hidden="true"></span> </span> <h4>' + clsArr[i].subject + " " + clsArr[i].year + '年 ' + clsArr[i].semester + 'セメスター (' + clsArr[i].unit + '単位)</h4></div> ');
+    var lecNameTag = lecture.find('#' + clsArr[i].name);
+    // lectureタグに含む内容からidで探査し、タイトルを見つけてクラスをつける
+    // これらのクラスをつけるのはフォントを加工するためである。
+    // sciEnは理工学系で太字となる。
     if(clsArr[i].subject === "専門応用科目理工学系"){
-      lecture.find('#' + clsArr[i].name).attr("class", "sciEn");
+      lecNameTag.attr("class", "sciEn");
     }
+    // 工学系はすべて斜体の文字となる。
     if(clsArr[i].subject === "専門応用科目工学系"){
-      lecture.find('#' + clsArr[i].name).attr("class", "eng");
-    }
-    if((clsArr[i].classField === "環境理工学") && clsArr[i].isFieldCommon){
-      if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "env sciEn ryouikihisshu").append("(領域選択必修)");
-      } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "env eng ryouikihisshu").append("(領域選択必修)");
-      } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "env ryouikihisshu").append("(領域選択必修)");
-      }
+      lecNameTag.attr("class", "eng");
     }
     
-    if((clsArr[i].classField === "���質理工学") && clsArr[i].isFieldCommon){
-      if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "material sciEn ryouikihisshu").append("(領域選択必修)");
-      } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "material eng ryouikihisshu").append("(領域選択必修)");
-      } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "material ryouikihisshu").append("(領域選択必修)");
+    if(!(clsArr[i].reqField === undefined)){
+      reqField = clsArr[i].reqField.split(" ");
+      // 領域必修がある場合のフォント処理をするコードである。
+      for(var l=0;l<reqField.length;l++){
+        for (var k=0;k<ryouiki.length;k++){ // 定数列ryouikiはグローバル変数
+          if((reqField[l] === ryouiki[k]) && clsArr[i].isFieldCommon){
+            var className;
+            if(clsArr[i].subject === "専門応用科目理工学系"){
+              className = ryouikiColor[k] + " sciEn ryouikihisshu";
+              lecNameTag.attr("class", className).append("(領域選択必修)");
+            } else if(clsArr[i].subject === "専門応用科目工学系"){
+              className = ryouikiColor[k] + " eng ryouikihisshu";
+              lecNameTag.attr("class", className).append("(領域選択必修)");
+            } else {
+              className = ryouikiColor[k] + " sciEn ryouikihisshu";
+              lecNameTag.attr("class", className).append("(領域選択必修)");
+            }
+          }
+        }
       }
+      
     }
     
-    if((clsArr[i].classField === "応用物理学") && clsArr[i].isFieldCommon){
-      if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "apply sciEn ryouikihisshu").append("(領域選択必修)");
-      } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "apply eng ryouikihisshu").append("(領域選択必修)");
-      } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "apply ryouikihisshu").append("(領域選択必修)");
-      }
-    }
     
-    if((clsArr[i].classField === "生命理工学") && clsArr[i].isFieldCommon){
-      if(clsArr[i].subject === "専門応用科目理工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "bio sciEn ryouikihisshu").append("(領域選択必修)");
-      } else if(clsArr[i].subject === "専門応用科目工学系"){
-        lecture.find('#' + clsArr[i].name).attr("class", "bio eng ryouikihisshu").append("(領域選択必修)");
-      } else {
-        lecture.find('#' + clsArr[i].name).attr("class", "bio ryouikihisshu").append("(領域選択必修)");
-      }
-    }
-    
+    // 推奨授業がある場合はここで赤の点線を下線として更新する。
     if(clsArr[i].isRecommended){
-      lecture.find('#' + clsArr[i].name).addClass("recommended").append("　推奨（物質・生命・環境）");
+      lecNameTag.addClass("recommended").append("　推奨（物質・生命・環境）");
     }
 
     
-    
+    // 履修するボタンの表示をするコード
     lecture.append('<div class="col-sm-2"><button class="rishuBtnOn rishuBtn btn btn-primary" style="display: inline-block;" data-clsNum="' + i + '"　value="' + i + '" >履修する</button><button class="rishuBtnOff rishuBtn btn btn-light" value="' + i + '" style="display: none;">はずす</button></div>');
+    
+    // タイトル下のテーブルに関するタグを付加するコード、説明欄、教授、関係する授業等である。
     lecture.append('<div class="table lectureDivTable" style="display: none;" ></div>');
     $(".lecture:nth-child(" + j + ") > .lectureDivTable").append('<table class="lecture__table table" > <tr><td>教員名</td><td class="profName"></td></tr> <tr><td>事前履修科目</td><td class="childClass nextClass"></td></tr> <tr><td>必要とする科目</td><td class="parentClass nextClass"></td> </tr><tr><td>概要</td><td ><p class="lectureDesc">' + clsArr[i].description + '</p></td></tr></table>');
     
@@ -505,7 +531,7 @@ function showClasses (clsArr) {
     // --------------- 授業を担当する教授の名前にリンクを載せて表示する（リンクがない場合はのせない） --------------- //
     var profNames = clsArr[i].teacher.split(" ");
     for(var k=0; k < profNames.length; k++){
-      var profLink = getAddress(profNames[k]);
+      var profLink = getProfLink(profNames[k]);
       
       if(!(profLink === undefined)){
         $(".profName:eq(" + i + ")").append('<a href=' + profLink + ' target=_blank>' + profNames[k] + ' </a>');
@@ -569,7 +595,7 @@ function calcMargin(clsName) {
   
 }
 function setClsData(){
-  const positionY = [0.85, 0.75, 0.65, 0.55, 0.25, 0.05];
+  const positionY = [0.98, 0.80, 0.62, 0.44, 0.26, 0.08];
   var positionX = [0,0,0,0,0,0];
   var maxNode = allLectures.length,
       maxEdge,
@@ -928,7 +954,7 @@ $(document).ready(function() {
 window.onload = function(){
   $.ajax({
     type: 'GET',
-    url: './data/classData10.json',
+    url: './data/classData12.json',
     dataType: 'json'
   })
   .then(
