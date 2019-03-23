@@ -1,5 +1,6 @@
 /* global $ */
 /* global sigma */
+
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
@@ -12,6 +13,29 @@ var eleValues;
 var fieldData  = [];
 const ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
 const ryouikiColor = [ "env", "apply", "material", "bio"];
+const ryouikiColorCode = ["#00f100","#ffd700", "#5cb3f1", "#ff4500"]
+var ryouikiGraphs  = [{
+        nodes: [],
+        edges: []
+      },
+      {
+        nodes: [],
+        edges: []
+      }, 
+      {
+        nodes: [],
+        edges: []
+      }, 
+      {
+        nodes: [],
+        edges: []
+      }];
+var ryouikiHisshu = [
+  [],
+  [],
+  [],
+  []
+  ]
 // moduleの作成
 var rishuSystem = {
   
@@ -93,14 +117,33 @@ function switchTabs(){
     $(target).css("display", "block");
   });
 }
-function deployLabRadioBtn () {
+function deployLabRadioBtn () { // 研究室別検索において各領域タブのラジオボタンを設定・配置する関数
   var profName;
+  
+  for(var i=0;i<profData.length; i++){
+    var specialFields = profData[i].specialField.split(" ");
+    for(var j=0;j<specialFields.length;j++){
+      var field = specialFields[j];
+      if(field === "応用物理学"){
+        $("#applyProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
+      }
+      if(field === "物質理工学"){
+        $("#materialProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
+      }
+      if(field === "生命理工学"){
+        $("#bioProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
+      }
+      if(field === "環境理工学"){
+        $("#envProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
+      }
+    }
+  }
   for(var i=0;i<profData.length; i++){
     var fields = profData[i].field.split(" ");
     for(var j=0;j<fields.length;j++){
       var field = fields[j];
       if(field === "応用物理学"){
-      $("#applyProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
+        $("#applyProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
       }
       if(field === "物質理工学"){
         $("#materialProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
@@ -113,7 +156,6 @@ function deployLabRadioBtn () {
       }
     }
   }
-  
   $("input[name='profName']").on("click", function() {
     $(".lecture").css("display", "none");
     profName = $("input[name='profName']:checked").val();
@@ -588,161 +630,235 @@ function* calcPosX () {
   
 }
 function calcMargin(clsName) {
-  var rate = 0.029;
+  var rate = 0.035;
   var len = parseInt(clsName.length, 10);
-  if(len >= 30) rate =0.008;
+  if(len >= 30) rate =0.010;
+  if(len <= 3) rate = 0.05;
   return rate * len;
   
 }
-function setClsData(){
-  const positionY = [0.98, 0.80, 0.62, 0.44, 0.26, 0.08];
-  var positionX = [0,0,0,0,0,0];
-  var maxNode = allLectures.length,
-      maxEdge,
+function setNodeAndEdge (graph, field){
+  var positionY = [0.98, 0.80, 0.62, 0.44, 0.28, 0.08];
+  var positionX = [0,0.05,0.01,0.02,0.05,0];
+  var feedLineThreshold = 1.5,
+      fieldLecs = [],
       i;
-  var physGraph  = {
-        nodes: [],
-        edges: []
-      },
-      materialGraph = {
-        nodes: [],
-        edges: []
-      }, 
-      envGraph = {
-        nodes: [],
-        edges: []
-      }, 
-      bioGraph = {
-        nodes: [],
-        edges: []
-      };
-  var physLecs = [];
-  
   for (i = 0; i < allLectures.length ; i++){
     console.log(positionX);
-    var lec = allLectures[i];
-    console.log(lec.name);
-    console.log("isCommon:", lec.isCommon);
-    if(((lec.classField === "応用物理学") || lec.isCommon)  && (lec.semester < 7)){
-      physLecs.push(lec);
-      if(!(isExist(lec.name, physGraph))){
-        
-        var id = parseInt(lec.semester,10) -1;
-        console.log("lecName", lec.name);
-        physGraph.nodes.push({
-          id: lec.name,
-          label: lec.name,
-          x: positionX[id],
-          y: positionY[id],
-          size: 0.5,
-          color: '#666'
-        });
-        positionX[id]+=calcMargin(lec.name);
-      }
-      
-      
-      for(var j in lec.parentClass) {
-        var parentLec = lec.parentClass[j];
-        console.log("parentLec: ",parentLec);
-        if(parentLec === undefined) continue;
-        console.log("parentLec:", parentLec);
-        console.log("ペアレントクラスでノードに存在するかどうかisExist:", isExist(parentLec, physGraph));
-        console.log("この時点でのgraph", physGraph.nodes);
-        if(!(isExist(parentLec, physGraph))) {
-          var parentLecJson = searchLecJson(parentLec);
-          console.log("parentLecJson: ", parentLecJson);
-          if(parentLecJson === undefined) continue;
+    var lec        = allLectures[i];
+    if(!(lec.reqField === undefined)) var reqField = lec.reqField.split(" ");
+    
+    
+    var classField= lec.classField.split(" ");
+    for(var j=0; j<classField.length; j++){
+      if(((classField[j] === field) 
+       || (lec.isCommon)) 
+       && (parseInt(lec.semester, 10) < 7) 
+       && (!!reqField)){
+        var color = ryouikiColorCode[num];
+        var num = ryouiki.indexOf(field);
+        fieldLecs.push(lec);
+        if(!(isExist(lec.name, graph))){
           
-          physGraph.nodes.push({
-            id: parentLecJson.name,
-            label: parentLecJson.name,
-            x: positionX[parseInt(parentLecJson.semester, 10)-1],
-            y: positionY[parseInt(parentLecJson.semester, 10)-1],
-            size: 0.5,
+          var id = parseInt(lec.semester,10) -1;
+          console.log("lecName", lec.name);
+          
+          if( lec.reqField === field) color = color || "#666";
+          graph.nodes.push({
+            id: lec.name,
+            label: lec.name,
+            x: positionX[id],
+            y: positionY[id],
+            size: 0.3,
+            color: "#666"
+          });
+          positionX[id]+=calcMargin(lec.name);
+          
+          // 横方向の長さが一定以上を超えた場合上にノードをずらす
+          if(positionX[id] > feedLineThreshold){
+            positionX[id] -=feedLineThreshold;
+            positionY[id] -=0.04;
+          }
+        }
+        
+        
+        for(var l in lec.parentClass) {
+          var parentLec = lec.parentClass[l];
+          console.log("parentLec: ",parentLec);
+          if(parentLec === undefined) continue;
+          console.log("parentLec:", parentLec);
+          console.log("ペアレントクラスでノードに存在するかどうかisExist:", isExist(parentLec, graph));
+          console.log("この時点でのgraph", graph.nodes);
+          if(!(isExist(parentLec, graph))) {
+            var parentLecJson = searchLecJson(parentLec);
+            console.log("parentLecJson: ", parentLecJson);
+            if(parentLecJson === undefined) continue;
+            
+            graph.nodes.push({
+              id: parentLecJson.name,
+              label: parentLecJson.name,
+              x: positionX[parseInt(parentLecJson.semester, 10)-1],
+              y: positionY[parseInt(parentLecJson.semester, 10)-1],
+              size: 0.3,
+              color: '#666',
+            });
+            positionX[parseInt(parentLecJson.semester, 10)-1]+=calcMargin(parentLecJson.name);
+            if(positionX[parseInt(parentLecJson.semester, 10)-1]>feedLineThreshold){
+              positionX[parseInt(parentLecJson.semester, 10)-1]-=feedLineThreshold;
+              positionY[parseInt(parentLecJson.semester, 10)-1]-=0.04;
+            }
+          }
+        }
+        
+      
+        for(var l in lec.childClass){
+          var childLec = lec.childClass[l];
+          console.log(childLec);
+          if(childLec === undefined) continue;
+          console.log(isExist(childLec, graph));
+          if(isExist(childLec, graph)) continue;
+          var childLecJson = searchLecJson(childLec);
+          console.log("childLecJson: ", parentLecJson);
+          if(childLecJson === undefined) continue;
+          
+          graph.nodes.push({
+            id: childLecJson.name,
+            label: childLecJson.name,
+            x: positionX[parseInt(childLecJson.semester, 10)-1],
+            y: positionY[parseInt(childLecJson.semester, 10)-1],
+            size: 0.3,
             color: '#666'
           });
-          positionX[parseInt(parentLecJson.semester, 10)-1]+=calcMargin(parentLecJson.name);
+          positionX[parseInt(childLecJson.semester, 10)-1]+=calcMargin(childLecJson.name);
+          if(positionX[parseInt(childLecJson.semester, 10)-1]>feedLineThreshold){
+            positionX[parseInt(childLecJson.semester, 10)-1] -=feedLineThreshold;
+            positionY[parseInt(childLecJson.semester, 10)-1] -=0.04;
+          }
+        }
+        
+      }
+    }
+    
+  }
+  for (i = 0; i < allLectures.length ; i++){
+    var lec = allLectures[i];
+    if(lec.isFieldCommon){
+      if(lec.reqField === undefined) continue;
+      var fields = lec.reqField.split(" ");
+      for(var j= 0; j< fields.length; j++){
+        var field = fields[j];
+        var fieldId = ryouiki.indexOf(field);
+        ryouikiHisshu[fieldId].push(lec);
+      }
+       
+    }
+  }
+  
+  for(var i=0; i< graph.nodes.length; i++){
+    var name = graph.nodes[i].label;
+    for(var j=0;j<ryouikiHisshu.length;j++){
+      var hisshuCls = ryouikiHisshu[j];
+      for(var k=0;k<hisshuCls.length;k++){
+        var lecture = hisshuCls[k];
+        if(lecture.name === name){
+          graph.nodes[i].color = ryouikiColorCode[j];
         }
       }
-      
-    
-      for(var j in lec.childClass){
-        var childLec = lec.childClass[j];
-        console.log(childLec);
-        if(childLec === undefined) continue;
-        console.log(isExist(childLec, physGraph));
-        if(isExist(childLec, physGraph)) continue;
-        var childLecJson = searchLecJson(childLec);
-        console.log("childLecJson: ", parentLecJson);
-        if(childLecJson === undefined) continue;
-        
-        physGraph.nodes.push({
-          id: childLecJson.name,
-          label: childLecJson.name,
-          x: positionX[parseInt(childLecJson.semester, 10)-1],
-          y: positionY[parseInt(childLecJson.semester, 10)-1],
-          size: 0.5,
-          color: '#666'
-        });
-        positionX[parseInt(childLecJson.semester, 10)-1]+=calcMargin(childLecJson.name);
-      }
-      
     }
   }
   
-  console.log("ノードの状態：", physGraph.nodes);
-  var parentEdgeCount = 0;
-  var childEdgeCount  = 0;
-  for(i=0;i<physLecs.length;i++){
-    var lec = physLecs[i];
-    console.log(lec.name);
-    for(var id in lec.parentClass){
-      var parentClsName = lec.parentClass[id];
+  console.log("ノードの状態：", graph.nodes);
+  var parentEdgeCount = 0,
+      childEdgeCount  = 0,
+      fieldLec;
+  console.log("fieldLecs", fieldLecs);
+  for(i=0;i<fieldLecs.length;i++){
+    fieldLec = fieldLecs[i];
+    console.log(fieldLec.name);
+    for(var id in fieldLec.parentClass){
+      var parentClsName = fieldLec.parentClass[id];
       console.log("parentClassName", parentClsName);
       if(parentClsName === undefined) continue;
-      if(isExist(parentClsName, physGraph)){
-          physGraph.edges.push({
+      if(isExist(parentClsName, graph)){
+          graph.edges.push({
           id: 'edgeParent' + parentEdgeCount,
-          source: lec.name,
+          source: fieldLec.name,
           target: parentClsName,
-          size: 0.1,
+          size: 0.03,
           type: 'line',
-          color: '#ddd',
+          color: '#eee',
           hover_color: '#ffd700'
         });
+        parentEdgeCount++;
       }
       
-      parentEdgeCount++;
+      
     }
-    for(var id in lec.childClass) {
-      var childClsName = lec.childClass[id];
+    for(var id in fieldLec.childClass) {
+      var childClsName = fieldLec.childClass[id];
       if(childClsName === undefined) continue;
-      if(isExist(childClsName, physGraph)){
-          physGraph.edges.push({
+      if(isExist(childClsName, graph)){
+          graph.edges.push({
           id: 'edgeChild' + childEdgeCount,
-          source: lec.name,
+          source: fieldLec.name,
           target: childClsName,
-          size: 0.1,
+          size: 0.03,
           type: 'line',
-          color: '#ddd',
+          color: '#eee',
           hover_color: '#ffd700'
         });
+        childEdgeCount++;
       }
-      childEdgeCount++;
+      
     }
   }
+}
+function draw () {
+  // 生成されたキャンバスに線を引き、秋学期や春学期などのフォントを追加
+  var sigmaCanvas = $(".sigma-scene");
+  if(!!sigmaCanvas){
+    var canvasWidth  = sigmaCanvas.width(),
+        canvasHeight = sigmaCanvas.height(),
+        baseGraph    = $("#baseGraph");
+    baseGraph.width(canvasWidth);
+    baseGraph.height(canvasHeight);
+    $(".graphs").append("<canvas id='baseGraph' width='" + canvasWidth + "px' height=" + canvasHeight + "px' ></canvas>" );
+    var aspectRatio = canvasWidth / canvasHeight,
+        canvas = document.getElementById("baseGraph"),
+        context = canvas.getContext('2d'),
+        rateOfHeights = [0.89, 0.71, 0.53, 0.32, 0.12],
+        rateOfTextHeights = [0.98, 0.80, 0.62, 0.44, 0.26, 0.08],
+        semesterNames = ["１年春学期", "１年秋学期", "２年春学期", "２年秋学期", "３年春学期", "３年秋学期"],
+        height,
+        width = canvasWidth;
   
-    
-  var physSigma = new sigma({
-    graph: physGraph,
+    context.font= "20px '游ゴシック'";
+    console.log("context", context);
+    for(var i=0; i < rateOfHeights.length; i++) {
+      height = canvasHeight * rateOfHeights[i];
+      context.fillRect(0,height,width,1);
+      
+    }
+    for(var j=0; j < semesterNames.length; j++) {
+      height = canvasHeight * rateOfTextHeights[j];
+      context.fillText(semesterNames[j], 10, height);
+    }
+  }
+}
+function showGraph(field){
+  
+  var i = ryouiki.indexOf(field),
+      ryouikiGraph = ryouikiGraphs[i];
+  var s = new sigma({
+    graph: ryouikiGraph,
     renderer: {
       container: document.getElementById('physicsGraph'),
       type: 'canvas'
     },
     settings: {
       doubleClickEnabled: false,
-      minEdgeSize: 0.1,
-      maxEdgeSize: 2,
+      minEdgeSize: 0.03,
+      maxEdgeSize: 1.2,
       enableEdgeHovering: true,
       enableCamera: false,
       edgeHoverColor: 'edge',
@@ -753,55 +869,198 @@ function setClsData(){
     }
   });
   
+  
+  
+    
+  
+  
+  function findNode(className){
+    var node;
+    for(var i=0;i<ryouikiGraph.nodes.length; i++){
+      if(ryouikiGraph.nodes[i].label === className) {
+        node = ryouikiGraph.nodes[i];
+        break;
+      }
+    }
+    return node;
+  }
   // Bind the events:
-  physSigma.bind('overNode', function(e) {
-    var nodeName = e.data.node.name,
-        max_edge = e.data.edges;
-        edges = function() {
-          var list = [];
+  var lightUpSigma;
+  s.bind('doubleClickNode', function(e) {
+    console.log("hovered", e.data);
+    
+    var nodeName = e.data.node.label;
+    findNode(nodeName).color = "#ffd700";
+    for(var i=0; i<ryouikiGraph.edges.length; i++) {
+      var source = ryouikiGraph.edges[i].source,
+          target = ryouikiGraph.edges[i].target;
+      
+      if(source === nodeName) {
+        var node = findNode(target);
+        node.color = "#ffd700";
+        ryouikiGraph.edges[i].color = "#ffd700";
+        console.log("node:",node);
+      }
+      if(target === nodeName){
+        var node = findNode(source);
+        node.color = "#ffd700";
+        ryouikiGraph.edges[i].color = "#ffd700";
+        console.log("node:",node);
         
-        }
-    var hoverNode = function () {
+      }
       
-      
-    };
+    }
+    
+    
+    console.log("sigma", s, "sigma:", sigma);
+    s.refresh();
   });
-  physSigma.bind('overNode outNode clickNode doubleClickNode rightClickNode', function(e) {
-    console.log(e.type, e.data.node.label, e.data.captor, e.data);
+  s.bind('outNode', function(e) {
+    console.log("lightUpSigma", lightUpSigma);
+    if(!!lightUpSigma) lightUpSigma.kill();
   });
-  physSigma.bind('overEdge outEdge clickEdge doubleClickEdge rightClickEdge', function(e) {
+  s.bind('overEdge outEdge clickEdge doubleClickEdge rightClickEdge', function(e) {
     console.log(e.type, e.data.edge, e.data.captor);
   });
-  physSigma.bind('clickStage', function(e) {
+  s.bind('clickStage', function(e) {
     console.log(e.type, e.data.captor);
   });
-  physSigma.bind('doubleClickStage rightClickStage', function(e) {
+  s.bind('doubleClickStage rightClickStage', function(e) {
     console.log(e.type, e.data.captor);
   });
   
-  physSigma.refresh();
+  
   // Initialize the dragNodes plugin:
-var dragListener = sigma.plugins.dragNodes(physSigma, physSigma.renderers[0]);
-
-dragListener.bind('startdrag', function(event) {
-  console.log(event);
-});
-dragListener.bind('drag', function(event) {
-  console.log(event);
-});
-dragListener.bind('drop', function(event) {
-  console.log(event);
-});
-dragListener.bind('dragend', function(event) {
-  console.log(event);
-});
+  var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+  
+  dragListener.bind('startdrag', function(event) {
+    console.log(event);
+  });
+  dragListener.bind('drag', function(event) {
+    console.log(event);
+  });
+  dragListener.bind('drop', function(event) {
+    console.log(event);
+  });
+  dragListener.bind('dragend', function(event) {
+    console.log(event);
+  });
+  return s;
 }
+
 function graphBtnOnClick () {
+  var count = 0;
+  var s;
   $(".graphBtn").on("click", function() {
-    var data = $(this).attr("data-id");
-    $(".graph").css("display", "none");
-    $(data).css("display", "block");
-    setClsData();
+    console.log(count);
+    
+    var dataField = $(this).attr("data-field");
+    let i = ryouiki.indexOf(dataField);
+    var ryouikiGraph = ryouikiGraphs[i];
+    if(count > 0){
+      console.log(s);
+      console.log("領域グラフ", ryouikiGraph, dataField);
+      s.graph.clear();
+      s.graph.read(ryouikiGraph);
+      s.refresh();
+    } else {
+      
+     
+      s = new sigma({
+        graph: ryouikiGraph,
+        renderer: {
+          container: document.getElementById('physicsGraph'),
+          type: 'canvas'
+        },
+        settings: {
+          doubleClickEnabled: false,
+          minEdgeSize: 0.03,
+          maxEdgeSize: 1.2,
+          enableEdgeHovering: false,
+          enableCamera: false,
+          edgeHoverColor: 'edge',
+          defaultEdgeHoverColor: '#ffd700',
+          edgeHoverSizeRatio: 1,
+          edgeHoverExtremities: true,
+          labelSize: "fixed",
+          labelColor: "node"
+        }
+      });
+      
+      var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+      
+      draw();
+      
+      s.bind('doubleClickNode', function(e) {
+        console.log("hovered", e.data);
+        
+        console.log("領域グラフ", ryouikiGraph);
+        
+        var nodeName = e.data.node.label,
+            color  = '#' + (
+                Math.floor(Math.random() * 16777215).toString(16) + '000000'
+              ).substr(0, 6);
+        s.graph.nodes(nodeName).color = color;
+        for(var i=0; i<ryouikiGraph.edges.length; i++) {
+          var source = ryouikiGraph.edges[i].source,
+              target = ryouikiGraph.edges[i].target,
+              edgeId = ryouikiGraph.edges[i].id,
+              name;
+              
+          
+          if(source === nodeName) {
+            name = target;
+            s.graph.nodes(name).color = color;
+            s.graph.edges(edgeId).color = color;
+            
+          }
+          if(target === nodeName){
+            name = source;
+            s.graph.nodes(name).color = color;
+            s.graph.edges(edgeId).color = color;
+            
+          }
+        }
+        s.refresh();
+      });
+    }
+    
+    count++;
+    
+    
+    // クリックファンクションをいったん解除
+    s.unbind("doubleClickNode");
+    
+    // もう一度クリックファンクションをつける
+    s.bind('doubleClickNode', function(e) {
+        var nodeName = e.data.node.label,
+            color  = '#' + (
+                Math.floor(Math.random() * 16777215).toString(16) + '000000'
+              ).substr(0, 6);
+        s.graph.nodes(nodeName).color = color;
+        for(var i=0; i<ryouikiGraph.edges.length; i++) {
+          var source = ryouikiGraph.edges[i].source,
+              target = ryouikiGraph.edges[i].target,
+              edgeId = ryouikiGraph.edges[i].id,
+              name;
+              
+          
+          if(source === nodeName) {
+            name = target;
+            s.graph.nodes(name).color = color;
+            s.graph.edges(edgeId).color = color;
+            
+          }
+          if(target === nodeName){
+            name = source;
+            s.graph.nodes(name).color = color;
+            s.graph.edges(edgeId).color = color;
+            
+          }
+        }
+        s.refresh();
+      });
+    
   });
 }
 
@@ -876,9 +1135,11 @@ function evaluate() {
 }
 
 // --------------- fieldLabs用関数 --------------- //
-function setTd(string, ryouiki, index, subindex){
+function setTd(string, ryouiki, index, subindex, mark){
+  var fields = ["応用物理学", "物質理工学", "生命理工学", "環境理工学"];
   if(string === ryouiki){
-    $("#labsRyouikiTable > tr:nth-child(" + index + ") > td:nth-child(" + subindex + ")").html("〇");
+    var i = fields.indexOf(ryouiki) + 2;
+    $("#labsRyouikiTable > tr:nth-child(" + index + ") > td:nth-child(" + i + ")").html(mark);
   }
   return false;
 }
@@ -892,10 +1153,18 @@ function showTable() {
     
     for(var k=0;k<strings.length;k++){
       var l = k + 2;
-      setTd(strings[k], "応用物理学", j, l);
-      setTd(strings[k], "物質理工学", j, l);
-      setTd(strings[k], "生命理工学", j, l);
-      setTd(strings[k], "環境理工学", j, l);
+      setTd(strings[k], "応用物理学", j, l, "〇");
+      setTd(strings[k], "物質理工学", j, l, "〇");
+      setTd(strings[k], "生命理工学", j, l, "〇");
+      setTd(strings[k], "環境理工学", j, l, "〇");
+    }
+    strings = profData[i].specialField.split(" ");
+    for(var k=0;k<strings.length;k++){
+      var l = k + 2;
+      setTd(strings[k], "応用物理学", j, l, "◎");
+      setTd(strings[k], "物質理工学", j, l, "◎");
+      setTd(strings[k], "生命理工学", j, l, "◎");
+      setTd(strings[k], "環境理工学", j, l, "◎");
     }
     $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(6)").html(profData[i].else);
     $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(7)").html(profData[i].master);
@@ -954,7 +1223,7 @@ $(document).ready(function() {
 window.onload = function(){
   $.ajax({
     type: 'GET',
-    url: './data/classData12.json',
+    url: './data/classData16.json',
     dataType: 'json'
   })
   .then(
@@ -980,8 +1249,12 @@ window.onload = function(){
        clear();
        
        showTable();
-       
+       for(var i = 0; i<ryouiki.length;i++) {
+         setNodeAndEdge(ryouikiGraphs[i], ryouiki[i]);
+       }
+       console.log(ryouikiGraphs);
        graphBtnOnClick();
+       
     },
     function() {
       console.log('読み込みに失敗しました');

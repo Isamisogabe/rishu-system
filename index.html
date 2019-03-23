@@ -32,10 +32,10 @@
       		
       		<div class="collapse navbar-collapse" id="navbarEexample7">
       			<ul class="nav navbar-nav">
-      				<li><a class="home-nav "href="javascript:void(0)" data-target="#easyExam">領域適性検査</a></li>
-      				<li class="active"><a class="home-nav" href="javascript:void(0)" data-target="#classResist">履修登録</a></li>
-      				<li><a class="home-nav" href="javascript:void(0)" data-target="#fieldLabs">研究室探し</a></li>
-      				<li><a class="home-nav" href="javascript:void(0)" data-target="#clsDataVisualization">授業関係図</a></li>
+      				<li><a class="home-nav fontBold "href="javascript:void(0)" data-target="#easyExam" >領域適性検査</a></li>
+      				<li class="active"><a class="home-nav fontBold" href="javascript:void(0)" data-target="#classResist">履修登録</a></li>
+      				<li><a class="home-nav fontBold" href="javascript:void(0)" data-target="#fieldLabs">研究室探し</a></li>
+      				<li><a class="home-nav fontBold" href="javascript:void(0)" data-target="#clsDataVisualization">科目体系図</a></li>
       			</ul>
       			<ul class="nav navbar-nav navbar-right">
       				
@@ -68,7 +68,7 @@
             </div>
             <div class="tabs__lab tabContent" id="lab">
               <h2 class="noteLabel">研究室別検索</h2>
-              <p>研究室の教授の左にあるボタンをクリックすることで、その研究室における履修推奨科目を検索することができます。また教授名のリンクをクリックすることで、教授の紹介ホームページに遷移することができます。</p>
+              <p>研究室の教授の左にあるボタンをクリックすることで、その研究室における履修推奨科目を検索することができます。また教授名のリンクをクリックすることで、教授の紹介ホームページに遷移することができます。(太字で書かれた部分はその分野をメインに研究しています。）</p>
               <div class="lab__ryouiki">
                 <ul class="nav nav-pills labBtns">
                 	<li role="presentation" class="apply-bg labBtn" data-target="#wellApply"><h3 class="fontBold fontWhite">応用物理学</h3></li>
@@ -280,28 +280,22 @@
         </tbody>
       </table>
     </main>
-    <main id="clsDataVisualization">
+    <main id="clsDataVisualization" style="display: none;">
       <div class="btns"></div>
       <div id="ryouikiGraphs">
+        <h2 class="noteLabel">各領域別授業グラフ</h2>
+        <p>ここでは、各領域に沿った授業の関係をグラフで表しています。</br>丸のノードをドラッグすることで移動させることができます。</br>ダブルクリックでその授業の関係する授業の関係が浮き出てきます。</p>
         <div class="btns">
-          <button class="btn btn-default graphBtn bigBtn apply-bg" name="applyFieldBtn" data-id="#physicsGraph">応用物理学領域</button>
-          <button class="btn btn-default graphBtn bigBtn material-bg" name="materialGraphBtn" data-id="#materialGraph">物質理工学領域</button>
-          <button class="btn btn-default graphBtn bigBtn bio-bg" name="bioGraphBtn" data-id="#bioGraph">生命理工学領域</button>
-          <button class="btn btn-default graphBtn bigBtn env-bg" name="envGraphBtn" data-id="#envGraph">環境理工学領域</button>
+          <button class="btn btn-default graphBtn bigBtn apply-bg fontWhite" name="applyFieldBtn" data-id="#physicsGraph" data-field="応用物理学">応用物理学領域</button>
+          <button class="btn btn-default graphBtn bigBtn material-bg fontWhite" name="materialGraphBtn" data-id="#materialGraph" data-field="物質理工学">物質理工学領域</button>
+          <button class="btn btn-default graphBtn bigBtn bio-bg fontWhite" name="bioGraphBtn" data-id="#bioGraph" data-field="生命理工学">生命理工学領域</button>
+          <button class="btn btn-default graphBtn bigBtn env-bg fontWhite" name="envGraphBtn" data-id="#envGraph" data-field="環境理工学">環境理工学領域</button>
         </div>
         <div class="graphs">
-          <div class="graph" id="physicsGraph">
+          <div class="graph" id="physicsGraph" >
             
           </div>
-          <div class="graph" id="materialGraph">
-            
-          </div>
-          <div class="graph" id="bioGraph">
-            
-          </div>
-          <div class="graph" id="envGraph">
-            
-          </div>
+          
         </div>
       </div>
     </main>

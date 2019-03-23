@@ -41,7 +41,7 @@ td {
   font-size: 1.4rem; }
 
 body {
-  font-family: "メイリオ", "Verdana", "MS Pゴシック", "sans-serif", "Times New Roman";
+  font-family: "游ゴシック", "メイリオ", "Verdana", "MS Pゴシック", "sans-serif", "Times New Roman";
   font-size: 62.5%;
   background: #fff;
   min-height: 1000px; }
@@ -384,11 +384,21 @@ body {
       width: 100%; } }
 
 #physicsGraph {
-  display: none;
-  top: 100px;
+  top: 300px;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute; }
+
+#baseGraph {
+  top: 300px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1; }
+
+#clsDataVisualization #ryouikiGraphs {
+  margin: 0 1%; }
 
 /*# sourceMappingURL=main.css.map */
