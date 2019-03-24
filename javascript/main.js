@@ -1,6 +1,5 @@
 /* global $ */
 /* global sigma */
-console.log($);
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
@@ -10,10 +9,9 @@ var totalUnit  = 0;
 var profData   ;
 var otherProfData;
 var eleValues;
-var fieldData  = [];
 const ryouiki    = ["環境理工学", "応用物理学", "物質理工学", "生命理工学"];
 const ryouikiColor = [ "env", "apply", "material", "bio"];
-const ryouikiColorCode = ["#00f100","#ffd700", "#5cb3f1", "#ff4500"]
+const ryouikiColorCode = ["#00f100","#ffd700", "#5cb3f1", "#ff4500"];
 var ryouikiGraphs  = [{
         nodes: [],
         edges: []
@@ -36,10 +34,7 @@ var ryouikiHisshu = [
   [],
   []
   ]
-// moduleの作成
-var rishuSystem = {
-  
-};
+
 
 // --------------- 履修登録用の関数 --------------- //
 function pushHtmlFile(){
@@ -229,20 +224,7 @@ function getProfLink(profName){
   }
   return link;
 }
-function getClassJson(url) {
-  var req = new XMLHttpRequest();
-  var jsonObj;
-  var makeData = '<tr class="jugyou"><td></td><td></td><td></td><td></td><td></td> </tr>';
-  var table = $('.table');
-  
-  req.onload = function() {
-    jsonObj = req.response;
-    return false;
-  };
-  req.open("GET", url, true);
-  req.responseType = "json";
-  req.send(null);
-}
+
 function windowSizeControll () {
   var height = $(window).height();
     $('#displayModel').css('height', height);
@@ -824,11 +806,13 @@ function graphBtnOnClick () {
     var dataField = $(this).attr("data-field");
     let i = ryouiki.indexOf(dataField);
     var ryouikiGraph = ryouikiGraphs[i];
+    // sのインスタンスが既にある場合
     if(count > 0){
       s.graph.clear();
       s.graph.read(ryouikiGraph);
       s.refresh();
-    } else {
+    } 
+    else { // sのインスタンスを作成
       
      
       s = new sigma({
@@ -862,7 +846,10 @@ function graphBtnOnClick () {
             color  = '#' + (
                 Math.floor(Math.random() * 16777215).toString(16) + '000000'
               ).substr(0, 6);
+        // ダブルクリックしたノードのカラーを変える
         s.graph.nodes(nodeName).color = color;
+        
+        // クリックしたノードの名前からそのノードと関係するエッジを見てカラーリング
         for(var i=0; i<ryouikiGraph.edges.length; i++) {
           var source = ryouikiGraph.edges[i].source,
               target = ryouikiGraph.edges[i].target,
@@ -886,7 +873,7 @@ function graphBtnOnClick () {
         s.refresh();
       });
     }
-    
+    // カウントで別の処理(sの設定を変えるだけ)を行うため sのインスタンスを再度呼ばないため
     count++;
     
     
@@ -905,8 +892,6 @@ function graphBtnOnClick () {
               target = ryouikiGraph.edges[i].target,
               edgeId = ryouikiGraph.edges[i].id,
               name;
-              
-          
           if(source === nodeName) {
             name = target;
             s.graph.nodes(name).color = color;
@@ -920,6 +905,7 @@ function graphBtnOnClick () {
             
           }
         }
+        // 変更したので更新
         s.refresh();
       });
     
@@ -928,12 +914,18 @@ function graphBtnOnClick () {
 
 // --------------- easyExam用の関数 --------------- //
 var evals = [0,0,0,0];
+var fields = ["応用物理学", "物質理工学", "生命理工学", "環境理工学"];
 function switchNavs() {
   $(".home-nav").on("click", function() {
     var id = $(this).attr("data-target");
     $(this).parent().parent().find("li[class='active']").removeClass("active");
     $("main").css("display", "none");
     $(id).css("display", "block");
+    if(id === "#clsDataVisualization"){
+      $("footer").css("margin-top", "700px");
+    } else {
+      $("footer").css("margin-top", "10px");
+    }
   });
 }
 function showExamBtns(data) {
@@ -949,6 +941,7 @@ function showExamBtns(data) {
   }
 }
 function examBtnOnClick() {
+  // 検査のボタンについての処理
   $(".eleBtn").on("click", function() {
     var self = $(this);
     if(self.hasClass("checked")){
@@ -962,6 +955,7 @@ function examBtnOnClick() {
   });
 }
 function examCalc(self, operand){
+  // 数値の処理部分
   var phy  = parseInt(self.attr("data-phy"), 10),
       chem = parseInt(self.attr("data-chem"), 10),
       bio  = parseInt(self.attr("data-bio"),10),
@@ -979,19 +973,32 @@ function examCalc(self, operand){
     evals[3] -= env;
   }
 }
+function findMaxIndex() {
+  var index,
+      value;
+  value = evals[0];
+  for(var i=1;i<evals.length;i++){
+    if(evals[i] > value ) value = evals[i];
+  }
+  index = evals.indexOf(value);
+  return index;
+}
 function evaluate() {
+  // 興味あるワードボタンに付随するデータの総計処理部分
   $("#evaluate").on("click", function() {
-    var scrapPhy  = "応用物理学領域：" + evals[0] + "/ 150",
-        scrapChem = "物質理工学領域：" + evals[1] + "/ 150",
-        scrapBio = "生命理工学領域：" + evals[2] + "/ 150",
-        scrapEnv = "環境理工学領域：" + evals[3] + "/ 150",
-        sentence  = scrapPhy + scrapChem + scrapBio + scrapEnv,
-        result   = $("#examResult");
-    result.html("");
-    result.append("<h4>" + scrapPhy  + "</h4>");
-    result.append("<h4>" + scrapChem + "</h4>");
-    result.append("<h4>" + scrapBio  + "</h4>");
-    result.append("<h4>" + scrapEnv  + "</h4>");
+    var scrapPhy  = "応用物理学領域：" + evals[0] + "/ 150<br/>",
+        scrapChem = "物質理工学領域：" + evals[1] + "/ 150<br/>",
+        scrapBio = "生命理工学領域：" + evals[2] + "/ 150<br/>",
+        scrapEnv = "環境理工学領域：" + evals[3] + "/ 150<br/>",
+        result   = $("#examResult"),
+        index;
+    
+    index = findMaxIndex();
+   
+    $("#modalMsg").html(fields[index]);
+    $("#bodyMsg p").html(scrapPhy + scrapChem + scrapBio + scrapEnv);
+    
+   
   });
 }
 
@@ -1010,7 +1017,7 @@ function showTable() {
   for(var i=0; i<profData.length; i++){
     var strings = profData[i].field.split(" "),
         j = i + 1;
-    table.append("<tr><td>"+ profData[i].prof + "</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+    table.append("<tr><td><a href=" + profData[i].link + " > "+ profData[i].prof + "</a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
     
     for(var k=0;k<strings.length;k++){
       var l = k + 2;
@@ -1035,6 +1042,8 @@ function showTable() {
 
 $(document).ready(function() {
   var rishuModel = rishuModel || [];
+  $("#sokaLogo").html("<img src='./image/soka-logo.png' alt='Soka-logo'>");
+$("#loading").html("<img src='./image/gif-load.gif' alt='loading'>");
   $.ajax({
     type: 'GET',
     url: './data/profData.json',
@@ -1080,10 +1089,17 @@ $(document).ready(function() {
   );
 });
 window.onload = function(){
+  
   $.ajax({
     type: 'GET',
-    url: './data/classData16.json',
-    dataType: 'json'
+    url: './data/classData17.json',
+    dataType: 'json',
+    complete: function(data) {
+      $("#backgroundLoad").animate({opacity: 0}, 1000, function() {
+         $(this).css("display", "none");
+         $("#loading").empty();
+       });
+    }
   })
   .then(
     function(json) {
@@ -1113,6 +1129,8 @@ window.onload = function(){
        }
        
        graphBtnOnClick();
+       
+       
        
     },
     function() {

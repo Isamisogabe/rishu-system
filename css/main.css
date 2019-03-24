@@ -43,8 +43,7 @@ td {
 body {
   font-family: "游ゴシック", "メイリオ", "Verdana", "MS Pゴシック", "sans-serif", "Times New Roman";
   font-size: 62.5%;
-  background: #fff;
-  min-height: 1000px; }
+  background: #fff; }
 
 .navbar {
   border-radius: 0;
@@ -168,6 +167,7 @@ body {
 .noteLabel {
   padding: 18px 20px;
   border-left: 5px solid #353e94;
+  max-width: 600px;
   -moz-box-shadow: 1px 1px 0.8px 0.8px rgba(0, 0, 0, 0.2);
   -webkit-box-shadow: 1px 1px 0.8px 0.8px rgba(0, 0, 0, 0.2);
   box-shadow: 1px 1px 0.8px 0.8px rgba(0, 0, 0, 0.2); }
@@ -371,7 +371,9 @@ body {
   color: white; }
 
 #fieldLabs table thead tr th {
-  text-align: left; }
+  text-align: left;
+  font-size: 12px;
+  font-size: 1.2rem; }
 #fieldLabs table tbody tr td {
   text-align: left; }
 
@@ -384,21 +386,67 @@ body {
       width: 100%; } }
 
 #physicsGraph {
-  top: 300px;
+  top: 250px;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute; }
+  @media (max-width: 800px) {
+    #physicsGraph {
+      top: 500px; } }
 
 #baseGraph {
-  top: 300px;
+  top: 250px;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
   z-index: -1; }
+  @media (max-width: 800px) {
+    #baseGraph {
+      top: 500px; } }
 
 #clsDataVisualization #ryouikiGraphs {
   margin: 0 1%; }
+
+@media (max-width: 800px) {
+  .nav > li.sp {
+    display: none; } }
+
+.modal-dialog {
+  z-index: 1080; }
+
+footer {
+  background-color: #272626;
+  text-align: center;
+  color: white;
+  padding: 5px 0;
+  margin-top: 100px; }
+
+#backgroundLoad {
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 950; }
+  #backgroundLoad #sokaLogo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -20%;
+    margin-top: -15%; }
+    @media (max-width: 800px) {
+      #backgroundLoad #sokaLogo {
+        margin-top: -50%;
+        margin-left: -60%; } }
+  #backgroundLoad #loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -3%;
+    margin-top: 10%;
+    z-index: 1000; }
 
 /*# sourceMappingURL=main.css.map */

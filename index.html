@@ -14,6 +14,11 @@
     <link rel="stylesheet" href="css/main.css"></link>
   </head>
   <body>
+    <div id="backgroundLoad">
+      <div id="sokaLogo"></div>
+      <div id="loading"></div>
+    </div>
+    
     <header>
       <nav class="navbar navbar-inverse">
       	<div class="container-fluid">
@@ -35,7 +40,7 @@
       				<li><a class="home-nav fontBold "href="javascript:void(0)" data-target="#easyExam" >領域適性検査</a></li>
       				<li class="active"><a class="home-nav fontBold" href="javascript:void(0)" data-target="#classResist">履修登録</a></li>
       				<li><a class="home-nav fontBold" href="javascript:void(0)" data-target="#fieldLabs">研究室探し</a></li>
-      				<li><a class="home-nav fontBold" href="javascript:void(0)" data-target="#clsDataVisualization">科目体系図</a></li>
+      				<li class="sp"><a class="home-nav fontBold " href="javascript:void(0)" data-target="#clsDataVisualization" >科目体系図</a></li>
       			</ul>
       			<ul class="nav navbar-nav navbar-right">
       				
@@ -68,7 +73,7 @@
             </div>
             <div class="tabs__lab tabContent" id="lab">
               <h2 class="noteLabel">研究室別検索</h2>
-              <p>研究室の教授の左にあるボタンをクリックすることで、その研究室における履修推奨科目を検索することができます。また教授名のリンクをクリックすることで、教授の紹介ホームページに遷移することができます。(太字で書かれた部分はその分野をメインに研究しています。）</p>
+              <p>研究室の教授の左にあるボタンをクリックすることで、その研究室における履修推奨科目を検索することができます。</br>また教授名のリンクをクリックすることで、教授の紹介ホームページに遷移することができます。<br>(太字で書かれた部分はその分野をメインに研究しています。）</p>
               <div class="lab__ryouiki">
                 <ul class="nav nav-pills labBtns">
                 	<li role="presentation" class="apply-bg labBtn" data-target="#wellApply"><h3 class="fontBold fontWhite">応用物理学</h3></li>
@@ -102,13 +107,15 @@
                 
               </div>
               <h2 class="noteLabel">卒業研究のための推奨履修科目</h2>
+              <p>上記のボタンをクリックすることでその教授の研究室の推奨科目が表示されます。</p>
             </div>
             <div class="tabs__keyword tabContent" id="free">
               <h2 class="noteLabel">フリーワード検索</h2>
-              <p>ここでは、様々なカテゴリに合わせて授業を検索することができます。カテゴリボタンをまず選択し、キーワードを入力して「検索」ボタンを押すと、キーワードにマッチした授業を発見することができます。</p>
+              <p>ここでは、様々なカテゴリに合わせて授業を検索することができます。<br/><b>「教科名検索」</b>,<b>「概要検索」</b>や<b>「教員検索」</b>などのカテゴリボタンをまず選択し、キーワードを入力して<b>「検索」</b>ボタンを押すと、キーワードにマッチした授業を発見することができます。<br/><b>「年次・セメスター検索」</b>ボタンや<b>「領域検索」</b>ボタンをクリックし、下に出る項目をクリックすることでその項目に応じた授業を検索することができます。<br/><br/><b>「履修する」</b>ボタンをクリックすることで<b>「履修モデル」</b>に登録することができます。<br/><b>「はずす」</b>ボタンをクリックすることで、<b>「履修モデル」</b>から外すことができます。</p>
+              <p>「履修状況」の下にある<b>「履修モデルを書き出す」</b>ボタンを押すことで、履修モデルがダウンロードされ、左下にボタンが発生するのでそれをクリックすると、別ページに移動します。そのページで右クリックし、「印刷する」をクリックすることで印刷画面に遷移し、印刷ボタンをクリックすることで印刷できます。</p>
               <div class="dropdown">
                 <input type="radio" name="search" value="1">
-              	教科名
+              	教科名検索
               </div>
               
               <div class="dropdown">
@@ -249,20 +256,40 @@
     <main id="easyExam" style="display: none;">
      
       <h2 class="noteLabel">自分が興味のあるワードを探してみよう！</h2>
-      <p>興味のあるワードのボタンを押して自分に合った領域を調べてみよう！</p>
+      <p>興味のあるワードのボタンを押すと、ボタンが青くなりチェック状態になります。もう一度ボタンを押すと元に戻ります。<br>下部にある<b>「評価する」</b>ボタンを押すと結果が表示されます。一つの参考にお使いください。</p>
       <ul id="eleBtns">
         
       </ul>
-      <button type="button" class="btn btn-success" id="evaluate" >評価する</button>
+      
       <div id="examResult">
-        
+        <button type="button" id="evaluate" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sampleModal">
+        	評価する
+        </button>
+
+        <!-- モーダル・ダイアログ -->
+        <div class="modal fade" id="sampleModal" tabindex="-1">
+        	<div class="modal-dialog">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+        				<h4 class="modal-title">あなたは<span id="modalMsg"></span>に向いているかもしれません！</h4>
+        			</div>
+        			<div class="modal-body" id="bodyMsg">
+        				<p></p>
+        			</div>
+        			<div class="modal-footer">
+        				<button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        			</div>
+        		</div>
+        	</div>
+        </div>
       </div>
     </main>
     <main id="fieldLabs" class="wholeMargin" style="display: none;">
       
       <h2 class="noteLabel">研究室の領域別分野一覧</h2>
       
-      <h4>ここでは専門領域から最適な研究室や教授を探すことができます。</h4>
+      <h4>ここでは専門領域から最適な研究室や教授を探すことができます。各教員名にリンクがあり、各教授の紹介ページにアクセスできます。</h4>
       <table class="table table-striped">
         <thead>
           <tr>
@@ -284,7 +311,7 @@
       <div class="btns"></div>
       <div id="ryouikiGraphs">
         <h2 class="noteLabel">各領域別授業グラフ</h2>
-        <p>ここでは、各領域に沿った授業の関係をグラフで表しています。</br>丸のノードをドラッグすることで移動させることができます。</br>ダブルクリックでその授業の関係する授業の関係が浮き出てきます。</p>
+        <p>ここでは、各領域に沿った授業の関係をグラフで表しています。ノードをクリック&ドラッグすることで移動させることができます。</br>ダブルクリックでその授業の関係する授業の関係が浮き出てきます（領域選択必修はその領域のカラーリングをしています）。<br>※微生物学は環境理工学と生命理工学の分野で選択必修科目です。</p>
         <div class="btns">
           <button class="btn btn-default graphBtn bigBtn apply-bg fontWhite" name="applyFieldBtn" data-id="#physicsGraph" data-field="応用物理学">応用物理学領域</button>
           <button class="btn btn-default graphBtn bigBtn material-bg fontWhite" name="materialGraphBtn" data-id="#materialGraph" data-field="物質理工学">物質理工学領域</button>
@@ -300,7 +327,7 @@
       </div>
     </main>
     <footer>
-      
+      <p>©2019 Soka University All rights reserved.</p>
     </footer>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="javascript/sigma.min.js"></script>
