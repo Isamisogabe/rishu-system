@@ -553,5 +553,14 @@ footer {
     margin-left: -3%;
     margin-top: 10%;
     z-index: 1000;
+    @media(max-width: 700px) {
+      margin-left: -10%;
+      margin-top: -15%;
+    }
+  }
+}
+.erase-sp{
+  @media(max-width: 700px) {
+    display: none;
   }
 }

@@ -607,7 +607,7 @@ function calcMargin(clsName) {
 function setNodeAndEdge (graph, field){
   var positionY = [0.98, 0.80, 0.62, 0.44, 0.28, 0.08];
   var positionX = [0,0.05,0.01,0.02,0.05,0];
-  var feedLineThreshold = 1.5,
+  var feedLineThreshold = 1.8,
       fieldLecs = [],
       i;
   for (i = 0; i < allLectures.length ; i++){

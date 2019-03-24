@@ -448,5 +448,13 @@ footer {
     margin-left: -3%;
     margin-top: 10%;
     z-index: 1000; }
+    @media (max-width: 700px) {
+      #backgroundLoad #loading {
+        margin-left: -10%;
+        margin-top: -15%; } }
+
+@media (max-width: 700px) {
+  .erase-sp {
+    display: none; } }
 
 /*# sourceMappingURL=main.css.map */
