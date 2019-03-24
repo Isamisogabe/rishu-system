@@ -1,6 +1,6 @@
 /* global $ */
 /* global sigma */
-
+console.log($);
 var allLectures;
 var rishuModel = [];
 var rishuUnit  = [0,0,0,0,0,0,0,0];
@@ -74,7 +74,7 @@ function pushInitLecs(){
       
       rishuModel.push(allLectures[i]);
       
-      console.log("追加した後の履修モデル", rishuModel);
+      
       
       addRishuModel(lecture);
     }
@@ -84,7 +84,7 @@ function clear() {
   $(".lecture").css("display", "block");
 }
 function supervise(unit, id){
-  console.log(unit );
+ 
   if(unit < standardUnit[id] ){
     $("#subject__" + id).parent().css("color", "#ff4500");
   } else {
@@ -92,7 +92,7 @@ function supervise(unit, id){
   }
   if( 3 < id && id <= 6 ){
     var totalUnit = subjectUnit[4] + subjectUnit[5] + subjectUnit[6];
-    console.log(totalUnit, standardUnit[4]);
+    
     if(totalUnit < standardUnit[4]){
       $("#subject__" + 4).parent().css("color", "#ff4500");
       $("#subject__" + 5).parent().css("color", "#ff4500");
@@ -159,7 +159,7 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
   $("input[name='profName']").on("click", function() {
     $(".lecture").css("display", "none");
     profName = $("input[name='profName']:checked").val();
-    console.log(profName);
+    
     for(var i=0;i<profData.length; i++){
       var lecs;
       if(profName === profData[i].prof){
@@ -178,7 +178,6 @@ function searchCls() {
   $("#searchBtn").on("click", function(){
     var text = $("#searchTxt").val(),
         reg  = new RegExp(text);
-    console.log(reg);
     if(text.length >= 30) return window.alert("30文字を超えています。修正してください。");
     var type = $("input[name=search]:checked").val();
     if(type === "1"){
@@ -212,7 +211,6 @@ function searchCls() {
         }
       }
     }
-    console.log(text);
   })
 }
 function getProfLink(profName){
@@ -239,9 +237,6 @@ function getClassJson(url) {
   
   req.onload = function() {
     jsonObj = req.response;
-    console.log(jsonObj);
-    
-    
     return false;
   };
   req.open("GET", url, true);
@@ -251,7 +246,7 @@ function getClassJson(url) {
 function windowSizeControll () {
   var height = $(window).height();
     $('#displayModel').css('height', height);
-
+    
   $(window).resize(function() {
     var height = $(window).height(),
         width  = $(window).width();
@@ -297,7 +292,7 @@ function selectRyouiki(){
     var btn     = $(this),
         field   = btn.attr("data-field"),
         isOnlyFieldCommon = btn.attr("data-isonlyfieldcommon");
-    console.log(isOnlyFieldCommon);
+    
     if(field == "none"){
       $("#" + field).parent().html("");
       return $(".lecture").show();
@@ -308,7 +303,7 @@ function selectRyouiki(){
       var lecture = $(".lecture:nth-child(" + k + ")");
       if(!isOnlyFieldCommon) {
         var classField = allLectures[i].classField.split(" ");
-        console.log(field in classField);
+        
         lecture.css("display", "none");
         for(var l in classField){
           if(field === classField[l]){
@@ -410,20 +405,17 @@ function addRishuModel(lecture) {
   totalUnit += unit;
   $(".unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
   $("#rishuInfo #unit__total").html("").append(totalUnit);
-  console.log("履修状況の単位 セメスター：",semester, "その単位数：", rishuUnit[semester-1]);
   
   var subjectId = selectSubject(lecture.subject);
-  console.log("選択した授業の科目 ->", lecture.subject);
+  
   subjectUnit[subjectId] += unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
   supervise(subjectUnit[subjectId], subjectId);
-  console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
 }
 function reduceRishuModel(lecture) {
   var semester = parseInt(lecture.semester,10),
       unit     = parseInt(lecture.unit,10);
-  console.log(unit);
   $("#rishu__" + semester).find("#display__" + lecture.classId).remove();
   
   rishuUnit[semester-1] -= unit;
@@ -432,12 +424,10 @@ function reduceRishuModel(lecture) {
   $("#rishuInfo #unit__total").html("").append(totalUnit);
   
   var subjectId = selectSubject(lecture.subject);
-  console.log("選択した授業の科目 ->", lecture.subject);
   subjectUnit[subjectId] -= unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
   supervise(subjectUnit[subjectId], subjectId);
-  console.log("選んだ授業のsubjectUnit", subjectUnit[subjectId]);
 }
 function rishuBtnOnClick (lectures) {
   //-------------------- 履修ボタンクリック処理 --------------------//
@@ -446,7 +436,6 @@ function rishuBtnOnClick (lectures) {
         Offbtn = Onbtn.parent().find('.rishuBtnOff'),
         clsId  = Onbtn.attr('data-clsNum'),
         lecture = allLectures[clsId];
-    console.log("授業登録ボタンを押す -> classナンバー：",  clsId);
     
     // 登録ボタンのCSS切り替え
     Onbtn.css('display', 'none');
@@ -456,8 +445,6 @@ function rishuBtnOnClick (lectures) {
     
     rishuModel.push(allLectures[clsId]);
     
-    console.log("追加した後の履修モデル", rishuModel);
-    
     addRishuModel(lecture);
   });
   $('.rishuBtnOff').on('click', function(e) {
@@ -465,7 +452,7 @@ function rishuBtnOnClick (lectures) {
         Onbtn = Offbtn.parent().find('.rishuBtnOn'),
         clsId = Offbtn.val(),
         lecture = allLectures[clsId];
-    console.log("ボタンOffクリック", e, clsId);
+    
     Offbtn.css('display', 'none');
     Onbtn.css('display', 'inline-block');
     lecture.isSigned = false;
@@ -476,7 +463,7 @@ function rishuBtnOnClick (lectures) {
         rishuModel.splice(i,1);
       }
     }
-    console.log(rishuModel);
+    
     reduceRishuModel(lecture);
   });
 }
@@ -626,9 +613,7 @@ function searchLecJson(clsName){
   }
   return cls;
 }
-function* calcPosX () {
-  
-}
+
 function calcMargin(clsName) {
   var rate = 0.035;
   var len = parseInt(clsName.length, 10);
@@ -644,7 +629,6 @@ function setNodeAndEdge (graph, field){
       fieldLecs = [],
       i;
   for (i = 0; i < allLectures.length ; i++){
-    console.log(positionX);
     var lec        = allLectures[i];
     if(!(lec.reqField === undefined)) var reqField = lec.reqField.split(" ");
     
@@ -659,9 +643,7 @@ function setNodeAndEdge (graph, field){
         var num = ryouiki.indexOf(field);
         fieldLecs.push(lec);
         if(!(isExist(lec.name, graph))){
-          
           var id = parseInt(lec.semester,10) -1;
-          console.log("lecName", lec.name);
           
           if( lec.reqField === field) color = color || "#666";
           graph.nodes.push({
@@ -684,14 +666,9 @@ function setNodeAndEdge (graph, field){
         
         for(var l in lec.parentClass) {
           var parentLec = lec.parentClass[l];
-          console.log("parentLec: ",parentLec);
           if(parentLec === undefined) continue;
-          console.log("parentLec:", parentLec);
-          console.log("ペアレントクラスでノードに存在するかどうかisExist:", isExist(parentLec, graph));
-          console.log("この時点でのgraph", graph.nodes);
           if(!(isExist(parentLec, graph))) {
             var parentLecJson = searchLecJson(parentLec);
-            console.log("parentLecJson: ", parentLecJson);
             if(parentLecJson === undefined) continue;
             
             graph.nodes.push({
@@ -713,12 +690,9 @@ function setNodeAndEdge (graph, field){
       
         for(var l in lec.childClass){
           var childLec = lec.childClass[l];
-          console.log(childLec);
           if(childLec === undefined) continue;
-          console.log(isExist(childLec, graph));
           if(isExist(childLec, graph)) continue;
           var childLecJson = searchLecJson(childLec);
-          console.log("childLecJson: ", parentLecJson);
           if(childLecJson === undefined) continue;
           
           graph.nodes.push({
@@ -767,17 +741,14 @@ function setNodeAndEdge (graph, field){
     }
   }
   
-  console.log("ノードの状態：", graph.nodes);
+  
   var parentEdgeCount = 0,
       childEdgeCount  = 0,
       fieldLec;
-  console.log("fieldLecs", fieldLecs);
   for(i=0;i<fieldLecs.length;i++){
     fieldLec = fieldLecs[i];
-    console.log(fieldLec.name);
     for(var id in fieldLec.parentClass){
       var parentClsName = fieldLec.parentClass[id];
-      console.log("parentClassName", parentClsName);
       if(parentClsName === undefined) continue;
       if(isExist(parentClsName, graph)){
           graph.edges.push({
@@ -833,7 +804,6 @@ function draw () {
         width = canvasWidth;
   
     context.font= "20px '游ゴシック'";
-    console.log("context", context);
     for(var i=0; i < rateOfHeights.length; i++) {
       height = canvasHeight * rateOfHeights[i];
       context.fillRect(0,height,width,1);
@@ -845,121 +815,16 @@ function draw () {
     }
   }
 }
-function showGraph(field){
-  
-  var i = ryouiki.indexOf(field),
-      ryouikiGraph = ryouikiGraphs[i];
-  var s = new sigma({
-    graph: ryouikiGraph,
-    renderer: {
-      container: document.getElementById('physicsGraph'),
-      type: 'canvas'
-    },
-    settings: {
-      doubleClickEnabled: false,
-      minEdgeSize: 0.03,
-      maxEdgeSize: 1.2,
-      enableEdgeHovering: true,
-      enableCamera: false,
-      edgeHoverColor: 'edge',
-      defaultEdgeHoverColor: '#ffd700',
-      edgeHoverSizeRatio: 1,
-      edgeHoverExtremities: true,
-      labelSize: "fixed"
-    }
-  });
-  
-  
-  
-    
-  
-  
-  function findNode(className){
-    var node;
-    for(var i=0;i<ryouikiGraph.nodes.length; i++){
-      if(ryouikiGraph.nodes[i].label === className) {
-        node = ryouikiGraph.nodes[i];
-        break;
-      }
-    }
-    return node;
-  }
-  // Bind the events:
-  var lightUpSigma;
-  s.bind('doubleClickNode', function(e) {
-    console.log("hovered", e.data);
-    
-    var nodeName = e.data.node.label;
-    findNode(nodeName).color = "#ffd700";
-    for(var i=0; i<ryouikiGraph.edges.length; i++) {
-      var source = ryouikiGraph.edges[i].source,
-          target = ryouikiGraph.edges[i].target;
-      
-      if(source === nodeName) {
-        var node = findNode(target);
-        node.color = "#ffd700";
-        ryouikiGraph.edges[i].color = "#ffd700";
-        console.log("node:",node);
-      }
-      if(target === nodeName){
-        var node = findNode(source);
-        node.color = "#ffd700";
-        ryouikiGraph.edges[i].color = "#ffd700";
-        console.log("node:",node);
-        
-      }
-      
-    }
-    
-    
-    console.log("sigma", s, "sigma:", sigma);
-    s.refresh();
-  });
-  s.bind('outNode', function(e) {
-    console.log("lightUpSigma", lightUpSigma);
-    if(!!lightUpSigma) lightUpSigma.kill();
-  });
-  s.bind('overEdge outEdge clickEdge doubleClickEdge rightClickEdge', function(e) {
-    console.log(e.type, e.data.edge, e.data.captor);
-  });
-  s.bind('clickStage', function(e) {
-    console.log(e.type, e.data.captor);
-  });
-  s.bind('doubleClickStage rightClickStage', function(e) {
-    console.log(e.type, e.data.captor);
-  });
-  
-  
-  // Initialize the dragNodes plugin:
-  var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
-  
-  dragListener.bind('startdrag', function(event) {
-    console.log(event);
-  });
-  dragListener.bind('drag', function(event) {
-    console.log(event);
-  });
-  dragListener.bind('drop', function(event) {
-    console.log(event);
-  });
-  dragListener.bind('dragend', function(event) {
-    console.log(event);
-  });
-  return s;
-}
 
 function graphBtnOnClick () {
   var count = 0;
   var s;
   $(".graphBtn").on("click", function() {
-    console.log(count);
     
     var dataField = $(this).attr("data-field");
     let i = ryouiki.indexOf(dataField);
     var ryouikiGraph = ryouikiGraphs[i];
     if(count > 0){
-      console.log(s);
-      console.log("領域グラフ", ryouikiGraph, dataField);
       s.graph.clear();
       s.graph.read(ryouikiGraph);
       s.refresh();
@@ -992,9 +857,6 @@ function graphBtnOnClick () {
       draw();
       
       s.bind('doubleClickNode', function(e) {
-        console.log("hovered", e.data);
-        
-        console.log("領域グラフ", ryouikiGraph);
         
         var nodeName = e.data.node.label,
             color  = '#' + (
@@ -1075,7 +937,6 @@ function switchNavs() {
   });
 }
 function showExamBtns(data) {
-  console.log(data);
   for(var i=0;i<data.length;i++){
     $("#eleBtns").append("<li> <button class='eleBtn'  id=" + data[i].ele +" >" + data[i].ele + "</button></li>" );
     $("#" + data[i].ele).attr(
@@ -1181,7 +1042,6 @@ $(document).ready(function() {
   })
   .then(
     function(json) {
-      console.log(json);
       profData = json;
     },
     function() {
@@ -1195,7 +1055,7 @@ $(document).ready(function() {
   })
   .then(
     function(json) {
-      console.log(json);
+      
        otherProfData = json;
     },
     function() {
@@ -1209,7 +1069,6 @@ $(document).ready(function() {
   })
   .then(
     function(json) {
-      console.log(json);
        eleValues = json;
        showExamBtns(eleValues);
        examBtnOnClick();
@@ -1228,7 +1087,7 @@ window.onload = function(){
   })
   .then(
     function(json) {
-      console.log(json);
+      
       
        allLectures = json;
        showClasses(allLectures);
@@ -1252,7 +1111,7 @@ window.onload = function(){
        for(var i = 0; i<ryouiki.length;i++) {
          setNodeAndEdge(ryouikiGraphs[i], ryouiki[i]);
        }
-       console.log(ryouikiGraphs);
+       
        graphBtnOnClick();
        
     },
