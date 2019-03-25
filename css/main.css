@@ -159,7 +159,8 @@ body {
   visibility: hidden; }
 
 .topMargin {
-  margin: 10px 0; }
+  margin: 10px 0;
+  min-height: 1000px; }
 
 .wholeMargin {
   margin: 10px 10px; }
@@ -435,12 +436,16 @@ footer {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-left: -20%;
-    margin-top: -15%; }
+    margin-left: -16%;
+    margin-top: -15%;
+    margin-right: auto; }
     @media (max-width: 800px) {
       #backgroundLoad #sokaLogo {
         margin-top: -50%;
         margin-left: -60%; } }
+    @media (max-width: 1000px) {
+      #backgroundLoad #sokaLogo {
+        margin-left: -23%; } }
   #backgroundLoad #loading {
     position: absolute;
     top: 50%;

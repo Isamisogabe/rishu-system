@@ -607,7 +607,7 @@ function calcMargin(clsName) {
 function setNodeAndEdge (graph, field){
   var positionY = [0.98, 0.80, 0.62, 0.44, 0.28, 0.08];
   var positionX = [0,0.05,0.01,0.02,0.05,0];
-  var feedLineThreshold = 1.8,
+  var feedLineThreshold = 1.5,
       fieldLecs = [],
       i;
   for (i = 0; i < allLectures.length ; i++){
@@ -918,11 +918,16 @@ var fields = ["応用物理学", "物質理工学", "生命理工学", "環境�
 function switchNavs() {
   $(".home-nav").on("click", function() {
     var id = $(this).attr("data-target");
+    var height = $(window).height() - 200 + "px";
     $(this).parent().parent().find("li[class='active']").removeClass("active");
     $("main").css("display", "none");
     $(id).css("display", "block");
     if(id === "#clsDataVisualization"){
-      $("footer").css("margin-top", "700px");
+      
+      $("footer").css("margin-top", height);
+    } else if(id === "#easyExam") {
+      height = $(window).height() - 600 + "px";
+      $("footer").css("margin-top", height);
     } else {
       $("footer").css("margin-top", "10px");
     }
