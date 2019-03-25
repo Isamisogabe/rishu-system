@@ -64,22 +64,21 @@ function pushInitLecs(){
       onBtn.css('display', 'none');
       offBtn.css('display', 'inline-block');
       
-      
+      // 履修モデルに追加されたのでisSignedフラグを変える
       lecture.isSigned = true;
       
       rishuModel.push(allLectures[i]);
-      
-      
-      
+      // 授業データを履修モデルに追加する。
       addRishuModel(lecture);
     }
   }
 }
 function clear() {
+  // div class=lecture 授業リストすべてを表示する
   $(".lecture").css("display", "block");
 }
 function supervise(unit, id){
- 
+ // 履修モデルの各分野における単位数を確認し、一定以上超えていなければ赤を表示する部分
   if(unit < standardUnit[id] ){
     $("#subject__" + id).parent().css("color", "#ff4500");
   } else {
@@ -170,6 +169,7 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
   });
 }
 function searchCls() {
+  // 検索ボタンのファンクションをつける部分
   $("#searchBtn").on("click", function(){
     var text = $("#searchTxt").val(),
         reg  = new RegExp(text);
@@ -355,6 +355,7 @@ function getClsId(clsName){
   return classId;
 }
 function detailBtnOnClick() {
+  // 授業リストの+-ボタンのファンクションをつける部分
   var classTable    = $('.lecture__table'),
       detailOnBtn   = $('.detailOnBtn'),
       detailOffBtn  = $('.detailOffBtn'),
@@ -626,9 +627,7 @@ function setNodeAndEdge (graph, field){
   
   if(aspectRatio > 1) feedLineThreshold = aspectRatio;
   
-  console.log(aspectRatio);
-  console.log(feedLineThreshold);
-  console.log(feedLineThreshold);
+  
   for (i = 0; i < allLectures.length ; i++){
     var lec        = allLectures[i];
     if(!(lec.reqField === undefined)) var reqField = lec.reqField.split(" ");
@@ -758,7 +757,7 @@ function setNodeAndEdge (graph, field){
           target: parentClsName,
           size: 0.03,
           type: 'line',
-          color: '#eee',
+          color: '#ddd',
           hover_color: '#ffd700'
         });
         parentEdgeCount++;
@@ -776,7 +775,7 @@ function setNodeAndEdge (graph, field){
           target: childClsName,
           size: 0.03,
           type: 'line',
-          color: '#eee',
+          color: '#ddd',
           hover_color: '#ffd700'
         });
         childEdgeCount++;
@@ -1066,8 +1065,11 @@ function showTable() {
 
 $(document).ready(function() {
   var rishuModel = rishuModel || [];
+  
+});
+window.onload = function(){
   $("#sokaLogo").html("<img src='./image/soka-logo.png' alt='Soka-logo'>");
-$("#loading").html("<img src='./image/gif-load.gif' alt='loading'>");
+  $("#loading").html("<img src='./image/gif-load.gif' alt='loading'>");
   $.ajax({
     type: 'GET',
     url: './data/profData.json',
@@ -1111,9 +1113,6 @@ $("#loading").html("<img src='./image/gif-load.gif' alt='loading'>");
       console.log('読み込みに失敗しました');
     }
   );
-});
-window.onload = function(){
-  
   $.ajax({
     type: 'GET',
     url: './data/classData17.json',

@@ -387,7 +387,7 @@ body {
       width: 100%; } }
 
 #physicsGraph {
-  top: 250px;
+  top: 300px;
   bottom: 0;
   left: 0;
   right: 0;
@@ -397,7 +397,7 @@ body {
       top: 500px; } }
 
 #baseGraph {
-  top: 250px;
+  top: 300px;
   bottom: 0;
   left: 0;
   right: 0;
