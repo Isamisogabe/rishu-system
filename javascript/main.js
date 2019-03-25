@@ -598,6 +598,10 @@ function searchLecJson(clsName){
 
 function calcMargin(clsName) {
   var rate = 0.035;
+  var w = $(window).width();
+  var h = $(window).height();
+  var aspectRatio = w / h;
+  if(w < 1500 && aspectRatio > 1.5) rate = 0.05;
   var len = parseInt(clsName.length, 10);
   if(len >= 30) rate =0.010;
   if(len <= 3) rate = 0.05;
@@ -610,6 +614,11 @@ function setNodeAndEdge (graph, field){
   var feedLineThreshold = 1.5,
       fieldLecs = [],
       i;
+  var w = $(window).width(),
+      h = $(window).height(),
+      aspectRatio = w / h;
+  console.log(feedLineThreshold)
+  if(aspectRatio > 1.5) feedLineThreshold = 2.0;
   for (i = 0; i < allLectures.length ; i++){
     var lec        = allLectures[i];
     if(!(lec.reqField === undefined)) var reqField = lec.reqField.split(" ");
