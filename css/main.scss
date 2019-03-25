@@ -508,7 +508,7 @@ body {
   }
 }
 .nav > li.sp {
-   @media(max-width: 800px) {
+   @media(max-width: 1000px) {
     display: none;
   }
 }
@@ -565,7 +565,7 @@ footer {
   }
 }
 .erase-sp{
-  @media(max-width: 700px) {
+  @media(max-width: 1000px) {
     display: none;
   }
 }

@@ -601,7 +601,7 @@ function calcMargin(clsName) {
   var w = $(window).width();
   var h = $(window).height();
   var aspectRatio = w / h;
-  if(w < 1500 && aspectRatio > 1.5) rate = 0.05;
+  if(w < 1500 && aspectRatio > 1.6) rate = 0.045;
   var len = parseInt(clsName.length, 10);
   if(len >= 30) rate =0.010;
   if(len <= 3) rate = 0.05;
@@ -609,7 +609,7 @@ function calcMargin(clsName) {
   
 }
 function setNodeAndEdge (graph, field){
-  var positionY = [0.98, 0.80, 0.62, 0.44, 0.28, 0.08];
+  var positionY = [1.00, 0.85, 0.72, 0.62, 0.45, 0.20];
   var positionX = [0,0.05,0.01,0.02,0.05,0];
   var feedLineThreshold = 1.5,
       fieldLecs = [],
@@ -617,8 +617,18 @@ function setNodeAndEdge (graph, field){
   var w = $(window).width(),
       h = $(window).height(),
       aspectRatio = w / h;
-  console.log(feedLineThreshold)
-  if(aspectRatio > 1.5) feedLineThreshold = 2.0;
+  
+  if(w < 800)          feedLineThreshold = 1.2;
+  else if(w < 1000)     feedLineThreshold = 1.2;
+  else if( w < 1200)    feedLineThreshold = 1.4;
+  else if(w < 1500 && aspectRatio > 1.5)     feedLineThreshold = 1.7;
+  else                  feedLineThreshold = 2.0;
+  
+  if(aspectRatio > 1) feedLineThreshold = aspectRatio;
+  
+  console.log(aspectRatio);
+  console.log(feedLineThreshold);
+  console.log(feedLineThreshold);
   for (i = 0; i < allLectures.length ; i++){
     var lec        = allLectures[i];
     if(!(lec.reqField === undefined)) var reqField = lec.reqField.split(" ");
@@ -788,8 +798,8 @@ function draw () {
     var aspectRatio = canvasWidth / canvasHeight,
         canvas = document.getElementById("baseGraph"),
         context = canvas.getContext('2d'),
-        rateOfHeights = [0.89, 0.71, 0.53, 0.32, 0.12],
-        rateOfTextHeights = [0.98, 0.80, 0.62, 0.44, 0.26, 0.08],
+        rateOfHeights = [0.82, 0.70, 0.58, 0.43, 0.18],
+        rateOfTextHeights = [0.93, 0.76, 0.65, 0.52, 0.31, 0.13],
         semesterNames = ["１年春学期", "１年秋学期", "２年春学期", "２年秋学期", "３年春学期", "３年秋学期"],
         height,
         width = canvasWidth;
