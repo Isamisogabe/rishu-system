@@ -1068,8 +1068,11 @@ $(document).ready(function() {
   
 });
 window.onload = function(){
+  // loding 画面を出す
   $("#sokaLogo").html("<img src='./image/soka-logo.png' alt='Soka-logo'>");
   $("#loading").html("<img src='./image/gif-load.gif' alt='loading'>");
+  
+  // 非同期通信を行う
   $.ajax({
     type: 'GET',
     url: './data/profData.json',
@@ -1078,86 +1081,90 @@ window.onload = function(){
   .then(
     function(json) {
       profData = json;
+      $.ajax({
+        type: 'GET',
+        url: './data/otherProfData.json',
+        dataType: 'json'
+      })
+      .then(
+        function(json) {
+          
+           otherProfData = json;
+           $.ajax({
+            type: 'GET',
+            url: './data/easyExam.json',
+            dataType: 'json'
+          })
+          .then(
+            function(json) {
+               eleValues = json;
+               showExamBtns(eleValues);
+               examBtnOnClick();
+               evaluate();
+               
+               $.ajax({
+                type: 'GET',
+                url: './data/classData17.json',
+                dataType: 'json',
+                complete: function(data) {
+                  $("#backgroundLoad").animate({opacity: 0}, 1000, function() {
+                     $(this).css("display", "none");
+                     $("#loading").empty();
+                   });
+                }
+              })
+              .then(
+                function(json) {
+                  
+                  
+                   allLectures = json;
+                   showClasses(allLectures);
+                   pushInitLecs();
+                   rishuBtnOnClick();
+                   detailBtnOnClick();
+                   clsOnClick();
+                   windowSizeControll();
+                   windowScroll();
+                   selectRyouiki();
+                   selectYear();
+                   selectSemester();
+                   searchCls();
+                   deployLabRadioBtn();
+                   switchTabs();
+                   labBtnOnClick();
+                   switchNavs();
+                   clear();
+                   
+                   showTable();
+                   for(var i = 0; i<ryouiki.length;i++) {
+                     setNodeAndEdge(ryouikiGraphs[i], ryouiki[i]);
+                   }
+                   
+                   graphBtnOnClick();
+                   
+                   
+                   
+                },
+                function() {
+                  console.log('読み込みに失敗しました');
+                }
+              );
+            },
+            function() {
+              console.log('読み込みに失敗しました');
+            }
+          );
+        },
+        function() {
+          console.log('読み込みに失敗しました');
+        }
+      );
     },
     function() {
       console.log('読み込みに失敗しました');
     }
   );
-  $.ajax({
-    type: 'GET',
-    url: './data/otherProfData.json',
-    dataType: 'json'
-  })
-  .then(
-    function(json) {
-      
-       otherProfData = json;
-    },
-    function() {
-      console.log('読み込みに失敗しました');
-    }
-  );
-  $.ajax({
-    type: 'GET',
-    url: './data/easyExam.json',
-    dataType: 'json'
-  })
-  .then(
-    function(json) {
-       eleValues = json;
-       showExamBtns(eleValues);
-       examBtnOnClick();
-       evaluate();
-    },
-    function() {
-      console.log('読み込みに失敗しました');
-    }
-  );
-  $.ajax({
-    type: 'GET',
-    url: './data/classData17.json',
-    dataType: 'json',
-    complete: function(data) {
-      $("#backgroundLoad").animate({opacity: 0}, 1000, function() {
-         $(this).css("display", "none");
-         $("#loading").empty();
-       });
-    }
-  })
-  .then(
-    function(json) {
-      
-      
-       allLectures = json;
-       showClasses(allLectures);
-       pushInitLecs();
-       rishuBtnOnClick();
-       detailBtnOnClick();
-       clsOnClick();
-       windowSizeControll();
-       windowScroll();
-       selectRyouiki();
-       selectYear();
-       selectSemester();
-       searchCls();
-       deployLabRadioBtn();
-       switchTabs();
-       labBtnOnClick();
-       switchNavs();
-       clear();
-       
-       showTable();
-       for(var i = 0; i<ryouiki.length;i++) {
-         setNodeAndEdge(ryouikiGraphs[i], ryouiki[i]);
-       }
-       
-       graphBtnOnClick();
-       
-       
-       
-    },
-    function() {
-      console.log('読み込みに失敗しました');
-    }
-  );
+ 
+  
+  
 };
