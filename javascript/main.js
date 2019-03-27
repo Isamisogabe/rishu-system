@@ -403,7 +403,7 @@ function reduceRishuModel(lecture) {
   
   rishuUnit[semester-1] -= unit;
   totalUnit -= unit;
-  $("#rishuInfo #unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
+  $("#rishuInfo .unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
   $("#rishuInfo #unit__total").html("").append(totalUnit);
   
   var subjectId = selectSubject(lecture.subject);
@@ -741,7 +741,6 @@ function setNodeAndEdge (graph, field){
     }
   }
   
-  
   var parentEdgeCount = 0,
       childEdgeCount  = 0,
       fieldLec;
@@ -762,8 +761,6 @@ function setNodeAndEdge (graph, field){
         });
         parentEdgeCount++;
       }
-      
-      
     }
     for(var id in fieldLec.childClass) {
       var childClsName = fieldLec.childClass[id];
