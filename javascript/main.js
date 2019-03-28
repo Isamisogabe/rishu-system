@@ -509,15 +509,16 @@ function showClasses (clsArr) {
         for (var k=0;k<ryouiki.length;k++){ // 定数列ryouikiはグローバル変数
           if((reqField[l] === ryouiki[k]) && clsArr[i].isFieldCommon){
             var className;
+            var description = clsArr[i].name + "（領域選択必修）"
             if(clsArr[i].subject === "専門応用科目理工学系"){
               className = ryouikiColor[k] + " sciEn ryouikihisshu";
-              lecNameTag.attr("class", className).append("(領域選択必修)");
+              lecNameTag.attr("class", className).html(description);
             } else if(clsArr[i].subject === "専門応用科目工学系"){
               className = ryouikiColor[k] + " eng ryouikihisshu";
-              lecNameTag.attr("class", className).append("(領域選択必修)");
+              lecNameTag.attr("class", className).html(description);
             } else {
               className = ryouikiColor[k] + " sciEn ryouikihisshu";
-              lecNameTag.attr("class", className).append("(領域選択必修)");
+              lecNameTag.attr("class", className).html(description);
             }
           }
         }
@@ -602,10 +603,11 @@ function calcMargin(clsName) {
   var w = $(window).width();
   var h = $(window).height();
   var aspectRatio = w / h;
-  if(w < 1500 && aspectRatio > 1.6) rate = 0.045;
-  var len = parseInt(clsName.length, 10);
+  if(w < 1500 && aspectRatio > 1.6) rate = 0.055;
+  var len = clsName.length;
   if(len >= 30) rate =0.010;
-  if(len <= 3) rate = 0.05;
+  
+  if(len <= 5) rate = 0.09;
   return rate * len;
   
 }
@@ -613,6 +615,7 @@ function setNodeAndEdge (graph, field){
   var positionY = [1.00, 0.85, 0.72, 0.62, 0.45, 0.20];
   var positionX = [0,0.05,0.01,0.02,0.05,0];
   var feedLineThreshold = 1.5,
+      margin_Y = 0.05,
       fieldLecs = [],
       i;
   var w = $(window).width(),
@@ -625,7 +628,8 @@ function setNodeAndEdge (graph, field){
   else if(w < 1500 && aspectRatio > 1.5)     feedLineThreshold = 1.7;
   else                  feedLineThreshold = 2.0;
   
-  if(aspectRatio > 1) feedLineThreshold = aspectRatio;
+  if(aspectRatio > 1) feedLineThreshold = aspectRatio ;
+  if(aspectRatio > 1.5) feedLineThreshold = aspectRatio + 0.5;
   
   
   for (i = 0; i < allLectures.length ; i++){
@@ -659,7 +663,7 @@ function setNodeAndEdge (graph, field){
           // 横方向の長さが一定以上を超えた場合上にノードをずらす
           if(positionX[id] > feedLineThreshold){
             positionX[id] -=feedLineThreshold;
-            positionY[id] -=0.04;
+            positionY[id] -=margin_Y;
           }
         }
         
@@ -706,7 +710,7 @@ function setNodeAndEdge (graph, field){
           positionX[parseInt(childLecJson.semester, 10)-1]+=calcMargin(childLecJson.name);
           if(positionX[parseInt(childLecJson.semester, 10)-1]>feedLineThreshold){
             positionX[parseInt(childLecJson.semester, 10)-1] -=feedLineThreshold;
-            positionY[parseInt(childLecJson.semester, 10)-1] -=0.04;
+            positionY[parseInt(childLecJson.semester, 10)-1] -=margin_Y;
           }
         }
         
@@ -1010,20 +1014,17 @@ function evaluate() {
         scrapChem = "物質理工学領域：" + evals[1] + "/ 150<br/>",
         scrapBio = "生命理工学領域：" + evals[2] + "/ 150<br/>",
         scrapEnv = "環境理工学領域：" + evals[3] + "/ 150<br/>",
-        result   = $("#examResult"),
         index;
     
     index = findMaxIndex();
    
     $("#modalMsg").html(fields[index]);
     $("#bodyMsg p").html(scrapPhy + scrapChem + scrapBio + scrapEnv);
-    
-   
   });
 }
 
 // --------------- fieldLabs用関数 --------------- //
-function setTd(string, ryouiki, index, subindex, mark){
+function setTd(string, ryouiki, index, subindex, mark){ // index は行、subindexは列を示す
   var fields = ["応用物理学", "物質理工学", "生命理工学", "環境理工学"];
   if(string === ryouiki){
     var i = fields.indexOf(ryouiki) + 2;
