@@ -176,6 +176,7 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
           var profCas = profData[i].description.cas;
           if(!(profCas[0] === "") && profCas[1] === "") desc.append("<h2 class='noteLabel'>ケーススタディⅠの概要</h2><p>" + profCas[0]  + "</p>");
           if(!(profCas[1] === "") && profCas[0] === "") desc.append("<h2 class='noteLabel'>ケーススタディⅡの概要</h2><p>" + profCas[1]  + "</p>");
+          if(!(profCas[1] === "") && !(profCas[0] === "")) desc.append("<h2 class='noteLabel'>ケーススタディⅠの概要</h2><p>" + profCas[0]  + "</p>"+ "<h2 class='noteLabel'>ケーススタディⅡの概要</h2><p>" + profCas[1]  + "</p>");
         }
         
         // 研究の授業
