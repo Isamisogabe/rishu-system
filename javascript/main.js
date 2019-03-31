@@ -115,56 +115,93 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
   var profName;
   
   for(var i=0;i<profData.length; i++){
-    var specialFields = profData[i].specialField.split(" ");
-    for(var j=0;j<specialFields.length;j++){
-      var field = specialFields[j];
-      if(field === "応用物理学"){
-        $("#applyProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
-      }
-      if(field === "物質理工学"){
-        $("#materialProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
-      }
-      if(field === "生命理工学"){
-        $("#bioProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
-      }
-      if(field === "環境理工学"){
-        $("#envProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' class='fontBold'>" + profData[i].prof +"</a></h5></div>");
-      }
-    }
-  }
-  for(var i=0;i<profData.length; i++){
     var fields = profData[i].field.split(" ");
     for(var j=0;j<fields.length;j++){
       var field = fields[j];
       if(field === "応用物理学"){
-        $("#applyProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
+        $("#applyProfs").append("<div class='prof' id='apply-" + profData[i].prof + "'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
       }
       if(field === "物質理工学"){
-        $("#materialProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
+        $("#materialProfs").append("<div class='prof' id='material-" + profData[i].prof + "'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
       }
       if(field === "生命理工学"){
-        $("#bioProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
+        $("#bioProfs").append("<div class='prof' id='bio-" + profData[i].prof + "'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
       }
       if(field === "環境理工学"){
-        $("#envProfs").append("<div class='prof'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
+        $("#envProfs").append("<div class='prof' id='env-" + profData[i].prof + "'><input type='radio' name='profName' value=" + profData[i].prof + " > <h5 class='profName '><a href=" +profData[i].link+ " target='_blank' >" + profData[i].prof +"</a></h5></div>");
       }
     }
   }
+  for(var i=0;i<profData.length; i++){
+    var fields = profData[i].field.split(" "),
+        specialFields = profData[i].specialField.split(" ");
+    for(var j=0;j<fields.length;j++){
+      for(var k=0;k<specialFields.length;k++){
+        var field = fields[j],
+            specialField = specialFields[k],
+            tag;
+        if(specialField === "応用物理学" && field === "応用物理学"){
+          tag = $("#apply-" + profData[i].prof);
+          tag.find(".profName").addClass("fontBold");
+        }
+        if(specialField === "物質理工学" && field === "物質理工学"){
+          tag = $("#material-" + profData[i].prof);
+          tag.find(".profName").addClass("fontBold");
+        }
+        if(specialField === "生命理工学" && field === "生命理工学"){
+          tag = $("#bio-" + profData[i].prof);
+          tag.find(".profName").addClass("fontBold");
+        }
+        if(specialField === "環境理工学" && field === "環境理工学"){
+          tag = $("#env-" + profData[i].prof);
+          tag.find(".profName").addClass("fontBold");
+        }
+      }
+    }
+  }
+  // 各研究室の説明を示す部分
   $("input[name='profName']").on("click", function() {
     $(".lecture").css("display", "none");
     profName = $("input[name='profName']:checked").val();
-    
+   
+    var desc    = $(".description");
+    desc.empty();
     for(var i=0;i<profData.length; i++){
       var lecs;
       if(profName === profData[i].prof){
-        $(".description").html("<h2 class='noteLabel'>" + profData[i].prof + "研究室</h2><p>" + profData[i].description  + "</p>");
-      
+        desc.append("<h2 class='noteLabel'>" + profData[i].prof + "研究室</h2><p>" + profData[i].description.lab  + "</p>");
+        
+        // ケーススタディの授業
+        if(!!(profData[i].description.cas)){
+          var profCas = profData[i].description.cas;
+          if(!(profCas[0] === "") && profCas[1] === "") desc.append("<h2 class='noteLabel'>ケーススタディの概要</h2><p>" + profCas[0]  + "</p>");
+          if(!(profCas[1] === "") && profCas[0] === "") desc.append("<h2 class='noteLabel'>ケーススタディの概要</h2><p>" + profCas[1]  + "</p>");
+        }
+        
+        // 研究の授業
+        if(!!(profData[i].description.res)){
+          var profRes = profData[i].description.res;
+          if(!(profRes[0] === "") && profRes[1] === "")desc.append("<h2 class='noteLabel'>研究Ⅰ＆Ⅱ概要</h2><p>" + profRes[0]  + "</p>");
+          if(!(profRes[1] === ""))desc.append("<h2 class='noteLabel'>研究概要Ⅰ</h2><p>" + profRes[0]  + "</p><h2 class='noteLabel'>研究概要Ⅱ</h2><p>" + profRes[1]  + "</p>");
+        }
+        
+        // 演習の授業
+        if(!!(profData[i].description.exe)){
+          var profExe = profData[i].description.exe;
+          if(!(profExe[0] === "") && profExe[1] === "")desc.append("<h2 class='noteLabel'>演習Ⅰ＆Ⅱ概要</h2><p>" + profExe[0]  + "</p>");
+          else desc.append("<h2 class='noteLabel'>演習概要Ⅰ</h2><p>" + profExe[0]  + "</p><h2 class='noteLabel'>演習概要Ⅱ</h2><p>" + profExe[1]  + "</p>");
+          
+        }
+        
         lecs = profData[i].classes.split(" ");
         for(var j=0;j<lecs.length;j++){
           var clsId = getClsId(lecs[j]);
           $("#" + clsId).css("display", "block");
         }
+        
+        break;
       }
+      
     }
   });
 }
@@ -538,7 +575,7 @@ function showClasses (clsArr) {
     
     // タイトル下のテーブルに関するタグを付加するコード、説明欄、教授、関係する授業等である。
     lecture.append('<div class="table lectureDivTable" style="display: none;" ></div>');
-    $(".lecture:nth-child(" + j + ") > .lectureDivTable").append('<table class="lecture__table table" > <tr><td>教員名</td><td class="profName"></td></tr> <tr><td>事前履修科目</td><td class="childClass nextClass"></td></tr> <tr><td>必要とする科目</td><td class="parentClass nextClass"></td> </tr><tr><td>概要</td><td ><p class="lectureDesc">' + clsArr[i].description + '</p></td></tr></table>');
+    $(".lecture:nth-child(" + j + ") > .lectureDivTable").html('<table class="lecture__table table" > <tr><td>教員名</td><td class="profName"></td></tr> <tr><td>事前履修科目</td><td class="childClass nextClass"></td></tr> <tr><td>必要とする科目</td><td class="parentClass nextClass"></td> </tr><tr><td>概要</td><td ><p class="lectureDesc">' + clsArr[i].description + '</p></td></tr></table>');
     
     
     // --------------- 授業を担当する教授の名前にリンクを載せて表示する（リンクがない場合はのせない） --------------- //
@@ -578,7 +615,7 @@ function showClasses (clsArr) {
 }
 // --------------- 履修登録用関数終了 --------------- //
 
-// --------------- 授業関係のデータビジュアライゼーション -------------- //
+// --------------- 授業関係のデー��ビジュアライゼーション -------------- //
 
 function isExist(clsName, graph){
   for(var i in graph.nodes){
@@ -597,7 +634,6 @@ function searchLecJson(clsName){
   }
   return cls;
 }
-
 function calcMargin(clsName) {
   var rate = 0.035;
   var w = $(window).width();
@@ -816,7 +852,6 @@ function draw () {
     }
   }
 }
-
 function graphBtnOnClick () {
   var count = 0;
   var s;
@@ -899,7 +934,7 @@ function graphBtnOnClick () {
     // クリックファンクションをいったん解除
     s.unbind("doubleClickNode");
     
-    // もう一度クリックファンクションをつける
+    // もう���度クリックファンクションをつける
     s.bind('doubleClickNode', function(e) {
         var nodeName = e.data.node.label,
             color  = '#' + (
@@ -1023,7 +1058,7 @@ function evaluate() {
   });
 }
 
-// --------------- fieldLabs用関数 --------------- //
+// --------------- fieldLabs用関数(研究者一覧用 --------------- //
 function setTd(string, ryouiki, index, subindex, mark){ // index は行、subindexは列を示す
   var fields = ["応用物理学", "物質理工学", "生命理工学", "環境理工学"];
   if(string === ryouiki){
@@ -1102,7 +1137,7 @@ window.onload = function(){
                
                $.ajax({
                 type: 'GET',
-                url: './data/classData17.json',
+                url: './data/classData18.json',
                 dataType: 'json',
                 complete: function(data) {
                   $("#backgroundLoad").animate({opacity: 0}, 1000, function() {
@@ -1139,9 +1174,6 @@ window.onload = function(){
                    }
                    
                    graphBtnOnClick();
-                   
-                   
-                   
                 },
                 function() {
                   console.log('読み込みに失敗しました');
