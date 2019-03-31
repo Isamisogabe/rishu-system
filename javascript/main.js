@@ -174,8 +174,8 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
         // ケーススタディの授業
         if(!!(profData[i].description.cas)){
           var profCas = profData[i].description.cas;
-          if(!(profCas[0] === "") && profCas[1] === "") desc.append("<h2 class='noteLabel'>ケーススタディの概要</h2><p>" + profCas[0]  + "</p>");
-          if(!(profCas[1] === "") && profCas[0] === "") desc.append("<h2 class='noteLabel'>ケーススタディの概要</h2><p>" + profCas[1]  + "</p>");
+          if(!(profCas[0] === "") && profCas[1] === "") desc.append("<h2 class='noteLabel'>ケーススタディⅠの概要</h2><p>" + profCas[0]  + "</p>");
+          if(!(profCas[1] === "") && profCas[0] === "") desc.append("<h2 class='noteLabel'>ケーススタディⅡの概要</h2><p>" + profCas[1]  + "</p>");
         }
         
         // 研究の授業
@@ -189,7 +189,7 @@ function deployLabRadioBtn () { // 研究室別検索において各領域タブ
         if(!!(profData[i].description.exe)){
           var profExe = profData[i].description.exe;
           if(!(profExe[0] === "") && profExe[1] === "")desc.append("<h2 class='noteLabel'>演習Ⅰ＆Ⅱ概要</h2><p>" + profExe[0]  + "</p>");
-          else desc.append("<h2 class='noteLabel'>演習概要Ⅰ</h2><p>" + profExe[0]  + "</p><h2 class='noteLabel'>演習概要Ⅱ</h2><p>" + profExe[1]  + "</p>");
+          else desc.append("<h2 class='noteLabel'>演習Ⅰ概要</h2><p>" + profExe[0]  + "</p><h2 class='noteLabel'>演習Ⅱ概要</h2><p>" + profExe[1]  + "</p>");
           
         }
         
