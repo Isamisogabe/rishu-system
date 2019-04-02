@@ -38,6 +38,7 @@ var ryouikiHisshu = [
 
 // --------------- 履修登録用の関数 --------------- //
 function pushHtmlFile(){
+  // 履修モデルを書き出す関数
   $("#textBtn").hide();
   var htmlContent = $("#rishuModel__Content").html(),
       content = htmlContent.replace(/<("[^"]*"|'[^']*'|[^'">])*>/g,''),
@@ -1074,7 +1075,7 @@ function showTable() {
   for(var i=0; i<profData.length; i++){
     var strings = profData[i].field.split(" "),
         j = i + 1;
-    table.append("<tr><td><a href=" + profData[i].link + " > "+ profData[i].prof + "</a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+    table.append("<tr><td><a href=" + profData[i].link + " target=_blank > "+ profData[i].prof + "</a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
     
     for(var k=0;k<strings.length;k++){
       var l = k + 2;
