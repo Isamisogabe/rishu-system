@@ -641,7 +641,7 @@ function calcMargin(clsName) {
   var w = $(window).width();
   var h = $(window).height();
   var aspectRatio = w / h;
-  if(w < 1500 && aspectRatio > 1.6) rate = 0.055;
+  if(w < 1500 && aspectRatio > 1.6) rate = 0.053;
   var len = clsName.length;
   if(len >= 30) rate =0.010;
   
@@ -650,7 +650,7 @@ function calcMargin(clsName) {
   
 }
 function setNodeAndEdge (graph, field){
-  var positionY = [1.00, 0.85, 0.72, 0.62, 0.45, 0.20];
+  var positionY = [1.00, 0.85, 0.73, 0.62, 0.45, 0.20];
   var positionX = [0,0.05,0.01,0.02,0.05,0];
   var feedLineThreshold = 1.5,
       margin_Y = 0.05,
@@ -667,7 +667,7 @@ function setNodeAndEdge (graph, field){
   else                  feedLineThreshold = 2.0;
   
   if(aspectRatio > 1) feedLineThreshold = aspectRatio ;
-  if(aspectRatio > 1.5) feedLineThreshold = aspectRatio + 0.5;
+  if(aspectRatio > 1.5) feedLineThreshold = aspectRatio + 0.3;
   
   
   for (i = 0; i < allLectures.length ; i++){
@@ -798,7 +798,7 @@ function setNodeAndEdge (graph, field){
           target: parentClsName,
           size: 0.03,
           type: 'line',
-          color: '#ddd',
+          color: '#eee',
           hover_color: '#ffd700'
         });
         parentEdgeCount++;
@@ -814,7 +814,7 @@ function setNodeAndEdge (graph, field){
           target: childClsName,
           size: 0.03,
           type: 'line',
-          color: '#ddd',
+          color: '#eee',
           hover_color: '#ffd700'
         });
         childEdgeCount++;
@@ -857,11 +857,12 @@ function draw () {
 function graphBtnOnClick () {
   var count = 0;
   var s;
+  var ryouikiGraph;
   $(".graphBtn").on("click", function() {
     
     var dataField = $(this).attr("data-field");
     let i = ryouiki.indexOf(dataField);
-    var ryouikiGraph = ryouikiGraphs[i];
+        ryouikiGraph = ryouikiGraphs[i];
     // sのインスタンスが既にある場合
     if(count > 0){
       s.graph.clear();
@@ -870,7 +871,7 @@ function graphBtnOnClick () {
     } 
     else { // sのインスタンスを作成
       
-     
+      
       s = new sigma({
         graph: ryouikiGraph,
         renderer: {
@@ -891,7 +892,8 @@ function graphBtnOnClick () {
           labelColor: "node"
         }
       });
-      
+      eraseGraphEdgeOnClick();
+      // ドラッグできるようになるプラグインを載せる
       var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
       
       draw();
@@ -927,6 +929,8 @@ function graphBtnOnClick () {
           }
         }
         s.refresh();
+        
+        
       });
     }
     // カウントで別の処理(sの設定を変えるだけ)を行うため sのインスタンスを再度呼ばないため
@@ -936,7 +940,7 @@ function graphBtnOnClick () {
     // クリックファンクションをいったん解除
     s.unbind("doubleClickNode");
     
-    // もう���度クリックファンクションをつける
+    // もう一度クリックファンクションをつける
     s.bind('doubleClickNode', function(e) {
         var nodeName = e.data.node.label,
             color  = '#' + (
@@ -966,6 +970,26 @@ function graphBtnOnClick () {
       });
     
   });
+  var eraseGraphEdgeOnClick = function() {
+    
+    $("#edgeErase").on("click", function () {
+      s.settings({
+        drawEdges: false
+      });
+      s.refresh();
+      $("#edgeErase").css("display", "none");
+      $("#edgeWatch").css("display", "inline-block");
+    });
+    $("#edgeWatch").on("click", function () {
+      s.settings({
+        drawEdges: true
+      });
+      s.refresh();
+      $("#edgeErase").css("display", "inline-block");
+      $("#edgeWatch").css("display", "none");
+    });
+  };
+  
 }
 
 // --------------- easyExam用の関数 --------------- //
@@ -1069,12 +1093,14 @@ function setTd(string, ryouiki, index, subindex, mark){ // index は行、subind
   }
   return false;
 }
-function showTable() {
+function showLabTable() {
   var table = $("#labsRyouikiTable");
   
   for(var i=0; i<profData.length; i++){
     var strings = profData[i].field.split(" "),
         j = i + 1;
+        
+    // テーブルの生成
     table.append("<tr><td><a href=" + profData[i].link + " target=_blank > "+ profData[i].prof + "</a></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
     
     for(var k=0;k<strings.length;k++){
@@ -1092,7 +1118,10 @@ function showTable() {
       setTd(strings[k], "生命理工学", j, l, "◎");
       setTd(strings[k], "環境理工学", j, l, "◎");
     }
+    
+    // 他の応用分野
     $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(6)").html(profData[i].else);
+    // 大学院専攻
     $("#labsRyouikiTable > tr:nth-child(" + j + ") > td:nth-child(7)").html(profData[i].master);
   }
 }
@@ -1151,15 +1180,19 @@ window.onload = function(){
               .then(
                 function(json) {
                   
-                  
+                   // 履修登録ページ
                    allLectures = json;
+                   // 授業タグ
                    showClasses(allLectures);
                    pushInitLecs();
                    rishuBtnOnClick();
                    detailBtnOnClick();
                    clsOnClick();
+                   
+                   // 右カラム（履修モデル）の設定
                    windowSizeControll();
                    windowScroll();
+                   // 検索ページのボタンの設定
                    selectRyouiki();
                    selectYear();
                    selectSemester();
@@ -1167,14 +1200,18 @@ window.onload = function(){
                    deployLabRadioBtn();
                    switchTabs();
                    labBtnOnClick();
-                   switchNavs();
                    clear();
+                   // 
+                   switchNavs();
                    
-                   showTable();
+                   
+                   // 研究室一覧ページ
+                   showLabTable();
+                   
+                   // グラフのセット
                    for(var i = 0; i<ryouiki.length;i++) {
                      setNodeAndEdge(ryouikiGraphs[i], ryouiki[i]);
                    }
-                   
                    graphBtnOnClick();
                 },
                 function() {
