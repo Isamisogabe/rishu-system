@@ -74,11 +74,11 @@ function pushInitLecs(){
     }
   }
 }
-function clear() {
+function showLectures() {
   // div class=lecture 授業リストすべてを表示する
   $(".lecture").css("display", "block");
 }
-function supervise(unit, id){
+function superviseSubjectToRed(unit, id){
  // 履修モデルの各分野における単位数を確認し、一定以上超えていなければ赤を表示する部分
   if(unit < standardUnit[id] ){
     $("#subject__" + id).parent().css("color", "#ff4500");
@@ -104,7 +104,7 @@ function switchTabs(){
   $(".tab").on("click", function() {
     var tab = $(this),
         target= tab.attr("data-target");
-    clear();
+    showLectures();
     $(".tab").removeClass("active");
     tab.addClass("active");
     
@@ -433,7 +433,7 @@ function addRishuModel(lecture) {
   subjectUnit[subjectId] += unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
-  supervise(subjectUnit[subjectId], subjectId);
+  superviseSubjectToRed(subjectUnit[subjectId], subjectId);
 }
 function reduceRishuModel(lecture) {
   var semester = parseInt(lecture.semester,10),
@@ -442,14 +442,19 @@ function reduceRishuModel(lecture) {
   
   rishuUnit[semester-1] -= unit;
   totalUnit -= unit;
-  $("#rishuInfo .unit__rishu__" + semester).html("").append(rishuUnit[semester-1]);
-  $("#rishuInfo #unit__total").html("").append(totalUnit);
+  // 「履修状況」ラベルに関するデータ操作
+  // 各セメスター
+  $(".unit__rishu__" + semester).empty().append(rishuUnit[semester-1]);
+  // セメスター合計単位数
+  $("#unit__total").empty().append(totalUnit);
   
   var subjectId = selectSubject(lecture.subject);
   subjectUnit[subjectId] -= unit;
   $("#subject__" + subjectId).html("")
   .append(subjectUnit[subjectId]);
-  supervise(subjectUnit[subjectId], subjectId);
+  
+  // 科目群の単位数が卒業要件以上なのかを確認する
+  superviseSubjectToRed(subjectUnit[subjectId], subjectId);
 }
 function rishuBtnOnClick (lectures) {
   //-------------------- 履修ボタンクリック処理 --------------------//
@@ -865,7 +870,7 @@ function graphBtnOnClick () {
         ryouikiGraph = ryouikiGraphs[i];
     // sのインスタンスが既にある場合
     if(count > 0){
-      s.graph.clear();
+      s.graph.showLectures();
       s.graph.read(ryouikiGraph);
       s.refresh();
     } 
@@ -1200,7 +1205,7 @@ window.onload = function(){
                    deployLabRadioBtn();
                    switchTabs();
                    labBtnOnClick();
-                   clear();
+                   showLectures();
                    // 
                    switchNavs();
                    
