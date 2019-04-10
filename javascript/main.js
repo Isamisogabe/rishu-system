@@ -870,7 +870,7 @@ function graphBtnOnClick () {
         ryouikiGraph = ryouikiGraphs[i];
     // sのインスタンスが既にある場合
     if(count > 0){
-      s.graph.showLectures();
+      s.graph.clear();
       s.graph.read(ryouikiGraph);
       s.refresh();
     } 
